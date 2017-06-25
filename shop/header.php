@@ -95,8 +95,8 @@
                                             <img alt="" class="img-circle" src="..<?php echo $_SESSION['NV']['URL'];?>" /> </a>
                                             <ul class="dropdown-menu dropdown-menu-default">
                                                 <li>
-                                                    <a href="nguoi-dung.html">
-                                                        <i class="icon-user"></i> My Profile </a>
+                                                    <a href="thong-tin-nguoi-dung.php">
+                                                        <i class="icon-user"></i>Thông tin cá nhân </a>
                                                     </li>
                                                     <li>
                                                         <a href="app_todo_2.html">

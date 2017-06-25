@@ -14,12 +14,12 @@
             $kq=capNhatKhuyenMai($tenKhuyenMai,$phanTram,$ngayBatDau,$ngayKetThuc,$cuaHang,$_GET['idKM']);
             if($kq!=true)
             {
-                echo '<script type="text/javascript">alert("Thất Bại");</script>';
+                echo '<script type="text/javascript">alert("Cập Nhật Thất Bại");</script>';
             }
         }
         else
         {
-            echo '<script type="text/javascript">alert("Thất Bại");</script>';
+            echo '<script type="text/javascript">alert("Cập Nhật Thất Bại");</script>';
         }             
     }
    
@@ -238,7 +238,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <div class="portlet-body form">
                                                 <!-- BEGIN FORM-->
                                                 <?php 
-                                                    $result=timKhuyenMai($cuaHang,$_GET['idKM']);
+                                                    $result=thongTinKhuyenMaiTheoMa($cuaHang,$_GET['idKM']);
                                                     $row_KhuyenMai=$result->fetch_assoc();
                                                     
                                                     $ngayBD= date("d-m-Y",strtotime($row_KhuyenMai['km_ngaybatdau']));

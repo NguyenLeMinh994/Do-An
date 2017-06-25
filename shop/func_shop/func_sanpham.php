@@ -5,7 +5,7 @@ function uploadimage($files,$tenSP)
 	$date=date('d-m-Y');
 	$newName=$date.'-'.$tenSP.'.'.pathinfo($files["name"],PATHINFO_EXTENSION);
 
-	$target_dir = "/public/upload/sanpham/";
+	$target_dir = "/public/upload/image/";
 	$path = $target_dir . basename($newName);
 	$uploadOk = true;
 
@@ -21,7 +21,7 @@ function uploadimage($files,$tenSP)
 	{
 	   if (move_uploaded_file($files["tmp_name"], "..".$path)) 
 		{
-			var_dump($path);
+			
 			return $path;
 		} 
 		else 
@@ -98,7 +98,7 @@ function danhSachSanPham($cuaHang)
 	$conn=connect();
 	$sql="SELECT * 
 		FROM sanpham,loaisanpham,hangsanxuat,nhacungcap
-		WHERE (sp_loaisanpham=lsp_ma AND sp_hangsanxuat=hsx_ma AND sp_nhacungcap=ncc_ma) AND sp_macuahang=$cuaHang";
+		WHERE (sp_loaisanpham=lsp_ma AND sp_hangsanxuat=hsx_ma AND sp_nhacungcap=ncc_ma) AND sp_macuahang=$cuaHang AND sp_trangthai=1";
 	return $conn->query($sql);
 }
 function xoaSanPham($maSP)
@@ -107,6 +107,27 @@ function xoaSanPham($maSP)
 	$sql="UPDATE sanpham
 		  SET sp_trangthai=2
 		  WHERE sp_ma=$maSP";
+
+	return $conn->query($sql);
+}
+
+function danhSachSanPhamBiHuy($cuaHang)
+{
+	$conn=connect();
+	$sql="SELECT * 
+		FROM sanpham,loaisanpham,hangsanxuat,nhacungcap
+		WHERE (sp_loaisanpham=lsp_ma AND sp_hangsanxuat=hsx_ma AND sp_nhacungcap=ncc_ma) AND sp_macuahang=$cuaHang AND sp_trangthai=2";
+	return $conn->query($sql);
+}
+
+function khoiPhucSanPham($maSP)
+{
+	$conn=connect();
+	$sql="UPDATE sanpham
+			SET 
+				sp_trangthai=1
+			WHERE 
+				sp_ma=$maSP";
 	return $conn->query($sql);
 }
 ?>

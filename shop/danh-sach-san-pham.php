@@ -3,7 +3,7 @@
      require "func_shop/func_sanpham.php";
      if(isset($_GET['idSP']) && !empty($_GET['idSP']))
      {
-        if(xoaSanPham($maSP)==true)
+        if(xoaSanPham($_GET['idSP'])==true)
         {
             echo '<script>alert("Xóa Thành Công");</script>';
         }
@@ -11,6 +11,7 @@
         {
             echo '<script>alert("Xóa Thất Bại");</script>';
         }
+       
      }
 
  ?>
@@ -232,7 +233,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <tr>
                                                 <td><?php echo $tensp; ?></td>
                                                 <td style="width:15%">
-                                                <img src="<?php echo $hinhdaidien;?>" class="img-rounded" alt="" style="width:100%"></td>
+                                                <img src="<?php echo $hinhdaidien;?>" class="img-rounded" alt="" style="width:100%">
+                                                </td>
                                                 <td><?php echo $dongiasp; ?></td>
                                                 <td><?php echo $hang; ?></td>
                                                 <td><?php echo $loai; ?></td>
@@ -248,10 +250,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <td>
                                                    <a href="" class="btn red btn-outline uppercase"> 
                                                         <i class="icon-basket-loaded"></i>
-                                                    </a>
+                                                    </a> 
                                                     <a href="" class="btn blue btn-outline uppercase"> 
                                                         <i class="icon-wrench"></i>
-                                                    </a> 
+                                                    </a><br>
                                                     <a href="?idSP=<?php echo $masp; ?>" class="btn dark btn-outline uppercase"> 
                                                         <i class="icon-trash"></i>
                                                     </a> 
@@ -876,3 +878,4 @@ License: You must have a valid license purchased only from themeforest(the above
     </body>
 
 </html>
+<?php require "bottom.php"; ?>

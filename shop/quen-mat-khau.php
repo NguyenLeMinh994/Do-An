@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     require "func_shop/func_nguoidung.php";
     $css="";
     if(isset($_POST['btnXacNhan']))

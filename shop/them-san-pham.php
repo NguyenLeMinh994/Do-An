@@ -347,7 +347,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                             <span class="required"> * </span>
                                                         </label>
                                                         <div class="col-md-9">
-                                                            <textarea class="ckeditor form-control" name="txtNoiDung" rows="6" data-error-container="#editor2_error"></textarea>
+                                                            <textarea class="ckeditor form-control" name="txtNoiDung" rows="6" data-error-container="#editor2_error" ></textarea>
                                                             <div id="editor2_error"> </div>
                                                         </div>
                                                     </div>

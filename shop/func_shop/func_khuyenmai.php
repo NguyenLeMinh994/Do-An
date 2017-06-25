@@ -71,7 +71,7 @@ require "../config/connectionstring.php";
 		return $conn->query($sql);
 	}
 
-	function timKhuyenMai($cuaHang,$maKhuyenMai)
+	function thongTinKhuyenMaiTheoMa($cuaHang,$maKhuyenMai)
 	{
 		$conn=connect();
 		$sql = "SELECT * 

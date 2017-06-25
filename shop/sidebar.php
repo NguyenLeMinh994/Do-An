@@ -51,7 +51,7 @@
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="danh-sach-san-pham.html" class="nav-link ">
+                        <a href="khoi-phuc-san-pham.php" class="nav-link ">
                             <span class="title">Khôi Phục Sản Phẩm
                             </span>
                         </a>

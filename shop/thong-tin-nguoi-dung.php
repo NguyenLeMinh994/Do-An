@@ -1,20 +1,22 @@
 <?php 
-     require "top.php";
-     require "func_shop/func_sanpham.php";
-     if(isset($_GET['idSP']) && !empty($_GET['idSP']))
-     {
-        if(khoiPhucSanPham($_GET['idSP'])==true)
-        {
-            echo '<script>alert("Khôi Phục Thành Công");</script>';
-        }
-        else
-        {
-            echo '<script>alert("Khôi Phục Thất Bại");</script>';
-        }
-        
-     }
+    require "top.php"; 
+    require "func_shop/func_nguoidung.php";
+    if(isset($_POST['btnLuuThongTin']))
+    {
+        luuThongTin($_SESSION['NV']['MaNhanVien'],$_POST['txtHoTen'],$_POST['txtEmail'],$_POST['txtSDT']);
+    }
 
- ?>
+    if(isset($_POST['btnLuuMatKhau']))
+    {
+        thayDoiMatKhau($_SESSION['NV']['MaNhanVien'],$_POST['txtMatKhauCu'],$_POST['txtMatKhauMoi']);
+    }
+    if(isset($_POST['btnThayDoiHinh']))
+    {
+        uploadHinh($_SESSION['NV']['MaNhanVien'],$_FILES['avatar']);
+    }
+    $thongtin=thongTinNguoiDung($_SESSION['NV']['MaNhanVien']);
+    $row_thongtin=$thongtin->fetch_assoc();
+?>
 <!DOCTYPE html>
 <!-- 
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.7
@@ -38,10 +40,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | FixedHeader Extension</title>
+        <title>Metronic Admin Theme #4 | New User Profile | Account</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
+        <meta content="Preview page of Metronic Admin Theme #4 for user account page" name="description" />
         <meta content="" name="author" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -51,13 +53,16 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="../public/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <link href="../public/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL STYLES -->
+        
         <link href="../public/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
         <link href="../public/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME GLOBAL STYLES -->
+        <!-- BEGIN PAGE LEVEL STYLES -->
+        <link href="../public/assets/pages/css/profile.min.css" rel="stylesheet" type="text/css" />
+        <!-- END PAGE LEVEL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <link href="../public/assets/layouts/layout4/css/layout.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/layouts/layout4/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
@@ -68,7 +73,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
         <!-- BEGIN HEADER -->
-        <?php require "header.php"; ?>
+        <?php //require "header.php"; ?>
         <!-- END HEADER -->
         <!-- BEGIN HEADER & CONTENT DIVIDER -->
         <div class="clearfix"> </div>
@@ -86,7 +91,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>Quản Lý Sản Phẩm
+                            <h1>Thông Tin Cá Nhân
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
@@ -180,78 +185,154 @@ License: You must have a valid license purchased only from themeforest(the above
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <span class="active">Danh Sách Sản Phẩm</span>
+                            <span class="active">Người Dùng</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
                     <!-- BEGIN PAGE BASE CONTENT -->
                     <div class="row">
                         <div class="col-md-12">
-                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <div class="portlet light bordered">
-                                <div class="portlet-title">
-                                    <div class="caption font-red">
-                                        <i class="icon-settings font-red"></i>
-                                        <span class="caption-subject bold uppercase">Danh Sách Sản Phẩm</span>
+                            <!-- BEGIN PROFILE SIDEBAR -->
+                            <div class="profile-sidebar">
+                                <!-- PORTLET MAIN -->
+                                <div class="portlet light profile-sidebar-portlet bordered">
+                                    <!-- SIDEBAR USERPIC -->
+                                    <div class="profile-userpic">
+                                        <img src="<?php echo '..'.$row_thongtin['nv_duongdanhinh']; ?>" class="img-responsive" alt=""> </div>
+                                    <!-- END SIDEBAR USERPIC -->
+                                    <!-- SIDEBAR USER TITLE -->
+                                    <div class="profile-usertitle">
+                                        <div class="profile-usertitle-name"><?php echo $row_thongtin['nv_hoten']; ?></div>
+                                        <div class="profile-usertitle-job"><?php echo $row_thongtin['cv_ten']; ?></div>
                                     </div>
-                                    <div class="tools"> </div>
+                                    <!-- END SIDEBAR USER TITLE -->
+                                    <!-- SIDEBAR BUTTONS -->
+                                    <div class="profile-userbuttons">
+                                       
+                                    </div>
+                                    <!-- END SIDEBAR BUTTONS -->
+                                    <!-- SIDEBAR MENU -->
+                                    <div class="profile-usermenu">
+                                        <ul class="nav">
+                                            <li>
+                                                <a href="page_user_profile_1.html">
+                                                    <i class="icon-home"></i> Cửa Hàng 
+                                                </a>
+                                            </li>
+                                          
+                                        </ul>
+                                    </div>
+                                    <!-- END MENU -->
                                 </div>
-                                <div class="portlet-body table-both-scroll">
-                                    <table class="table table-striped table-bordered table-hover order-column" id="sample_4">
-                                        <thead>
-                                            <tr>
-                                                <th>Tên Sản Phẩm </th>
-                                                <th>Hình</th>
-                                                <th>Giá (VND)</th>
-                                                <th>Hãng</th>
-                                                <th>Loại</th>
-                                                <th>Nhà Cung Cấp</th>
-                                                <th>Thao Tác</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php 
-                                        $sanpham=danhSachSanPhamBiHuy($cuaHang);
-                                        while ($row_sp=$sanpham->fetch_assoc()) 
-                                        {
-                                            $masp=$row_sp['sp_ma'];
-                                            $tensp=$row_sp['sp_ten']; 
-                                            $hinhdaidien= "..".$row_sp['sp_hinhdaidien'];
-                                            $dongiasp=number_format($row_sp['sp_dongia'],0,'.','.')." VND";
-                                            $loai=$row_sp['lsp_ten'];
-                                            $hang=$row_sp['hsx_ten']; 
-                                            $nhacungcap=$row_sp['ncc_ten'];
-                                            $khuyenmai=$row_sp['sp_makhuyenmai'];
-                                             //xử lý ngày
-                                            $ngayhientai=strtotime(date("Y-m-d"));
-                                            $ngaydang=$row_sp['sp_ngaydang'];
-                                            $ngayketiep=strtotime(date("Y-m-d", strtotime($ngaydang)) . " +7 day");
-                                             // $date=date("Y-m-d",$ngayketiep);
-                                        
-                                        ?>
-                                            <tr>
-                                                <td><?php echo $tensp; ?></td>
-                                                <td style="width:15%">
-                                                <img src="<?php echo $hinhdaidien;?>" class="img-rounded" alt="" style="width:100%"></td>
-                                                <td><?php echo $dongiasp; ?></td>
-                                                <td><?php echo $hang; ?></td>
-                                                <td><?php echo $loai; ?></td>
-                                                <td><?php echo $nhacungcap; ?></td>
-                                                
-                                                <td>
-                                                    <a href="?idSP=<?php echo $masp; ?>" class="btn dark btn-outline uppercase"> 
-                                                        <i class="icon-trash"></i>
-                                                        Khôi Phục
-                                                    </a> 
-                                                </td>
-                                            </tr>
-                                        <?php 
-                                        }
-                                        ?>
-                                        </tbody>
-                                    </table>
+                                <!-- END PORTLET MAIN -->
+                                <!-- PORTLET MAIN -->
+                                
+                                <!-- END PORTLET MAIN -->
+                            </div>
+                            <!-- END BEGIN PROFILE SIDEBAR -->
+                            <!-- BEGIN PROFILE CONTENT -->
+                            <div class="profile-content">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="portlet light bordered">
+                                            <div class="portlet-title tabbable-line">
+                                                <div class="caption caption-md">
+                                                    <i class="icon-globe theme-font hide"></i>
+                                                    <span class="caption-subject font-blue-madison bold uppercase">Tài Khoản</span>
+                                                </div>
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active">
+                                                        <a href="#tab_1_1" data-toggle="tab">Thông tin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#tab_1_2" data-toggle="tab">Thay Đổi Avatar</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#tab_1_3" data-toggle="tab">Thay Đổi Mật Khẩu</a>
+                                                    </li>
+                                                  
+                                                </ul>
+                                            </div>
+                                            <div class="portlet-body">
+                                                <div class="tab-content">
+                                                    <!-- PERSONAL INFO TAB -->
+                                                    <div class="tab-pane active" id="tab_1_1" >
+                                                        <form id="frmThongTin" role="form"  method="post">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Họ Tên</label>
+                                                                <span class="required"> * </span>
+                                                                <input type="text" class="form-control" value="<?php echo $row_thongtin['nv_hoten']; ?>"  name="txtHoTen"/> </div>
+                                                            
+                                                            <div class="form-group">
+                                                                <label class="control-label">Số Điện Thoại</label>
+                                                                <input type="text" class="form-control" value="<?php echo $row_thongtin['nv_sdt']; ?>"  name="txtSDT"/> </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label">Email</label>
+                                                                <input type="text" class="form-control" value="<?php echo $row_thongtin['nv_email']; ?>"  name="txtEmail"/> </div>
+                                                            
+                                                            <div class="margiv-top-10">
+                                                                
+                                                                <button type="submit" class="btn green" name="btnLuuThongTin">Lưu</button>
+                                                                
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- END PERSONAL INFO TAB -->
+                                                    <!-- CHANGE AVATAR TAB -->
+                                                    <div class="tab-pane" id="tab_1_2" >
+                                                        <form action="thong-tin-nguoi-dung.php" role="form" method="post" enctype="multipart/form-data" id="frmUpload">
+                                                            <div class="form-group">
+                                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
+                                                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                                                    <div>
+                                                                        <span class="btn default btn-file">
+                                                                            <span class="fileinput-new"> Select image </span>
+                                                                            <span class="fileinput-exists"> Change </span>
+                                                                            <input type="file" name="avatar"> </span>
+                                                                        <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="clearfix margin-top-10">
+                                                                    <span class="label label-danger">NOTE! </span>
+                                                                    <span>Attached image thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="margin-top-10">
+                                                                <button type="submit" class="btn green" name="btnThayDoiHinh">Thay Đổi</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- END CHANGE AVATAR TAB -->
+                                                    <!-- CHANGE PASSWORD TAB -->
+                                                    <div class="tab-pane" id="tab_1_3" >
+                                                        <form action="thong-tin-nguoi-dung.php" method="post" id="frmMatKhau">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Mật Khẩu Cũ</label>
+                                                                <input type="password" class="form-control" name="txtMatKhauCu" /> </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label">Mật Khẩu Mới</label>
+                                                                <input type="password" class="form-control" name="txtMatKhauMoi" id="password_new"/> </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label">Nhập Lại Mật Khẩu</label>
+                                                                <input type="password" class="form-control" name="txtNhapLaiMatKhau" /> </div>
+                                                            <div class="margin-top-10">
+                                                                <button type="submit" class="btn green" name="btnLuuMatKhau">Thay Đổi Mật Khẩu</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- END CHANGE PASSWORD TAB -->
+                                                    <!-- PRIVACY SETTINGS TAB -->
+                                                    
+                                                    <!-- END PRIVACY SETTINGS TAB -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- END PROFILE CONTENT -->
                         </div>
                     </div>
                     <!-- END PAGE BASE CONTENT -->
@@ -826,7 +907,39 @@ License: You must have a valid license purchased only from themeforest(the above
         <?php require "footer.php"; ?>
         <!-- END FOOTER -->
         <!-- BEGIN QUICK NAV -->
-
+        <nav class="quick-nav">
+            <a class="quick-nav-trigger" href="#0">
+                <span aria-hidden="true"></span>
+            </a>
+            <ul>
+                <li>
+                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" target="_blank" class="active">
+                        <span>Purchase Metronic</span>
+                        <i class="icon-basket"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/reviews/4021469?ref=keenthemes" target="_blank">
+                        <span>Customer Reviews</span>
+                        <i class="icon-users"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://keenthemes.com/showcast/" target="_blank">
+                        <span>Showcase</span>
+                        <i class="icon-user"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://keenthemes.com/metronic-theme/changelog/" target="_blank">
+                        <span>Changelog</span>
+                        <i class="icon-graph"></i>
+                    </a>
+                </li>
+            </ul>
+            <span aria-hidden="true" class="quick-nav-bg"></span>
+        </nav>
+        <div class="quick-nav-overlay"></div>
         <!-- END QUICK NAV -->
         <!--[if lt IE 9]>
 <script src="../public/assets/global/plugins/respond.min.js"></script>
@@ -840,18 +953,19 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <script src="../public/assets/global/scripts/datatable.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
+         <script src="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
-         <script src="../public/assets/pages/scripts/table-datatables-scroller.min.js" type="text/javascript"></script>
-        <!-- <script src="../public/assets/pages/scripts/table-datatables-fixedheader.min.js" type="text/javascript"></script> -->
+        <script src="../public/assets/pages/scripts/profile.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <script src="../public/assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>
@@ -859,6 +973,123 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
         <script src="../public/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
         <!-- END THEME LAYOUT SCRIPTS -->
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#frmThongTin').validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "", // validate all fields including form hidden input
+                    rules: {
+                        txtHoTen: {
+                            required: true
+                        },
+                        txtSDT:{
+                            required: true,
+                            number:true
+                        },
+                        txtEmail:{
+                            required: true,
+                            email:true
+                        }
+                    },
+                    messages:{
+                        txtHoTen: {
+                            required: "Họ tên không được rỗng"
+                        },
+                         txtSDT:{
+                            required: "SĐT không được rỗng",
+                            number:"Nhập Số"
+                        },
+                         txtEmail:{
+                            required: "Email hông được rỗng",
+                            email:"Nhập Email"
+                        }
+                    },
+                    highlight: function(element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function(element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+                    errorPlacement: function(error, element) 
+                    {
+                        if (element.is(':checkbox')) 
+                        {
+                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                        } 
+                        else 
+                        if (element.is(':radio')) {
+                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                        }
+                        else 
+                        {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    }
+                });
+
+                $('#frmMatKhau').validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "", // validate all fields including form hidden input
+                    rules: {
+                        txtMatKhauCu: {
+                            required: true
+                        },
+                        txtMatKhauMoi:{
+                            required: true,
+                  
+                        },
+                        txtNhapLaiMatKhau:{
+                            equalTo: "#password_new"
+                          
+                        }
+                    },
+                    messages:{
+                        txtMatKhauCu: {
+                            required: "Mật khẩu không được rỗng"
+                        },
+                         txtMatKhauMoi:{
+                            required: "Mật khẩu không được rỗng"
+                       
+                        },
+                         txtNhapLaiMatKhau:{
+                            equalTo:"Không trùng khớp",
+                           
+                        }
+                    },
+                    highlight: function(element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function(element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+                    errorPlacement: function(error, element) 
+                    {
+                        if (element.is(':checkbox')) 
+                        {
+                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                        } 
+                        else 
+                        if (element.is(':radio')) {
+                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                        }
+                        else 
+                        {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    }
+                });
+            });
+        </script>
     </body>
 
 </html>
