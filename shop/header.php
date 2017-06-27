@@ -99,21 +99,17 @@
                                                         <i class="icon-user"></i>Thông tin cá nhân </a>
                                                     </li>
                                                     <li>
-                                                        <a href="app_todo_2.html">
-                                                            <i class="icon-rocket"></i> My Tasks
-                                                            <span class="badge badge-success"> 7 </span>
+                                                        <a href="thong-tin-cua-hang.php">
+                                                        <i class="icon-rocket"></i> Cửa hàng
+                                                            <!-- <span class="badge badge-success"></span> -->
                                                         </a>
                                                     </li>
                                                     <li class="divider"> </li>
                                                     <li>
-                                                        <a href="page_user_lock_1.html">
-                                                            <i class="icon-lock"></i> Lock Screen </a>
+                                                        <a href="dang-xuat.php">
+                                                            <i class="icon-key"></i> Log Out </a>
                                                         </li>
-                                                        <li>
-                                                            <a href="dang-xuat.php">
-                                                                <i class="icon-key"></i> Log Out </a>
-                                                            </li>
-                                                        </ul>
+                                                    </ul>
                                                     </li>
                                                     <!-- END USER LOGIN DROPDOWN -->
                                                     <!-- BEGIN QUICK SIDEBAR TOGGLER -->

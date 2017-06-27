@@ -99,85 +99,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         </div>
                         <!-- END PAGE TITLE -->
                         <!-- BEGIN PAGE TOOLBAR -->
-                        <div class="page-toolbar">
-                            <!-- BEGIN THEME PANEL -->
-                            <div class="btn-group btn-theme-panel">
-                                <a href="javascript:;" class="btn dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-settings"></i>
-                                </a>
-                                <div class="dropdown-menu theme-panel pull-right dropdown-custom hold-on-click">
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-4 col-xs-12">
-                                            <h3>HEADER</h3>
-                                            <ul class="theme-colors">
-                                                <li class="theme-color theme-color-default active" data-theme="default">
-                                                    <span class="theme-color-view"></span>
-                                                    <span class="theme-color-name">Dark Header</span>
-                                                </li>
-                                                <li class="theme-color theme-color-light " data-theme="light">
-                                                    <span class="theme-color-view"></span>
-                                                    <span class="theme-color-name">Light Header</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-8 col-sm-8 col-xs-12 seperator">
-                                            <h3>LAYOUT</h3>
-                                            <ul class="theme-settings">
-                                                <li> Theme Style
-                                                    <select class="layout-style-option form-control input-small input-sm">
-                                                        <option value="square">Square corners</option>
-                                                        <option value="rounded" selected="selected">Rounded corners</option>
-                                                    </select>
-                                                </li>
-                                                <li> Layout
-                                                    <select class="layout-option form-control input-small input-sm">
-                                                        <option value="fluid" selected="selected">Fluid</option>
-                                                        <option value="boxed">Boxed</option>
-                                                    </select>
-                                                </li>
-                                                <li> Header
-                                                    <select class="page-header-option form-control input-small input-sm">
-                                                        <option value="fixed" selected="selected">Fixed</option>
-                                                        <option value="default">Default</option>
-                                                    </select>
-                                                </li>
-                                                <li> Top Dropdowns
-                                                    <select class="page-header-top-dropdown-style-option form-control input-small input-sm">
-                                                        <option value="light">Light</option>
-                                                        <option value="dark" selected="selected">Dark</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Mode
-                                                    <select class="sidebar-option form-control input-small input-sm">
-                                                        <option value="fixed">Fixed</option>
-                                                        <option value="default" selected="selected">Default</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Menu
-                                                    <select class="sidebar-menu-option form-control input-small input-sm">
-                                                        <option value="accordion" selected="selected">Accordion</option>
-                                                        <option value="hover">Hover</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Position
-                                                    <select class="sidebar-pos-option form-control input-small input-sm">
-                                                        <option value="left" selected="selected">Left</option>
-                                                        <option value="right">Right</option>
-                                                    </select>
-                                                </li>
-                                                <li> Footer
-                                                    <select class="page-footer-option form-control input-small input-sm">
-                                                        <option value="fixed">Fixed</option>
-                                                        <option value="default" selected="selected">Default</option>
-                                                    </select>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END THEME PANEL -->
-                        </div>
+                      
                         <!-- END PAGE TOOLBAR -->
                     </div>
                     <!-- END PAGE HEAD-->
@@ -214,13 +136,17 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <div class="portlet-body form">
                                                 <!-- BEGIN FORM-->
                                                 <!-- BEGIN Thêm Sản Phẩm -->
-                                                <form class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
+                                                <form id="frmSanPham" class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
                                                     <div class="form-body">
                                                         <div class="alert alert-danger display-hide">
-                                                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. 
+                                                            <button class="close" data-close="alert">
+                                                                
+                                                            </button>  Nhập đầy đủ các trường dữ liệu.
                                                         </div>
                                                         <div class="alert alert-success display-hide">
-                                                            <button class="close" data-close="alert"></button> Your form validation is successful! 
+                                                            <button class="close" data-close="alert">
+                                                                
+                                                            </button> Thêm sản phẩm thành công.
                                                         </div>
                                                         <div class="form-group">
                                                            <label class="col-md-3 control-label">Tên Sản Phẩm
@@ -1005,6 +931,102 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
         <script src="../public/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
         <!-- END THEME LAYOUT SCRIPTS -->
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var form1 = $("#frmSanPham");
+                   var error1 = $('.alert-danger', form1);
+                   var success1 = $('.alert-success', form1);
+                  //  form1.on('submit', function() {
+                  //     for(var instanceName in CKEDITOR.instances) {
+                  //         CKEDITOR.instances[instanceName].updateElement();
+                  //     }
+                  // })
+                   
+                form1.validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "", // validate all fields including form hidden input
+                    rules: {
+                        txtTenSP:{
+                            required:true
+                        },
+                        txtSoLuong:{
+                            required:true,
+                            number:true,
+                            min: 1,
+                        },
+                        txtDonGia:{
+                            required:true,
+                            number:true
+                            
+                        },
+                        txtNoiDung:{
+                            required:true
+                        },    
+                    },
+                    messages: {
+                        txtTenSP: {
+                            required:"Tên sản phẩm không có giá trị rỗng"
+                        },
+                        txtSoLuong:{
+                            required:"Số lượng không có giá trị rỗng",
+                            number:"Nhập số phần trăm",
+                            min:"Ít nhất 1",
+                        },
+                        txtDonGia:{
+                            required:"Đơn giá không có giá trị rỗng",
+                            number:"Nhập Số",
+                        },
+                        txtNoiDung:{
+                            required:"Nội dung không có giá trị rỗng",
+                        }
+                    },
+                       errorPlacement: function(error, element) {
+
+                           if (element.is(':checkbox')) 
+                           {
+                               error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                           } 
+                           else 
+                           if (element.is(':radio')) {
+                               error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                           }
+                           else 
+                           {
+                               error.insertAfter(element); // for other inputs, just perform default behavior
+                           }
+                            // console.log(error);
+                           // console.log(element);
+                        
+                           // var i=$(element).parent(".input-group");
+                           // i?i.after(error):element.after(error);
+                       },
+                       invalidHandler: function(event, validator) { //display error alert on form submit              
+                           success1.hide();
+                           error1.show();
+                           App.scrollTo(error1, -200);
+                       },
+                       highlight: function(element) { // hightlight error inputs
+                           $(element)
+                               .closest('.form-group').addClass('has-error'); // set error class to the control group
+                       },
+
+                       unhighlight: function(element) { // revert the change done by hightlight
+                           $(element)
+                               .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                       },
+                       submitHandler: function(form,e) {
+                         e.preventDefault();
+                         success1.show();
+                         success1.slideUp(5000);
+                         error1.hide();
+                         form.submit();
+                         
+                       }
+                }); 
+            });
+        </script>
     </body>
 </html>
 <?php require "bottom.php"; ?>

@@ -1,19 +1,14 @@
 <?php 
-     require "top.php";
-     require "func_shop/func_sanpham.php";
-     if(isset($_GET['idSP']) && !empty($_GET['idSP']))
-     {
-        if(xoaSanPham($_GET['idSP'])==true)
-        {
-            echo '<script>alert("Xóa Thành Công");</script>';
-        }
-        else
-        {
-            echo '<script>alert("Xóa Thất Bại");</script>';
-        }
-       
-     }
-
+    require "top.php";
+    require "func_shop/func_nhacungcap.php";
+    if(!isset($_GET['idNCC']))
+    {
+        header('location:../shop/danh-sach-nha-cung-cap.php');
+    }
+    if(isset($_POST['btnCapNhat']) && !empty($_GET['idNCC']))
+    {
+        capNhatNhaCungCap($_GET['idNCC'],$_POST['txtTenNCC'],$_POST['txtDiaChi'],$_POST['txtSDT'],$_POST['txtEmail']);
+    }
  ?>
 <!DOCTYPE html>
 <!-- 
@@ -38,10 +33,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | FixedHeader Extension</title>
+        <title>Metronic Admin Theme #4 | Form Layouts</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
+        <meta content="Preview page of Metronic Admin Theme #4 for form layouts" name="description" />
         <meta content="" name="author" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -49,14 +44,30 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="../public/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+       
         <!-- END GLOBAL MANDATORY STYLES -->
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <link href="../public/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+        <!-- BEGIN PAGE LEVEL PLUGINS Mới -->
+        <!-- BEHIN Select -->
+        <link href="../public/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!-- END   Select -->
+        <!-- BEGIN UP FILE HÌNH -->
+          <link href="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+          <!--END UP FILE HÌNH   -->
+        <link href="../public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css" />
+        <!-- BEGIN SỐ -->
+        <link href="../public/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.css" rel="stylesheet" type="text/css" />
+        <!-- END SỐ -->
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="../public/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
         <link href="../public/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+	
         <!-- END THEME GLOBAL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <link href="../public/assets/layouts/layout4/css/layout.min.css" rel="stylesheet" type="text/css" />
@@ -86,7 +97,8 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>Quản Lý Sản Phẩm
+                            <h1>Nhà Cung Cấp
+                                
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
@@ -180,92 +192,95 @@ License: You must have a valid license purchased only from themeforest(the above
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <span class="active">Danh Sách Sản Phẩm</span>
+                            <span class="active">Thêm Nhà Cung Cấp</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
                     <!-- BEGIN PAGE BASE CONTENT -->
+                    
                     <div class="row">
                         <div class="col-md-12">
-                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <div class="portlet light bordered">
-                                <div class="portlet-title">
-                                    <div class="caption font-red">
-                                        <i class="icon-settings font-red"></i>
-                                        <span class="caption-subject bold uppercase">Danh Sách Sản Phẩm</span>
-                                    </div>
-                                    <div class="tools"> </div>
-                                </div>
-                                <div class="portlet-body table-both-scroll">
-                                    <table class="table table-striped table-bordered table-hover order-column" id="sample_4">
-                                        <thead>
-                                            <tr>
-                                                <th>Tên Sản Phẩm </th>
-                                                <th>Hình</th>
-                                                <th>Giá (VND)</th>
-                                                <th>Hãng</th>
-                                                <th>Loại</th>
-                                                <th>Nhà Cung Cấp</th>
-                                                <th>Trạng Thái</th>
-                                                <th>Thao Tác</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php 
-                                        $sanpham=danhSachSanPham($cuaHang);
-                                        while ($row_sp=$sanpham->fetch_assoc()) 
-                                        {
-                                            $masp=$row_sp['sp_ma'];
-                                            $tensp=$row_sp['sp_ten']; 
-                                            $hinhdaidien= "..".$row_sp['sp_hinhdaidien'];
-                                            $dongiasp=number_format($row_sp['sp_dongia'],0,'.','.')." VND";
-                                            $loai=$row_sp['lsp_ten'];
-                                            $hang=$row_sp['hsx_ten']; 
-                                            $nhacungcap=$row_sp['ncc_ten'];
-                                            $khuyenmai=$row_sp['sp_makhuyenmai'];
-                                             //xử lý ngày
-                                            $ngayhientai=strtotime(date("Y-m-d"));
-                                            $ngaydang=$row_sp['sp_ngaydang'];
-                                            $ngayketiep=strtotime(date("Y-m-d", strtotime($ngaydang)) . " +7 day");
-                                             // $date=date("Y-m-d",$ngayketiep);
-                                        
-                                        ?>
-                                            <tr>
-                                                <td><?php echo $tensp; ?></td>
-                                                <td style="width:15%">
-                                                <img src="<?php echo $hinhdaidien;?>" class="img-rounded" alt="" style="width:100%">
-                                                </td>
-                                                <td><?php echo $dongiasp; ?></td>
-                                                <td><?php echo $hang; ?></td>
-                                                <td><?php echo $loai; ?></td>
-                                                <td><?php echo $nhacungcap; ?></td>
-                                                <td>
+                            <div class="tabbable-line boxless tabbable-reversed">
+                              
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_0">
+                                        <div class="portlet box green">
+                                            <div class="portlet-title">
+                                                <div class="caption">
+                                                    <i class="fa fa-gift"></i>
+                                                    Thêm Nhà Cung Cấp
+                                                </div>
+                                                <div class="tools">
+                                                    <a href="javascript:;" class="collapse"> </a>
+                        
+                                                </div>
+                                            </div>
+                                            <div class="portlet-body form">
+                                                <!-- BEGIN FORM-->
+                                                <!-- BEGIN -->
                                                 <?php 
-                                                    if($khuyenmai!="")
-                                                        echo '<span class="label label-sm label-warning"> Khuyến mãi </span><br>';
-                                                    if($ngayhientai<=$ngayketiep)
-                                                        echo ' <span class="label label-sm label-success"> Mới </span>';
-                                                 ?>
-                                                </td>
-                                                <td>
-                                                   <a href="" class="btn red btn-outline uppercase"> 
-                                                        <i class="glyphicon glyphicon-picture"></i>
-                                                    </a> 
-                                                    <a href="cap-nhat-san-pham.php?idSP=<?php echo $masp; ?>" class="btn blue btn-outline uppercase"> 
-                                                        <i class="icon-wrench"></i>
-                                                    </a><br>
-                                                    <a href="?idSP=<?php echo $masp; ?>" class="btn dark btn-outline uppercase"> 
-                                                        <i class="icon-trash"></i>
-                                                    </a> 
-                                                </td>
-                                                
-                                               
-                                            </tr>
-                                        <?php 
-                                        }
-                                        ?>
-                                        </tbody>
-                                    </table>
+                                                    $nhacungcap=layNhaCungCapTheoID($_GET['idNCC']);
+                                                    $row_ncc=$nhacungcap->fetch_assoc();
+                                                    $ten=$row_ncc['ncc_ten'];
+                                                    $diachi=$row_ncc['ncc_diachi'];
+                                                    $sdt=$row_ncc['ncc_sdt'];
+                                                    $email=$row_ncc['ncc_email'];
+                                                ?>
+                                                <form id="frmNhaCungCap" class="form-horizontal form-bordered" method="post">
+                                                    <div class="form-body">
+                                                        <div class="alert alert-danger display-hide">
+                                                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. 
+                                                        </div>
+                                                        <div class="alert alert-success display-hide">
+                                                            <button class="close" data-close="alert"></button> Your form validation is successful! 
+                                                        </div>
+                                                        <div class="form-group">
+                                                           <label class="col-md-3 control-label">Tên Nhà Cung Cấp
+                                                               <span class="required"> * </span>
+                                                           </label>
+                                                           <div class="col-md-4">
+                                                            <input value="<?php echo $ten;?>" type="text" class="form-control" name="txtTenNCC" placeholder="Tên Nhà Cung Cấp">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                     <label class="col-md-3 control-label">Địa Chỉ
+                                                         <span class="required"> * </span>
+                                                     </label>
+                                                     <div class="col-md-4">
+                                                        <input type="text" value="<?php echo $diachi;?>" class="form-control" name="txtDiaChi" placeholder="Địa Chỉ">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Số Điện Thoại
+                                                        <span class="required"> * </span>
+                                                    </label>
+                                                    <div class="col-md-4">
+                                                        <!-- id="touchspin_3" -->
+                                                        <input type="text" name="txtSDT" value="<?php echo $sdt;?>" class="form-control" placeholder="Số Điện Thoại"> 
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                     <label class="col-md-3 control-label">Email
+                                                         <span class="required"> * </span>
+                                                     </label>
+                                                     <div class="col-md-4">
+                                                        <input type="text" class="form-control" value="<?php echo $email;?>" name="txtEmail" placeholder="Email">
+                                                    </div>
+                                                </div>
+                                                <div class="form-actions">
+                                                    <div class="row">
+                                                        <div class="col-md-offset-3 col-md-9">
+                                                            <button type="submit" class="btn green" name="btnCapNhat">Cập Nhật Nhà Cung Cấp</button>
+                                                            <!--  <button type="button" class="btn btn-circle grey-salsa btn-outline">Cancel</button> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!-- END Thêm Sản Phẩm -->
+                                                <!-- END FORM-->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -842,7 +857,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <?php require "footer.php"; ?>
         <!-- END FOOTER -->
         <!-- BEGIN QUICK NAV -->
-
+        
         <!-- END QUICK NAV -->
         <!--[if lt IE 9]>
 <script src="../public/assets/global/plugins/respond.min.js"></script>
@@ -857,17 +872,47 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <script src="../public/assets/global/scripts/datatable.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+        <!-- BEGIN PAGE LEVEL PLUGINS Mới-->
+        <!--  -->
+         <script src="../public/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+        <!--  -->
+        <script src="../public/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+        <!-- BEGIN FILE UP HÌNH -->
+        <script src="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+        <!-- END FILE UP HÌNH -->
+        <!-- BEGIN CKEDITOR-->
+        <script src="../public/ck/ckeditor/ckeditor.js" type="text/javascript"></script>
+        <!-- END CKEDITOR -->
+        <!--  -->
+        <!-- <script src="../public/assets/global/plugins/bootstrap-markdown/lib/markdown.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js" type="text/javascript"></script> -->
+        <!--  -->
+        <script src="../public/assets/global/plugins/moment.min.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>
+        <!-- BEGIN SỐ -->
+        <script src="../public/assets/global/plugins/fuelux/js/spinner.min.js" type="text/javascript">
+             
+        </script>
+        <script src="../public/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript">
+            
+        </script>
+        <!-- END SỐ -->
+
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
-        <!-- BEGIN PAGE LEVEL SCRIPTS -->
-         <script src="../public/assets/pages/scripts/table-datatables-scroller.min.js" type="text/javascript"></script>
-        <!-- <script src="../public/assets/pages/scripts/table-datatables-fixedheader.min.js" type="text/javascript"></script> -->
+        <!-- BEGIN PAGE LEVEL SCRIPTS Mới-->
+        <!--  -->
+         <script src="../public/assets/pages/scripts/components-select2.min.js" type="text/javascript"></script>
+        <!--  -->
+        <script src="../public/assets/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
+        <script src="../public/assets/pages/scripts/form-samples.min.js" type="text/javascript"></script>
+        <script src="../public/assets/pages/scripts/components-bootstrap-touchspin.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <script src="../public/assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>
@@ -875,7 +920,80 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
         <script src="../public/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
         <!-- END THEME LAYOUT SCRIPTS -->
-    </body>
+        <script type="text/javascript">
+        $(document).ready(function(){
+            var form1 = $("#frmNhaCungCap");
+            var error1 = $('.alert-danger', form1);
+            var success1 = $('.alert-success', form1);
+           
 
+           form1.validate({
+             errorElement: 'span', //default input error message container
+             errorClass: 'help-block help-block-error', // default input error message class
+             focusInvalid: false, // do not focus the last invalid input
+             ignore: "", // validate all fields including form hidden input
+             rules: {
+                txtEmail:{
+                    required:true,
+                    email:true
+                },
+                txtSDT:{
+                    required:true,
+                    number:true
+                },
+                txtDiaChi:{
+                    required:true
+                },
+                txtTenNCC:{
+                    required:true
+                }
+             },
+             errorPlacement: function(error, element) {
+
+                 // if (element.is(':checkbox')) 
+                 // {
+                 //     error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                 // } 
+                 // else 
+                 // if (element.is(':radio')) {
+                 //     error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                 // }
+                 // else 
+                 // {
+                 //     error.insertAfter(element); // for other inputs, just perform default behavior
+                 // }
+                  // console.log(error);
+                 // console.log(element);
+              
+                 // var i=$(element).parent(".input-group");
+                 // i?i.after(error):element.after(error);
+             },
+             invalidHandler: function(event, validator) { //display error alert on form submit              
+                 success1.hide();
+                 error1.show();
+                 App.scrollTo(error1, -200);
+             },
+             highlight: function(element) { // hightlight error inputs
+                 $(element)
+                     .closest('.form-group').addClass('has-error'); // set error class to the control group
+             },
+
+             unhighlight: function(element) { // revert the change done by hightlight
+                 $(element)
+                     .closest('.form-group').removeClass('has-error'); // set error class to the control group
+             },
+
+             submitHandler: function(form) {
+                success1.show().slideUp(5000);
+                error1.hide();
+                form.submit();
+                
+
+                               
+             }
+           }); 
+        });
+        </script>
+    </body>
 </html>
 <?php require "bottom.php"; ?>

@@ -1,0 +1,61 @@
+<?php 
+require_once "../config/connectionstring.php";
+function soLuongSanPham($cuaHang)
+{
+	$conn=connect();
+	$sql="SELECT count(*) as soluong 
+		FROM sanpham
+		WHERE sp_macuahang=$cuaHang AND sp_trangthai=1";
+	$result=$conn->query($sql);
+	$r=$result->fetch_assoc();
+	return $r['soluong'];
+}
+function soLuongDonHang($cuaHang)
+{
+	$conn=connect();
+	$sql = "SELECT count(*) as soluong
+	FROM hoadon
+	WHERE hd_cuahang=$cuaHang AND hd_trangthai=1";
+	$result = $conn->query($sql);
+	$row=$result->fetch_assoc();
+	return $row['soluong'];
+}
+function demSoLuongKhuyenMai($cuaHang)
+{
+	$conn=connect();
+	$sql = "SELECT count(*) as soluong
+	FROM khuyenmai
+	WHERE 
+	km_trangthai=1 And km_magianhang=$cuaHang";
+	$result = $conn->query($sql);
+	$row=$result->fetch_assoc();
+	mysqli_free_result($result);
+	return $row['soluong'];
+}
+function capNhatTrangThaiSanPhamKhuyenMai()
+{
+	$conn=connect();
+	$sql="
+		UPDATE
+		  sanpham,
+		  khuyenmai
+		SET 
+			sp_makhuyenmai=NULL
+		WHERE
+		  sp_makhuyenmai = km_ma And km_trangthai=2";
+
+	$conn->query($sql);
+}
+function capNhatTrangThaiKhuyenMai()
+{
+	$conn=connect();
+	$sql = "UPDATE khuyenmai 
+		SET km_trangthai=2 
+		WHERE km_trangthai=1 
+		And km_ngayketthuc<CURDATE()";
+	if($conn->query($sql)===true)
+	{
+		capNhatTrangThaiSanPhamKhuyenMai();
+	}
+}
+?>

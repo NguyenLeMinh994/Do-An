@@ -1,8 +1,10 @@
 <?php 
     require "top.php";
-    require "func_shop/func_khuyenmai.php";
+    require "func_shop/func_trangchu.php";
     capNhatTrangThaiKhuyenMai();
     $soLuongKhuyenMai=demSoLuongKhuyenMai($cuaHang);
+    $soluongdonhang=soLuongDonHang($cuaHang);
+    $soluongsanpham=soLuongSanPham($cuaHang);
 ?>
 
 <!DOCTYPE html>
@@ -78,8 +80,8 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>Admin Dashboard 2
-                                <small>statistics, charts, recent events and reports</small>
+                            <h1>
+                            Trang Chủ Admin
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
@@ -90,13 +92,9 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!-- END PAGE HEAD-->
                     <!-- BEGIN PAGE BREADCRUMB -->
                     <ul class="page-breadcrumb breadcrumb">
-                        <li>
-                            <a href="index.html">Home</a>
-                            <i class="fa fa-circle"></i>
-                        </li>
-                        <li>
-                            <span class="active">Dashboard</span>
-                        </li>
+                       <!--  <li>
+                            <span class="active">Trang Chủ </span>
+                        </li> -->
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
                     <!-- BEGIN PAGE BASE CONTENT -->
@@ -108,7 +106,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        <span data-counter="counterup" data-value="1349">0</span>
+                                        <span data-counter="counterup" data-value="<?php echo $soluongsanpham; ?>"></span>
                                     </div>
                                     <div class="desc">Sản Phẩm</div>
                                 </div>
@@ -133,7 +131,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        <span data-counter="counterup" data-value="549">0</span>
+                                    
+                                        <span data-counter="counterup" data-value="<?php echo $soluongdonhang; ?>"></span>
                                     </div>
                                     <div class="desc"> Đơn Hàng </div>
                                 </div>
@@ -146,7 +145,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <div class="details">
                                     <div class="number"> +
-                                        <span data-counter="counterup" data-value="89"></span>% </div>
+                                        <span data-counter="counterup" data-value="89"></span></div>
                                     <div class="desc"> Bình Luận </div>
                                 </div>
                             </a>
@@ -166,39 +165,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <?php require "footer.php"; ?>
         <!-- END FOOTER -->
         <!-- BEGIN QUICK NAV -->
-        <nav class="quick-nav">
-            <a class="quick-nav-trigger" href="#0">
-                <span aria-hidden="true"></span>
-            </a>
-            <ul>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" target="_blank" class="active">
-                        <span>Purchase Metronic</span>
-                        <i class="icon-basket"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/reviews/4021469?ref=keenthemes" target="_blank">
-                        <span>Customer Reviews</span>
-                        <i class="icon-users"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/showcast/" target="_blank">
-                        <span>Showcase</span>
-                        <i class="icon-user"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/metronic-theme/changelog/" target="_blank">
-                        <span>Changelog</span>
-                        <i class="icon-graph"></i>
-                    </a>
-                </li>
-            </ul>
-            <span aria-hidden="true" class="quick-nav-bg"></span>
-        </nav>
-        <div class="quick-nav-overlay"></div>
+     
         <!-- END QUICK NAV -->
         <!--[if lt IE 9]>
 <script src=".../public/assets/global/plugins/respond.min.js"></script>

@@ -1,20 +1,12 @@
-<?php 
-     require "top.php";
-     require "func_shop/func_sanpham.php";
-     if(isset($_GET['idSP']) && !empty($_GET['idSP']))
-     {
-        if(xoaSanPham($_GET['idSP'])==true)
-        {
-            echo '<script>alert("Xóa Thành Công");</script>';
-        }
-        else
-        {
-            echo '<script>alert("Xóa Thất Bại");</script>';
-        }
-       
-     }
-
- ?>
+<?php  
+    require "top.php";
+    require "func_shop/func_donhang.php";
+    if(isset($_GET['idDH']))
+    {
+        khoiPhucDonHang($_GET['idDH']);
+    }
+      
+?>
 <!DOCTYPE html>
 <!-- 
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.7
@@ -86,7 +78,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>Quản Lý Sản Phẩm
+                            <h1>Quản Lý Đơn Hàng
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
@@ -180,7 +172,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <span class="active">Danh Sách Sản Phẩm</span>
+                            <span class="active">Danh Sách Đơn Hàng</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
@@ -188,88 +180,91 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <div class="portlet light bordered">
+                          
+                            <!-- END EXAMPLE TABLE PORTLET-->
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <div class="portlet box red">
                                 <div class="portlet-title">
-                                    <div class="caption font-red">
-                                        <i class="icon-settings font-red"></i>
-                                        <span class="caption-subject bold uppercase">Danh Sách Sản Phẩm</span>
+                                    <div class="caption">
+                                        <i class="fa fa-globe"></i>
+                                    Danh Sách Đơn Hàng
                                     </div>
-                                    <div class="tools"> </div>
+                                    <div class="actions">
+                                        
+                                    </div>
                                 </div>
-                                <div class="portlet-body table-both-scroll">
-                                    <table class="table table-striped table-bordered table-hover order-column" id="sample_4">
+                                <div class="portlet-body">
+                                    <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th>Tên Sản Phẩm </th>
-                                                <th>Hình</th>
-                                                <th>Giá (VND)</th>
-                                                <th>Hãng</th>
-                                                <th>Loại</th>
-                                                <th>Nhà Cung Cấp</th>
-                                                <th>Trạng Thái</th>
-                                                <th>Thao Tác</th>
+                                                <th> Số Đơn Hàng </th>
+                                                <th> Tên Khách Hàng </th>
+                                                <th> Tổng Tiền  </th>
+                                                <th> Trạng Thái </th>
+                                                <th> Thao Tác</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                        <?php 
-                                        $sanpham=danhSachSanPham($cuaHang);
-                                        while ($row_sp=$sanpham->fetch_assoc()) 
-                                        {
-                                            $masp=$row_sp['sp_ma'];
-                                            $tensp=$row_sp['sp_ten']; 
-                                            $hinhdaidien= "..".$row_sp['sp_hinhdaidien'];
-                                            $dongiasp=number_format($row_sp['sp_dongia'],0,'.','.')." VND";
-                                            $loai=$row_sp['lsp_ten'];
-                                            $hang=$row_sp['hsx_ten']; 
-                                            $nhacungcap=$row_sp['ncc_ten'];
-                                            $khuyenmai=$row_sp['sp_makhuyenmai'];
-                                             //xử lý ngày
-                                            $ngayhientai=strtotime(date("Y-m-d"));
-                                            $ngaydang=$row_sp['sp_ngaydang'];
-                                            $ngayketiep=strtotime(date("Y-m-d", strtotime($ngaydang)) . " +7 day");
-                                             // $date=date("Y-m-d",$ngayketiep);
-                                        
-                                        ?>
-                                            <tr>
-                                                <td><?php echo $tensp; ?></td>
-                                                <td style="width:15%">
-                                                <img src="<?php echo $hinhdaidien;?>" class="img-rounded" alt="" style="width:100%">
-                                                </td>
-                                                <td><?php echo $dongiasp; ?></td>
-                                                <td><?php echo $hang; ?></td>
-                                                <td><?php echo $loai; ?></td>
-                                                <td><?php echo $nhacungcap; ?></td>
-                                                <td>
-                                                <?php 
-                                                    if($khuyenmai!="")
-                                                        echo '<span class="label label-sm label-warning"> Khuyến mãi </span><br>';
-                                                    if($ngayhientai<=$ngayketiep)
-                                                        echo ' <span class="label label-sm label-success"> Mới </span>';
-                                                 ?>
-                                                </td>
-                                                <td>
-                                                   <a href="" class="btn red btn-outline uppercase"> 
-                                                        <i class="glyphicon glyphicon-picture"></i>
-                                                    </a> 
-                                                    <a href="cap-nhat-san-pham.php?idSP=<?php echo $masp; ?>" class="btn blue btn-outline uppercase"> 
-                                                        <i class="icon-wrench"></i>
-                                                    </a><br>
-                                                    <a href="?idSP=<?php echo $masp; ?>" class="btn dark btn-outline uppercase"> 
-                                                        <i class="icon-trash"></i>
-                                                    </a> 
-                                                </td>
-                                                
-                                               
+                                        <tfoot>
+                                           <tr>
+                                                <th> Số Đơn Hàng </th>
+                                                <th> Tên Khách Hàng </th>
+                                                <th> Tổng Tiền </th>
+                                                <th> Trạng Thái </th>
+                                                <th> Thao Tác</th>
                                             </tr>
-                                        <?php 
+                                        </tfoot>
+                                        <tbody>
+                                            <?php  
+                                            $donHang=danhSachDonHangBiHuy($cuaHang);
+                                            while($row_donhang=$donHang->fetch_assoc())
+                                            {
+
+                                                $mahd=$row_donhang['hd_ma'];
+                                                ?>
+                                                <tr>
+                                                    <td> <?php echo $mahd; ?> </td>
+                                                    <td> <?php echo $row_donhang['kh_hoten']; ?> </td>
+                                                    <td> <?php echo number_format($row_donhang['hd_tongtien']); ?> VNĐ</td>
+                                                    <td> 
+                                                        <!-- <span class="label label-danger"> Danger </span> -->
+                                                        <?php  
+                                                        if($row_donhang['hd_trangthai']==1)
+                                                        {
+                                                           echo '<span class="badge badge-info badge-roundless"> Chưa Giao </span>'; 
+                                                        }
+                                                        else
+                                                            if($row_donhang['hd_trangthai']==2)
+                                                            {
+                                                                echo '<span class="badge badge-warning badge-roundless"> Đang Giao </span>';
+                                                            }
+                                                            else
+                                                                echo '<span class="badge badge-success badge-roundless"> Đã Giao </span>';    
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                 <a href='chi-tiet-don-hang.php?idHD=<?php echo $mahd; ?>' class='btn dark btn-outline uppercase'> 
+                                                    Xem
+                                                </a>
+                                                <a href='?idDH=<?php echo $mahd; ?>' class='btn red btn-outline uppercase'> 
+                                                    Khôi Phục
+                                                </a>
+                                                </td>
+                                            </tr>
+                                            <?php  
                                         }
                                         ?>
+                                                                                
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                            <!-- END EXAMPLE TABLE PORTLET-->
+                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                             
+                            <!-- END EXAMPLE TABLE PORTLET-->
                         </div>
                     </div>
+                   
                     <!-- END PAGE BASE CONTENT -->
                 </div>
                 <!-- END CONTENT BODY -->
@@ -839,10 +834,17 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
-        <?php require "footer.php"; ?>
+        <div class="page-footer">
+            <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
+                <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
+                <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
+            </div>
+            <div class="scroll-to-top">
+                <i class="icon-arrow-up"></i>
+            </div>
+        </div>
         <!-- END FOOTER -->
         <!-- BEGIN QUICK NAV -->
-
         <!-- END QUICK NAV -->
         <!--[if lt IE 9]>
 <script src="../public/assets/global/plugins/respond.min.js"></script>
@@ -866,8 +868,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
-         <script src="../public/assets/pages/scripts/table-datatables-scroller.min.js" type="text/javascript"></script>
-        <!-- <script src="../public/assets/pages/scripts/table-datatables-fixedheader.min.js" type="text/javascript"></script> -->
+        <script src="../public/assets/pages/scripts/table-datatables-fixedheader.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <script src="../public/assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>

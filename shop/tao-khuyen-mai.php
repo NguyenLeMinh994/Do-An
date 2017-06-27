@@ -238,7 +238,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <div class="portlet-body form">
                                                 <!-- BEGIN FORM-->
                                                 <!-- id="frmTaoKhuyenMai" -->
-                                                <form action="tao-khuyen-mai.php" id="frmTaoKhuyenMai" class="form-horizontal form-bordered" method="post">
+                                                <form action="#" id="frmTaoKhuyenMai" class="form-horizontal form-bordered" method="post">
                                                     <div class="form-body">
                                                         <div class="alert alert-danger display-hide">
                                                             <button class="close" data-close="alert"></button> Kiểm tra lại các trường dữ liệu. 

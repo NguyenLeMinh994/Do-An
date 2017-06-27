@@ -1,31 +1,46 @@
 <?php 
 require "../config/connectionstring.php";
-	function capNhatTrangThaiSanPhamKhuyenMai()
-	{
-		$conn=connect();
-		$sql="
-			UPDATE
-			  sanpham,
-			  khuyenmai
-			SET 
-				sp_makhuyenmai=NULL
-			WHERE
-			  sp_makhuyenmai = km_ma And km_trangthai=2";
+	// function capNhatTrangThaiSanPhamKhuyenMai()
+	// {
+	// 	$conn=connect();
+	// 	$sql="
+	// 		UPDATE
+	// 		  sanpham,
+	// 		  khuyenmai
+	// 		SET 
+	// 			sp_makhuyenmai=NULL
+	// 		WHERE
+	// 		  sp_makhuyenmai = km_ma And km_trangthai=2";
 
-		$conn->query($sql);
-	}
-	function capNhatTrangThaiKhuyenMai()
-	{
-		$conn=connect();
-		$sql = "UPDATE khuyenmai 
-			SET km_trangthai=2 
-			WHERE km_trangthai=1 
-			And km_ngayketthuc<CURDATE()";
-		if($conn->query($sql)===true)
-		{
-			capNhatTrangThaiSanPhamKhuyenMai();
-		}
-	}
+	// 	$conn->query($sql);
+	// }
+	// function capNhatTrangThaiKhuyenMai()
+	// {
+	// 	$conn=connect();
+	// 	$sql = "UPDATE khuyenmai 
+	// 		SET km_trangthai=2 
+	// 		WHERE km_trangthai=1 
+	// 		And km_ngayketthuc<CURDATE()";
+	// 	if($conn->query($sql)===true)
+	// 	{
+	// 		capNhatTrangThaiSanPhamKhuyenMai();
+	// 	}
+	// }
+
+
+	// function demSoLuongKhuyenMai($cuaHang)
+	// {
+	// 	$conn=connect();
+	// 	$sql = "SELECT count(*) as soluong
+	// 			FROM khuyenmai
+	// 			WHERE 
+	// 				km_trangthai=1 And km_magianhang=$cuaHang";
+	// 	$result = $conn->query($sql);
+	// 	$row=$result->fetch_assoc();
+	// 	 mysqli_free_result($result);
+	// 	return $row['soluong'];
+	// }
+
 	function taoKhuyenMai($tenKhuyenMai,$phanTram,$ngayBatDau,$ngayKetThuc,$cuaHang)
 	{
 		$conn=connect();
@@ -49,7 +64,8 @@ require "../config/connectionstring.php";
 		{
 		    return true;
 		} 
-		return false;
+		else
+			return false;
 	}
 
 	function danhSachKhuyenMai($cuaHang)
@@ -124,18 +140,7 @@ require "../config/connectionstring.php";
 		return $conn->query($sql);
 	}
 
-	function demSoLuongKhuyenMai($cuaHang)
-	{
-		$conn=connect();
-		$sql = "SELECT count(*) as soluong
-				FROM khuyenmai
-				WHERE 
-					km_trangthai=1 And km_magianhang=$cuaHang";
-		$result = $conn->query($sql);
-		$row=$result->fetch_assoc();
-		 mysqli_free_result($result);
-		return $row['soluong'];
-	}
+
 
 	function danhSachSanPhamKhuyenMai($cuaHang)
 	{

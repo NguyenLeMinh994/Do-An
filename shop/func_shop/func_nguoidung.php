@@ -75,13 +75,13 @@
 				WHERE nv_ma=$maNV";
 		if($conn->query($sql)===true)
 		{
+			$_SESSION['NV']['HoTen']=$hoTen;
 			echo "<script>alert('Lưu Thông Tin Thành Công');</script>";
 		}
 		else
 		{
 			echo "<script>alert('Thất Bại: Kiểm Tra Lại Thông Tin');</script>";
 		}
-
 	}
 
 	function thayDoiMatKhau($maNV,$matKhauCu,$matKhauMoi)
@@ -101,6 +101,7 @@
 				WHERE nv_ma=$maNV";
 			if($conn->query($sql)==true)
 			{
+
 				echo "<script>alert('Thành Công: Cập Nhật Mật Khẩu Mới');</script>";
 			}
 			else
@@ -119,7 +120,7 @@
 				FROM nhanvien
 				WHERE nv_ma=$maNV";
 		$result = $conn->query($sql);
-		/*
+		
 		if($result->num_rows >0)
 		{
 			$row_thongtin=$result->fetch_assoc();
@@ -161,8 +162,10 @@
 			       $sql= "UPDATE nhanvien
 			       		SET nv_duongdanhinh='$target_file'
 			       		WHERE nv_ma=$maNV";
+			       	
 			       	if($conn->query($sql)===true)
 			       	{
+			       		$_SESSION['NV']['URL']=$target_file;
 			       		echo "<script>alert('Thành Công: Thay Đổi Hình');</script>";
 			       	}
 			   } 
@@ -172,11 +175,8 @@
 			   }
 			
 			} 
-
-		}
-		*/
-		
-		
+		}	
 	}
 
+	
 ?>
