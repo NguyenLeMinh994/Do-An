@@ -100,7 +100,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!-- BEGIN PAGE BASE CONTENT -->
                      <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                            <a class="dashboard-stat dashboard-stat-v2 blue" href="danh-sach-san-pham.php">
                                 <div class="visual">
                                     <i class="fa fa-comments"></i>
                                 </div>
@@ -125,7 +125,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                            <a class="dashboard-stat dashboard-stat-v2 green" href="danh-sach-don-hang.php">
                                 <div class="visual">
                                     <i class="fa fa-shopping-cart"></i>
                                 </div>

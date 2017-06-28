@@ -155,8 +155,8 @@ require "../config/connectionstring.php";
 	{
 		$conn=connect();
 		$sql = "SELECT * 
-				FROM sanpham
-				WHERE sp_makhuyenmai IS NULL And sp_trangthai=1 And sp_macuahang=$cuaHang";
+				FROM sanpham,loaisanpham,hangsanxuat
+				WHERE sp_makhuyenmai IS NULL And sp_trangthai=1 And sp_macuahang=$cuaHang AND (sp_loaisanpham=lsp_ma AND sp_hangsanxuat=hsx_ma)";
 		return $conn->query($sql);
 	}
 	function chonSanPhamKhuyenMai($maKhuyenMai,$maSanPham,$cuaHang)

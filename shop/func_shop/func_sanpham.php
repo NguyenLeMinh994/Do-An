@@ -7,7 +7,7 @@ function uploadimage($files,$tenSP)
 
 		$date=date('d-m-Y');
 		$newName=$date.'-'.$tenSP.'.'.pathinfo($files["name"],PATHINFO_EXTENSION);
-		$target_dir = "/public/upload/image/";
+		$target_dir = "/public/upload/img/";
 		$path = $target_dir . basename($newName);
 		$uploadOk = true;
 		$size=5*1024*1024;
@@ -50,11 +50,12 @@ function uploadimage($files,$tenSP)
 	else
 		return false;
 }
-function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong,$cuaHang)
+function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong,$cauHinh,$cuaHang)
 {	
 	$conn=connect();
 	//chuyễn đổi chuỗi html
 	$nd=$conn->real_escape_string($noiDung);
+	$cauhinh=$conn->real_escape_string($cauHinh);
 	$date=date("Y-m-d");
 	$tenkhongdau=to_slug($tenSP);
 	$path_Hinh=uploadimage($files,$tenkhongdau);
@@ -64,8 +65,8 @@ function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong,$
 	}
 	else
 	{
-		$sql="INSERT INTO sanpham(sp_macuahang,sp_loaisanpham,sp_hangsanxuat,sp_nhacungcap,sp_ten,sp_tenkhongdau,sp_hinhdaidien,sp_noidung,sp_soluong,sp_dongia,sp_xemnhieunhat,sp_ngaydang,sp_trangthai)
-		VALUES ($cuaHang,$loaiSP,$hsx,$ncc,'$tenSP','$tenkhongdau','$path_Hinh','$nd',$soLuong,$donGia,0,'$date',1)
+		$sql="INSERT INTO sanpham(sp_macuahang,sp_loaisanpham,sp_hangsanxuat,sp_nhacungcap,sp_ten,sp_tenkhongdau,sp_hinhdaidien,sp_noidung,sp_soluong,sp_dongia,sp_xemnhieunhat,sp_ngaydang,sp_trangthai,sp_cauhinh)
+		VALUES ($cuaHang,$loaiSP,$hsx,$ncc,'$tenSP','$tenkhongdau','$path_Hinh','$nd',$soLuong,$donGia,0,'$date',1,'$cauhinh')
 		";
 		if ($conn->query($sql) === TRUE) 
 		{	
@@ -77,21 +78,19 @@ function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong,$
 			{
 				echo '<script>alert("Thêm Sản Phẩm Thành Công");</script>';
 			}
-			
 		} 
 		else 
 		{
 			echo '<script>alert("Thêm Sản Phẩm Thất Bại");</script>';
 		}
 	}
-	
-	
 }
 // ----------------------------------------------------------------
-function capNhatSanPham($idSP,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong)
+function capNhatSanPham($idSP,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong,$cauHinh)
 {
 	$conn=connect();
 	$nd=$conn->real_escape_string($noiDung);
+	$ch=$conn->real_escape_string($cauHinh);
 	$date=date("Y-m-d");
 	$tenkhongdau=to_slug($tenSP);
 	$sql="UPDATE sanpham
@@ -101,11 +100,34 @@ function capNhatSanPham($idSP,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong
 		  sp_nhacungcap=$ncc,
 		  sp_loaisanpham=$loaiSP,
 		  sp_soluong=$soLuong,
-		  sp_hangsanxuat=$hsx
+		  sp_hangsanxuat=$hsx,
+		  sp_cauhinh='$ch'
 		  WHERE sp_ma=$idSP";
+
 	if($conn->query($sql)===true)
 	{
 		echo '<script>alert("Cập Nhật Sản Phẩm Thành Công");</script>';
+	}
+	else
+	{
+		echo '<script>alert("Cập Nhật Sản Phẩm Thất Bại");</script>';
+	}
+}
+function capNhatHinh($idSP,$tenSP,$files)
+{
+	$conn=connect();
+	$path_Hinh=uploadimage($files,$tenSP);
+	if($path_Hinh==false)
+	{
+		echo '<script>alert("Upload hình lên server thất bại");</script>';
+		return false;
+	}
+	else
+	{
+		$sql="UPDATE sanpham
+			  SET sp_hinhdaidien='$path_Hinh'
+			  WHERE sp_ma=$idSP";
+		return $conn->query($sql);
 	}
 }
 // -----------------------------------------------------------------

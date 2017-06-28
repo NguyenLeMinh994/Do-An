@@ -3,7 +3,7 @@
     require "func_shop/func_sanpham.php";
     if(isset($_POST['btnThemSP']))
     {
-        themSanPham($_FILES['hinhanh'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtSoLuong'],$cuaHang);
+        themSanPham($_FILES['hinhanh'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtSoLuong'],$_POST['txtCauHinh'],$cuaHang);
     }
  ?>
 <!DOCTYPE html>
@@ -29,7 +29,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | Form Layouts</title>
+        <title>Thêm Sản Phẩm</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for form layouts" name="description" />
@@ -274,6 +274,17 @@ License: You must have a valid license purchased only from themeforest(the above
                                                         </label>
                                                         <div class="col-md-9">
                                                             <textarea class="ckeditor form-control" name="txtNoiDung" rows="6" data-error-container="#editor2_error" ></textarea>
+                                                            <div id="editor2_error"> </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Cấu Hình
+                                                            <span class="required"> * </span>
+                                                        </label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="ckeditor form-control" name="txtCauHinh" rows="6" data-error-container="#editor2_error" >
+                                                           
+                                                            </textarea>
                                                             <div id="editor2_error"> </div>
                                                         </div>
                                                     </div>
@@ -934,13 +945,13 @@ License: You must have a valid license purchased only from themeforest(the above
         <script type="text/javascript">
             $(document).ready(function(){
                 var form1 = $("#frmSanPham");
-                   var error1 = $('.alert-danger', form1);
-                   var success1 = $('.alert-success', form1);
-                  //  form1.on('submit', function() {
-                  //     for(var instanceName in CKEDITOR.instances) {
-                  //         CKEDITOR.instances[instanceName].updateElement();
-                  //     }
-                  // })
+                var error1 = $('.alert-danger', form1);
+                var success1 = $('.alert-success', form1);
+                   form1.on('submit', function() {
+                      for(var instanceName in CKEDITOR.instances) {
+                          CKEDITOR.instances[instanceName].updateElement();
+                      }
+                  })
                    
                 form1.validate({
                     errorElement: 'span', //default input error message container
@@ -963,7 +974,10 @@ License: You must have a valid license purchased only from themeforest(the above
                         },
                         txtNoiDung:{
                             required:true
-                        },    
+                        },
+                        txtCauHinh:{
+                            required:true
+                        }       
                     },
                     messages: {
                         txtTenSP: {
@@ -980,50 +994,53 @@ License: You must have a valid license purchased only from themeforest(the above
                         },
                         txtNoiDung:{
                             required:"Nội dung không có giá trị rỗng",
+                        },
+                        txtCauHinh:{
+                            required:"Cấu Hình không có giá trị rỗng",
                         }
                     },
-                       errorPlacement: function(error, element) {
+                    errorPlacement: function(error, element) {
 
-                           if (element.is(':checkbox')) 
-                           {
-                               error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                           } 
-                           else 
-                           if (element.is(':radio')) {
-                               error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                           }
-                           else 
-                           {
+                     if (element.is(':checkbox')) 
+                     {
+                         error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                     } 
+                     else 
+                         if (element.is(':radio')) {
+                             error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                         }
+                         else 
+                         {
                                error.insertAfter(element); // for other inputs, just perform default behavior
                            }
                             // console.log(error);
                            // console.log(element);
-                        
+                           
                            // var i=$(element).parent(".input-group");
                            // i?i.after(error):element.after(error);
                        },
                        invalidHandler: function(event, validator) { //display error alert on form submit              
-                           success1.hide();
-                           error1.show();
-                           App.scrollTo(error1, -200);
-                       },
+                         success1.hide();
+                         error1.show();
+                         App.scrollTo(error1, -200);
+                     },
                        highlight: function(element) { // hightlight error inputs
-                           $(element)
+                         $(element)
                                .closest('.form-group').addClass('has-error'); // set error class to the control group
-                       },
+                           },
 
                        unhighlight: function(element) { // revert the change done by hightlight
-                           $(element)
+                         $(element)
                                .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                       },
-                       submitHandler: function(form,e) {
-                         e.preventDefault();
-                         success1.show();
-                         success1.slideUp(5000);
-                         error1.hide();
-                         form.submit();
-                         
-                       }
+                           },
+                           submitHandler: function(form,e) {
+                               e.preventDefault();
+                               success1.show();
+                               success1.slideUp(5000);
+                               error1.hide();
+                               form.submit();
+                               
+                           }
                 }); 
             });
         </script>

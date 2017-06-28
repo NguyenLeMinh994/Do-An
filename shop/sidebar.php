@@ -171,12 +171,18 @@
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu"> 
-                   <li class="nav-item  ">
-                    <a href="danh-sach-san-pham.html" class="nav-link ">
+                 <li class="nav-item  ">
+                    <a href="thong-ke-hang-ton.php" class="nav-link ">
                         <span class="title">Hàng Tồn Kho
                         </span>
                     </a>
-                </li> 
+                </li>
+                <li class="nav-item  ">
+                    <a href="thong-ke-san-pham.php" class="nav-link ">
+                        <span class="title">Tổng Sản Phẩm
+                        </span>
+                    </a>
+                </li>
             </ul>
         </li>
                         <!-- <li class="nav-item">

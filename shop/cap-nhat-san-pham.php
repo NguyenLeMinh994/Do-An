@@ -1,13 +1,27 @@
 <?php 
     require "top.php";
     require "func_shop/func_sanpham.php";
-    if(!isset($_GET['idSP']) && empty($_GET['idSP']))
+    if(!isset($_GET['idSP']) || empty($_GET['idSP']))
     {
         header("Location:danh-sach-san-pham.php");
     }
     if(isset($_POST['btnCapNhatSP']))
     {
-        
+        if(empty($_FILES['hinhanh']['name']))
+        {
+            capNhatSanPham($_GET['idSP'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtSoLuong'],$_POST['txtCauHinh']);
+        }
+        else
+        {
+            if(capNhatHinh($_GET['idSP'],$_POST['txtTenSP'],$_FILES['hinhanh'])==true)
+            {
+                capNhatSanPham($_GET['idSP'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtSoLuong'],$_POST['txtCauHinh']);
+            }
+            // else
+            // {
+            //     echo '<script>alert("Upload hình lên server thất bại");</script>';
+            // }
+        }
     }
  ?>
 <!DOCTYPE html>
@@ -299,12 +313,23 @@ License: You must have a valid license purchased only from themeforest(the above
                                                             <div id="editor2_error"> </div>
                                                         </div>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Cấu Hình
+                                                            <span class="required"> * </span>
+                                                        </label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="ckeditor form-control" name="txtCauHinh" rows="6" data-error-container="#editor2_error" >
+                                                                <?php echo $r_sp['sp_cauhinh']; ?>
+                                                            </textarea>
+                                                            <div id="editor2_error"> </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-actions">
                                                     <div class="row">
                                                         <div class="col-md-offset-3 col-md-9">
-                                                            <button type="submit" class="btn green" name="btnCapNhatSP">Thêm Sản Phẩm</button>
-                                                             <a href="danh-sach-san-pham.php" class="btn btn-circle grey-salsa btn-outline">Trở Về</a>
+                                                            <button type="submit" class="btn green" name="btnCapNhatSP">Cập Nhật Sản Phẩm</button>
+                                                             <a href="danh-sach-san-pham.php" class="btn grey-salsa btn-outline">Trở Về</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -958,11 +983,12 @@ License: You must have a valid license purchased only from themeforest(the above
                 var form1 = $("#frmSanPham");
                    var error1 = $('.alert-danger', form1);
                    var success1 = $('.alert-success', form1);
-                  //  form1.on('submit', function() {
-                  //     for(var instanceName in CKEDITOR.instances) {
-                  //         CKEDITOR.instances[instanceName].updateElement();
-                  //     }
-                  // })
+
+                   form1.on('submit', function() {
+                      for(var instanceName in CKEDITOR.instances) {
+                          CKEDITOR.instances[instanceName].updateElement();
+                      }
+                  })
                    
                 form1.validate({
                     errorElement: 'span', //default input error message container
@@ -985,7 +1011,10 @@ License: You must have a valid license purchased only from themeforest(the above
                         },
                         txtNoiDung:{
                             required:true
-                        },    
+                        },
+                        txtCauHinh:{
+                            required:true
+                        }
                     },
                     messages: {
                         txtTenSP: {
@@ -1002,7 +1031,11 @@ License: You must have a valid license purchased only from themeforest(the above
                         },
                         txtNoiDung:{
                             required:"Nội dung không có giá trị rỗng",
+                        },
+                         txtCauHinh:{
+                            required:"Cấu Hình không có giá trị rỗng",
                         }
+
                     },
                        errorPlacement: function(error, element) {
 
@@ -1040,8 +1073,7 @@ License: You must have a valid license purchased only from themeforest(the above
                        },
                        submitHandler: function(form,e) {
                          e.preventDefault();
-                         success1.show();
-                         success1.slideUp(5000);
+                         success1.show().slideUp(5000);
                          error1.hide();
                          form.submit();
                          

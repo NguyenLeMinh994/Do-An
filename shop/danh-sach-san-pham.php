@@ -38,7 +38,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | FixedHeader Extension</title>
+        <title>Danh Sách Sản Phẩm</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
@@ -200,9 +200,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <table class="table table-striped table-bordered table-hover order-column" id="sample_4">
                                         <thead>
                                             <tr>
-                                                <th>Tên Sản Phẩm </th>
+                                                <th>Tên</th>
                                                 <th>Hình</th>
-                                                <th>Giá (VND)</th>
+                                                <th>Giá</th>
                                                 <th>Hãng</th>
                                                 <th>Loại</th>
                                                 <th>Nhà Cung Cấp</th>
@@ -232,7 +232,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         ?>
                                             <tr>
                                                 <td><?php echo $tensp; ?></td>
-                                                <td style="width:15%">
+                                                <td style="width:11%">
                                                 <img src="<?php echo $hinhdaidien;?>" class="img-rounded" alt="" style="width:100%">
                                                 </td>
                                                 <td><?php echo $dongiasp; ?></td>

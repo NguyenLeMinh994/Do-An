@@ -1,7 +1,12 @@
 <?php 
      require "top.php";
      require "func_shop/func_khuyenmai.php";
+     if(!isset($_GET['idKM']) || empty($_GET['idKM']))
+     {
+        header("Location:danh-sach-khuyen-mai.php");
+     }
      $maKhuyenMai=$_GET['idKM'];
+
      if(isset($maKhuyenMai) && isset($_GET['idSP']))
      {
         if(chonSanPhamKhuyenMai($maKhuyenMai,$_GET['idSP'],$cuaHang)==true)
@@ -35,7 +40,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | FixedHeader Extension</title>
+        <title>Chọn Sản Phẩm Khuyến Mãi</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
@@ -207,38 +212,40 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> Tên sản phẩm </th>
+                                                <th> Tên</th>
                                                 <th> Hình </th>
-                                                <th> Giá (VND)</th>
+                                                <th> Giá </th>
                                                 <th> Loại Sản Phẩm</th>
                                                 <th> Hãng Sản Xuất</th>
                                                 <th> Thao Tác</th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
+                                      <!--   <tfoot>
                                             <tr>
                                                 <th> Tên sản phẩm </th>
                                                 <th> Hình </th>
-                                                <th> Giá (VND)</th>
+                                                <th> Giá</th>
                                                 <th> Loại Sản Phẩm</th>
                                                 <th> Hãng Sản Xuất</th>
                                                 <th> Thao Tác</th>
                                             </tr>
-                                        </tfoot>
+                                        </tfoot> -->
                                         <tbody>
                                         <?php 
                                             $result=danhSachSanPham($cuaHang);
                                             while ($row_sp=$result->fetch_assoc()) 
                                             {
                                                 $tenSanPham=$row_sp['sp_ten'];
-                                                $donGia=$row_sp['sp_dongia'];
-                                                $loaiSanPham=$row_sp['sp_loaisanpham'];
-                                                $hangSanXuat=$row_sp['sp_hangsanxuat'];
+                                                $donGia=number_format($row_sp['sp_dongia'])." VNĐ";
+                                                $loaiSanPham=$row_sp['lsp_ten'];
+                                                $hangSanXuat=$row_sp['hsx_ten'];
                                                 $maSanPham=$row_sp['sp_ma'];
+                                                $hinh=$row_sp['sp_hinhdaidien'];
                                                 
                                         echo"<tr>
                                                 <td>$tenSanPham </td>
-                                                <td> Internet Explorer 4.0 </td>
+                                                <td style='width:11%'>
+                                                <img src='..$hinh' class='img-rounded'  style='width:100%'></td>
                                                 <td>$donGia </td>
                                                 <td> $loaiSanPham </td>
                                                 <td> $hangSanXuat </td>
