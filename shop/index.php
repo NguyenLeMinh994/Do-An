@@ -30,7 +30,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | Admin Dashboard 2</title>
+        <title>Trang Chủ</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for statistics, charts, recent events and reports" name="description" />
@@ -43,6 +43,8 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="../public/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="../public/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
@@ -98,7 +100,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
                     <!-- BEGIN PAGE BASE CONTENT -->
-                     <div class="row">
+                    <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                             <a class="dashboard-stat dashboard-stat-v2 blue" href="danh-sach-san-pham.php">
                                 <div class="visual">
@@ -149,6 +151,84 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <div class="desc"> Bình Luận </div>
                                 </div>
                             </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="portlet light portlet-fit bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class=" icon-layers font-green"></i>
+                                        <span class="caption-subject font-green bold uppercase">
+                                        Sản Phẩm
+                                        </span>
+                                    </div>
+                                    <div class="actions">
+                                        
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div id="morris_chart_4" style="height:250px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-md-8">
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                           
+                            <!-- END EXAMPLE TABLE PORTLET-->
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <div class="portlet box red">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-globe"></i>
+                                        Danh Sách Sản Phẩm
+                                    </div>
+                                    <div class="actions">
+                                        
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
+                                        <thead>
+                                            <tr>
+                                                <th> Tên </th>
+                                                <th> Giá </th>
+                                                <th>Loại</th>
+                                                <th>Lượt xem</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                       <!--  <tfoot>
+                                            <tr>
+                                                <th> Tên sản phẩm </th>
+                                                <th> Hình </th>
+                                                <th> Giá </th>
+                                                <th> Loại Sản Phẩm</th>
+                                                <th> Hãng Sản Xuất</th>
+                                                <th> Trạng thái </th>
+                                                <th> Thao Tác</th>
+                                            </tr>
+                                        </tfoot> -->
+                                        <tbody>
+                                        <?php  
+                                            $luotxem=LuotXem($cuaHang);
+                                            while($r_view=$luotxem->fetch_assoc()){
+
+
+                                        ?>
+                                            <tr>
+                                                <td> <?php echo $r_view['sp_ten']; ?></td>
+                                                <td> <?php echo $r_view['sp_dongia']; ?> </td>
+                                                <td> <?php echo $r_view['lsp_ten']; ?></td>
+                                                <td> <?php echo ($r_view['sp_xemnhieunhat']>0?$r_view['sp_xemnhieunhat']:'N/A'); ?></td>
+                                                
+                                            </tr>                                        
+                                          <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- END EXAMPLE TABLE PORTLET-->
                         </div>
                     </div>
                     <!-- END PAGE BASE CONTENT -->
@@ -211,11 +291,17 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
+        <script src="../public/assets/global/scripts/datatable.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+        <script src="../public/assets/pages/scripts/table-datatables-fixedheader.min.js" type="text/javascript"></script>
+
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
+
         <script src="../public/assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
@@ -224,6 +310,23 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
         <script src="../public/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
         <!-- END THEME LAYOUT SCRIPTS -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                // PIE CHART
+                new Morris.Donut({
+                  element: 'morris_chart_4',
+                  data: [
+                <?php  
+                    $soluong=soLuongLoaiSanPham($cuaHang);
+                    while ($r_sl=$soluong->fetch_assoc()) {
+                ?>
+                    {label: "<?php echo $r_sl['lsp_ten']; ?>", 
+                    value: <?php echo $r_sl['soluong']; ?>},
+                <?php  } ?>
+                  ]
+                });
+            });
+        </script>
     </body>
 
 </html>

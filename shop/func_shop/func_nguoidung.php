@@ -34,29 +34,40 @@
 		}
 		return $rt;
 	}
-	function quenMatKhau($tenDangNhap,$email,$matKhauMoi)
+//------------------------------------------------------------
+	function nhapMatKhauMoi($email,$matkhau)
 	{
 		$conn=connect();
-		$rt=false;
-		$sql = "SELECT * FROM nhanvien 
-					Where nv_macuahang IS NOT NULL 
-					And (nv_tendangnhap='$tenDangNhap' And nv_email='$email')";
-		$result = $conn->query($sql);
-		if ($result->num_rows < 2)
-		{
-			$matKhauMoi2=md5($matKhauMoi);
-			$sql="UPDATE nhanvien SET nv_matkhau='$matKhauMoi2' 
-				WHERE nv_macuahang IS NOT NULL 
-				And (nv_tendangnhap='$tenDangNhap' And nv_email='$email')";
-			
-			if ($conn->query($sql) === TRUE)
-			{
-				return kiemTraDangNhapCuaHang($tenDangNhap,$matKhauMoi);
-				
-			}	
-		}
-		return $rt;
+		$matkhau2=md5($matkhau);
+		$sql="UPDATE nhanvien
+				SET nv_matkhau=$matkhau2
+				WHERE nv_email=$email";
+		return $conn->query($sql);
 	}
+	function quenMatKhau($email)
+	{
+		$conn=connect();
+		if(!empty($email))
+		{
+			$sql = "SELECT * FROM nhanvien 
+						Where nv_macuahang IS NOT NULL 
+						And nv_email='$email'";
+			$result = $conn->query($sql);
+			if($result->num_rows > 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+			{
+				return false;
+			}	
+	}
+//------------------------------------------------
 
 	function thongTinNguoiDung($maNV)
 	{

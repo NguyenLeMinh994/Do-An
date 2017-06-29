@@ -58,4 +58,24 @@ function capNhatTrangThaiKhuyenMai()
 		capNhatTrangThaiSanPhamKhuyenMai();
 	}
 }
+function soLuongLoaiSanPham($cuaHang)
+{
+	$conn=connect();
+	$sql="SELECT count(sp_ma) as soluong,lsp_ten
+	FROM sanpham,loaisanpham
+	WHERE lsp_ma=sp_loaisanpham AND sp_macuahang=$cuaHang AND sp_trangthai=1
+	GROUP BY lsp_ma";
+
+	return $conn->query($sql);
+}
+
+function LuotXem($cuaHang)
+{
+	$conn=connect();
+	$sql="SELECT *
+	FROM sanpham,loaisanpham
+	WHERE lsp_ma=sp_loaisanpham AND sp_macuahang=$cuaHang AND sp_trangthai=1";
+
+	return $conn->query($sql);
+}
 ?>

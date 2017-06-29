@@ -4,14 +4,14 @@
 
     if(isset($_POST['btnXacNhan']))
     {      
-        if(quenMatKhau($_POST['txtEmail'])==true)
-        {
-            header("Location:mat-khau-moi.php");
-        }
-        else
-        {
-            echo "<script>alert('Email không đúng')</script>";
-        }
+       if(nhapMatKhauMoi($_POST['txtEmail'],$_POST['txtPassword'])==true)
+       {
+            header("Location:dang-nhap.php");
+       }
+       else
+       {
+            echo "<script>alert('Thay Đổi Mật Khẩu Thất Bại')</script>";
+       }
     }
     else
         if(isset($_SESSION['NV']))
@@ -42,7 +42,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Quên Mật Khẩu</title>
+        <title>Tạo Mật Khẩu Mới</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for " name="description" />
@@ -67,10 +67,11 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END PAGE LEVEL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
-        <link rel="shortcut icon" href="favicon.ico" /> </head>
+        <link rel="shortcut icon" href="favicon.ico" /> 
+        </head>
     <!-- END HEAD -->
 
-    <body class=" login">
+    <body class="login">
         <!-- BEGIN LOGO -->
         <div class="logo">
             <a href="index.html">
@@ -80,22 +81,26 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN LOGIN -->
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
-            <form class="login-form"  method="post">
-                <h3 class="form-title font-green">Quên Mật Khẩu ?</h3>
+            <form class="login-form" action="#" method="post">
+                <h3 class="form-title font-green">Tạo Mật Khẩu Mới</h3>
                 <div class="alert alert-danger display-hide">
 
                     <button class="close" data-close="alert"></button>
-                    <span> Kiểm tra lại email</span>
+                    <span> Kiểm tra lại.</span>
                 </div>
                 
                 <div class="form-group">
                     <label class="control-label visible-ie8 visible-ie9">Email</label>
                     <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="txtEmail" /> 
                 </div>
-                <!-- <div class="form-group">
+                <div class="form-group">
                     <label class="control-label visible-ie8 visible-ie9">Mật khẩu</label>
-                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Mật Khẩu Mới" name="password" />
-                </div> -->
+                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Mật Khẩu Mới" name="txtPassword" id="pass" />
+                </div>
+                 <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">Mật khẩu</label>
+                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Nhập Lại Mật Khẩu" name="txtRePassword" />
+                </div>
                 <div class="form-actions">
                     <button type="submit" class="btn green uppercase" name="btnXacNhan">Xác Nhận</button>
                    
@@ -141,6 +146,14 @@ License: You must have a valid license purchased only from themeforest(the above
                         txtEmail:{
                             required:true,
                             email:true
+                        },
+                        txtPassword:{
+                            required:true
+                            
+                        },
+                        txtRePassword:{
+                            equalTo:"#pass",
+                            required:true
                         }
                     },
                     // message:{
@@ -160,6 +173,9 @@ License: You must have a valid license purchased only from themeforest(the above
                     errorPlacement:function(e,r){
                         e.insertAfter(r.closest(".input-icon"))
                     },
+                    submitHandler:function(e){
+                        e.submit()
+                    }
                 });
                 // $(".login-form input").keypress(function(e){
                 //     return 13==e.which?(
