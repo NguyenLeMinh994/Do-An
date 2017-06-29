@@ -46,4 +46,26 @@
 		cthd_masanpham";
 		return $conn->query($sql);
 	}
+
+	function doanhThuCuaNam($cuaHang,$nam)
+	{
+		$conn=connect();
+		if(!empty($nam))
+		{
+			$sql="SELECT
+			MONTH(hd_ngaygiao) AS thang,
+			SUM(cthd_soluong * cthd_dongia) AS sotien
+			FROM
+			hoadon
+			INNER JOIN
+			chitiethoadon
+			ON
+			hd_ma = cthd_mahoadon
+			WHERE
+			YEAR(hd_ngaygiao) = $nam AND hd_trangthai=3 AND hd_cuahang=$cuaHang
+			GROUP BY
+			MONTH(hd_ngaygiao)";
+		}
+		return $conn->query($sql);
+	}
 ?>

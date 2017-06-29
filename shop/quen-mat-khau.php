@@ -4,9 +4,10 @@
 
     if(isset($_POST['btnXacNhan']))
     {      
-        if(quenMatKhau($_POST['txtEmail'])==true)
+        $id=quenMatKhau($_POST['txtEmail']);
+        if($id!=false)
         {
-            header("Location:mat-khau-moi.php");
+            header("Location:mat-khau-moi.php?user=".$id);
         }
         else
         {

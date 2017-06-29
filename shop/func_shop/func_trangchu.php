@@ -78,4 +78,15 @@ function LuotXem($cuaHang)
 
 	return $conn->query($sql);
 }
+
+function thongKeCacNam($cuaHang)
+{
+	$conn=connect();
+	$sql="SELECT YEAR(hd_ngaygiao) as nam, SUM(hd_tongtien) as tongtien
+		FROM hoadon 
+		WHERE hd_trangthai=3 AND hd_cuahang=$cuaHang
+		GROUP BY YEAR(hd_ngaygiao)";
+
+	return $conn->query($sql);
+}
 ?>

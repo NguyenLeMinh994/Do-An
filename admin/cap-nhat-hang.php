@@ -5,6 +5,11 @@
     {
        capNhatHang($_GET['idHang'],$_POST['txtTenHang']);
     }
+    else
+        if(!isset($_GET['idHang']) || empty($_GET['idHang']))   
+        {
+            header("Location:danh-sach-hang.php");
+        }
 ?>
 <!DOCTYPE html>
 <!-- 

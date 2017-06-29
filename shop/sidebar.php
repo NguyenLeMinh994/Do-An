@@ -148,38 +148,28 @@
             </li>
         </ul>
     </li>
-    <li class="nav-item">
-        <a href="javascript:;" class="nav-link nav-toggle">
-            <i class="icon-puzzle"></i>
-            <span class="title">Bình Luận</span>
-            <span class="arrow"></span>
-        </a>
-        <ul class="sub-menu"> 
-            <li class="nav-item  ">
-                <a href="danh-sach-binh-luan.html" class="nav-link ">
-                    <span class="title">Danh Sách Bình Luận
-                    </span>
-                    <span class="badge badge-danger">4</span>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li class="nav-item  ">
+    <li class="nav-item ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-bar-chart"></i>
                     <span class="title">Thống Kê</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu"> 
-                 <li class="nav-item  ">
+                 <li class="nav-item">
                     <a href="thong-ke-hang-ton.php" class="nav-link ">
                         <span class="title">Hàng Tồn Kho
                         </span>
                     </a>
                 </li>
-                <li class="nav-item  ">
+                <li class="nav-item">
                     <a href="thong-ke-san-pham.php" class="nav-link ">
-                        <span class="title">Tổng Sản Phẩm
+                        <span class="title">Doanh Thu Sản Phẩm
+                        </span>
+                    </a>
+                </li>
+                 <li class="nav-item">
+                    <a href="doanh-thu-theo-nam.php" class="nav-link">
+                        <span class="title">Doanh Thu Theo Năm
                         </span>
                     </a>
                 </li>

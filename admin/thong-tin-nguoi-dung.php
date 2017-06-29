@@ -1,5 +1,27 @@
-<?php require "top.php"; 
-    require "func_admin/func_cuahang.php";
+<?php 
+    require "top.php"; 
+    require "func_admin/func_nguoidung.php";
+    if(isset($_POST['btnLuuThongTin']))
+    {
+        luuThongTin($_SESSION['AD']['MaNhanVien'],$_POST['txtHoTen'],$_POST['txtEmail'],$_POST['txtSDT']);
+    }
+
+    if(isset($_POST['btnLuuMatKhau']))
+    {
+        thayDoiMatKhau($_SESSION['AD']['MaNhanVien'],$_POST['txtMatKhauCu'],$_POST['txtMatKhauMoi']);
+    }
+    if(isset($_POST['btnThayDoiHinh']))
+    {
+    	if(empty($_FILES['file_avatar']['name']))
+    	{
+    		
+    		echo "<script>alert('Thất Bại: Vui lòng chọn hình');</script>";
+    	}
+    	else
+    		uploadHinh($_SESSION['AD']['MaNhanVien'],$_FILES['file_avatar']);
+    }
+    $thongtin=thongTinNguoiDung($_SESSION['AD']['MaNhanVien']);
+    $row_thongtin=$thongtin->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <!-- 
@@ -24,10 +46,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Danh Sách Cửa Hàng</title>
+        <title>Metronic Admin Theme #4 | New User Profile | Account</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
+        <meta content="Preview page of Metronic Admin Theme #4 for user account page" name="description" />
         <meta content="" name="author" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -37,13 +59,16 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="../public/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <link href="../public/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL STYLES -->
+        
         <link href="../public/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
         <link href="../public/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME GLOBAL STYLES -->
+        <!-- BEGIN PAGE LEVEL STYLES -->
+        <link href="../public/assets/pages/css/profile.min.css" rel="stylesheet" type="text/css" />
+        <!-- END PAGE LEVEL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <link href="../public/assets/layouts/layout4/css/layout.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/layouts/layout4/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
@@ -62,7 +87,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <!-- BEGIN SIDEBAR -->
-           <?php require "sidebar.php"; ?>
+            <?php require "sidebar.php"; ?>
             <!-- END SIDEBAR -->
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
@@ -72,188 +97,164 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>FixedHeader Extension
-                                <small>rowreorder extension demos</small>
+                            <h1>Thông Tin Cá Nhân
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
                         <!-- BEGIN PAGE TOOLBAR -->
-                        <div class="page-toolbar">
-                            <!-- BEGIN THEME PANEL -->
-                            <div class="btn-group btn-theme-panel">
-                                <a href="javascript:;" class="btn dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-settings"></i>
-                                </a>
-                                <div class="dropdown-menu theme-panel pull-right dropdown-custom hold-on-click">
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-4 col-xs-12">
-                                            <h3>HEADER</h3>
-                                            <ul class="theme-colors">
-                                                <li class="theme-color theme-color-default active" data-theme="default">
-                                                    <span class="theme-color-view"></span>
-                                                    <span class="theme-color-name">Dark Header</span>
-                                                </li>
-                                                <li class="theme-color theme-color-light " data-theme="light">
-                                                    <span class="theme-color-view"></span>
-                                                    <span class="theme-color-name">Light Header</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-8 col-sm-8 col-xs-12 seperator">
-                                            <h3>LAYOUT</h3>
-                                            <ul class="theme-settings">
-                                                <li> Theme Style
-                                                    <select class="layout-style-option form-control input-small input-sm">
-                                                        <option value="square">Square corners</option>
-                                                        <option value="rounded" selected="selected">Rounded corners</option>
-                                                    </select>
-                                                </li>
-                                                <li> Layout
-                                                    <select class="layout-option form-control input-small input-sm">
-                                                        <option value="fluid" selected="selected">Fluid</option>
-                                                        <option value="boxed">Boxed</option>
-                                                    </select>
-                                                </li>
-                                                <li> Header
-                                                    <select class="page-header-option form-control input-small input-sm">
-                                                        <option value="fixed" selected="selected">Fixed</option>
-                                                        <option value="default">Default</option>
-                                                    </select>
-                                                </li>
-                                                <li> Top Dropdowns
-                                                    <select class="page-header-top-dropdown-style-option form-control input-small input-sm">
-                                                        <option value="light">Light</option>
-                                                        <option value="dark" selected="selected">Dark</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Mode
-                                                    <select class="sidebar-option form-control input-small input-sm">
-                                                        <option value="fixed">Fixed</option>
-                                                        <option value="default" selected="selected">Default</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Menu
-                                                    <select class="sidebar-menu-option form-control input-small input-sm">
-                                                        <option value="accordion" selected="selected">Accordion</option>
-                                                        <option value="hover">Hover</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Position
-                                                    <select class="sidebar-pos-option form-control input-small input-sm">
-                                                        <option value="left" selected="selected">Left</option>
-                                                        <option value="right">Right</option>
-                                                    </select>
-                                                </li>
-                                                <li> Footer
-                                                    <select class="page-footer-option form-control input-small input-sm">
-                                                        <option value="fixed">Fixed</option>
-                                                        <option value="default" selected="selected">Default</option>
-                                                    </select>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END THEME PANEL -->
-                        </div>
+                        
                         <!-- END PAGE TOOLBAR -->
                     </div>
                     <!-- END PAGE HEAD-->
                     <!-- BEGIN PAGE BREADCRUMB -->
                     <ul class="page-breadcrumb breadcrumb">
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.php">Trang Chủ</a>
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <a href="#">Tables</a>
-                            <i class="fa fa-circle"></i>
-                        </li>
-                        <li>
-                            <span class="active">Datatables</span>
+                            <span class="active">Người Dùng</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
                     <!-- BEGIN PAGE BASE CONTENT -->
                     <div class="row">
                         <div class="col-md-12">
-                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                           
-                            <!-- END EXAMPLE TABLE PORTLET-->
-                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <div class="portlet box red">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="fa fa-globe"></i>Cửa Hàng</div>
-                                    <div class="actions">
-                                        <a href="javascript:;" class="btn btn-default btn-sm btn-circle">
-                                            <i class="fa fa-plus"></i> Add </a>
-                                        <a href="javascript:;" class="btn btn-default btn-sm btn-circle">
-                                            <i class="fa fa-print"></i> Print </a>
+                            <!-- BEGIN PROFILE SIDEBAR -->
+                            <div class="profile-sidebar">
+                                <!-- PORTLET MAIN -->
+                                <div class="portlet light profile-sidebar-portlet bordered">
+                                    <!-- SIDEBAR USERPIC -->
+                                    <div class="profile-userpic">
+                                        <img src="<?php echo '..'.$row_thongtin['nv_duongdanhinh']; ?>" class="img-responsive" alt=""> </div>
+                                    <!-- END SIDEBAR USERPIC -->
+                                    <!-- SIDEBAR USER TITLE -->
+                                    <div class="profile-usertitle">
+                                        <div class="profile-usertitle-name"><?php echo $row_thongtin['nv_hoten']; ?></div>
+                                        <div class="profile-usertitle-job"><?php echo $row_thongtin['cv_ten']; ?></div>
+                                    </div>
+                                    <!-- END SIDEBAR USER TITLE -->
+                                    <!-- SIDEBAR BUTTONS -->
+                                    <div class="profile-userbuttons">
+                                       
+                                    </div>
+                                    <!-- END SIDEBAR BUTTONS -->
+                                    <!-- SIDEBAR MENU -->
+                                    <div class="profile-usermenu">
+                                        <ul class="nav">
+                                          
+                                        </ul>
+                                    </div>
+                                    <!-- END MENU -->
+                                </div>
+                                <!-- END PORTLET MAIN -->
+                                <!-- PORTLET MAIN -->
+                                
+                                <!-- END PORTLET MAIN -->
+                            </div>
+                            <!-- END BEGIN PROFILE SIDEBAR -->
+                            <!-- BEGIN PROFILE CONTENT -->
+                            <div class="profile-content">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="portlet light bordered">
+                                            <div class="portlet-title tabbable-line">
+                                                <div class="caption caption-md">
+                                                    <i class="icon-globe theme-font hide"></i>
+                                                    <span class="caption-subject font-blue-madison bold uppercase">Tài Khoản</span>
+                                                </div>
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active">
+                                                        <a href="#tab_1_1" data-toggle="tab">Thông tin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#tab_1_2" data-toggle="tab">Thay Đổi Avatar</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#tab_1_3" data-toggle="tab">Thay Đổi Mật Khẩu</a>
+                                                    </li>
+                                                  
+                                                </ul>
+                                            </div>
+                                            <div class="portlet-body">
+                                                <div class="tab-content">
+                                                    <!-- PERSONAL INFO TAB -->
+                                                    <div class="tab-pane active" id="tab_1_1" >
+                                                        <form id="frmThongTin" role="form"  method="post">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Họ Tên</label>
+                                                                <span class="required"> * </span>
+                                                                <input type="text" class="form-control" value="<?php echo $row_thongtin['nv_hoten']; ?>"  name="txtHoTen"/> </div>
+                                                            
+                                                            <div class="form-group">
+                                                                <label class="control-label">Số Điện Thoại</label>
+                                                                <input type="text" class="form-control" value="<?php echo $row_thongtin['nv_sdt']; ?>"  name="txtSDT"/> </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label">Email</label>
+                                                                <input type="text" class="form-control" value="<?php echo $row_thongtin['nv_email']; ?>"  name="txtEmail"/> </div>
+                                                            
+                                                            <div class="margiv-top-10">
+                                                                
+                                                                <button type="submit" class="btn green" name="btnLuuThongTin">Lưu</button>
+                                                                
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- END PERSONAL INFO TAB -->
+                                                    <!-- CHANGE AVATAR TAB -->
+                                                    <div class="tab-pane" id="tab_1_2" >
+                                                        <form action="#" role="form" method="post" enctype="multipart/form-data">
+                                                            <div class="form-group">
+                                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
+                                                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                                                    <div>
+                                                                        <span class="btn default btn-file">
+                                                                            <span class="fileinput-new"> Select image </span>
+                                                                            <span class="fileinput-exists"> Change </span>
+                                                                            <input type="file" name="file_avatar"> </span>
+                                                                        <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="clearfix margin-top-10">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="margin-top-10">
+                                                                <button type="submit" class="btn green" name="btnThayDoiHinh">Thay Đổi</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- END CHANGE AVATAR TAB -->
+                                                    <!-- CHANGE PASSWORD TAB -->
+                                                    <div class="tab-pane" id="tab_1_3" >
+                                                        <form action="thong-tin-nguoi-dung.php" method="post" id="frmMatKhau">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Mật Khẩu Cũ</label>
+                                                                <input type="password" class="form-control" name="txtMatKhauCu" /> </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label">Mật Khẩu Mới</label>
+                                                                <input type="password" class="form-control" name="txtMatKhauMoi" id="password_new"/> </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label">Nhập Lại Mật Khẩu</label>
+                                                                <input type="password" class="form-control" name="txtNhapLaiMatKhau" /> </div>
+                                                            <div class="margin-top-10">
+                                                                <button type="submit" class="btn green" name="btnLuuMatKhau">Thay Đổi Mật Khẩu</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- END CHANGE PASSWORD TAB -->
+                                                    <!-- PRIVACY SETTINGS TAB -->
+                                                    
+                                                    <!-- END PRIVACY SETTINGS TAB -->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="portlet-body">
-                                    <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
-                                        <thead>
-                                            <tr>
-                                                <th> Mã  </th>
-                                                <th> Cửa Hàng</th>
-                                                <th> Chủ Cửa Hàng</th>
-                                                <th> Số Điện Thoại </th>
-                                                <th> Email </th>
-                                                <th> Ngày Thuê </th>
-                                                <th> Doanh Thu </th>
-                                            </tr>
-                                        </thead>
-                                        <!-- <tfoot>
-                                            <tr>
-                                                 <th> Mã  </th>
-                                                <th> Cửa Hàng</th>
-                                                <th> Chủ Cửa Hàng</th>
-                                                <th> Số Điện Thoại </th>
-                                                <th> Email </th>
-                                                <th> Ngày Thuê </th>
-                                                <th> Doanh Thu </th>
-                                            </tr>
-                                        </tfoot> -->
-                                        <tbody>
-                                        <?php 
-                                            $danhsachcuahang=danhSachCuaHang();
-                                            while ($row_cuahang=$danhsachcuahang->fetch_assoc()) 
-                                            {
-
-                                                $tencuahang=$row_cuahang['ch_ten'];
-                                                $macuahang=$row_cuahang['ch_ma'];
-                                                $sdt_cuahang=$row_cuahang['ch_sdt'];
-                                               
-                                                $ngaybatdauthue=date("d/m/Y",strtotime($row_cuahang['ch_ngaybatdauthue']));
-                                                // $ngayketthucthue=date("d/m/Y",strtotime($row_cuahang['ch_ngayketthucthue']));
-
-                                                $thongtin=layThongTinChuCuaHang($macuahang);
-                                                $row_thongtin=$thongtin->fetch_assoc();
-                                                $email=$row_thongtin['nv_email'];
-                                                $chucuahang=$row_thongtin['nv_hoten'];
-
-                                        ?>
-                                            <tr>
-                                                <td> <?php echo $macuahang; ?> </td>
-                                                <td> <?php echo $tencuahang; ?> </td>
-                                                <td> <?php echo $chucuahang; ?> </td>
-                                                <td> <?php echo $sdt_cuahang; ?> </td>
-                                                <td><?php echo $email; ?></td>
-                                                <td> 
-                                                    <?php echo $ngaybatdauthue;?>
-                                                </td>
-                                                <td>  
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
                             </div>
-                            <!-- END EXAMPLE TABLE PORTLET-->
+                            <!-- END PROFILE CONTENT -->
                         </div>
                     </div>
                     <!-- END PAGE BASE CONTENT -->
@@ -825,50 +826,10 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
-        <div class="page-footer">
-            <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
-                <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
-                <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
-            </div>
-            <div class="scroll-to-top">
-                <i class="icon-arrow-up"></i>
-            </div>
-        </div>
+        <?php require "footer.php"; ?>
         <!-- END FOOTER -->
         <!-- BEGIN QUICK NAV -->
-        <nav class="quick-nav">
-            <a class="quick-nav-trigger" href="#0">
-                <span aria-hidden="true"></span>
-            </a>
-            <ul>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" target="_blank" class="active">
-                        <span>Purchase Metronic</span>
-                        <i class="icon-basket"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/reviews/4021469?ref=keenthemes" target="_blank">
-                        <span>Customer Reviews</span>
-                        <i class="icon-users"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/showcast/" target="_blank">
-                        <span>Showcase</span>
-                        <i class="icon-user"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/metronic-theme/changelog/" target="_blank">
-                        <span>Changelog</span>
-                        <i class="icon-graph"></i>
-                    </a>
-                </li>
-            </ul>
-            <span aria-hidden="true" class="quick-nav-bg"></span>
-        </nav>
-        <div class="quick-nav-overlay"></div>
+        
         <!-- END QUICK NAV -->
         <!--[if lt IE 9]>
 <script src="../public/assets/global/plugins/respond.min.js"></script>
@@ -882,17 +843,19 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <script src="../public/assets/global/scripts/datatable.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
+         <script src="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
-        <script src="../public/assets/pages/scripts/table-datatables-fixedheader.min.js" type="text/javascript"></script>
+        <script src="../public/assets/pages/scripts/profile.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <script src="../public/assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>
@@ -900,6 +863,126 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
         <script src="../public/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
         <!-- END THEME LAYOUT SCRIPTS -->
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#frmThongTin').validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "", // validate all fields including form hidden input
+                    rules: {
+                        txtHoTen: {
+                            required: true
+                        },
+                        txtSDT:{
+                            required: true,
+                            number:true
+                        },
+                        txtEmail:{
+                            required: true,
+                            email:true
+                        }
+                    },
+                    messages:{
+                        txtHoTen: {
+                            required: "Họ tên không được rỗng"
+                        },
+                         txtSDT:{
+                            required: "SĐT không được rỗng",
+                            number:"Nhập Số"
+                        },
+                         txtEmail:{
+                            required: "Email hông được rỗng",
+                            email:"Nhập Email"
+                        }
+                    },
+                    highlight: function(element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function(element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+                    errorPlacement: function(error, element) 
+                    {
+                        if (element.is(':checkbox')) 
+                        {
+                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                        } 
+                        else 
+                        if (element.is(':radio')) {
+                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                        }
+                        else 
+                        {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    }
+                });
+
+                $('#frmMatKhau').validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "", // validate all fields including form hidden input
+                    rules: {
+                        txtMatKhauCu: {
+                            required: true
+                        },
+                        txtMatKhauMoi:{
+                            required: true,
+                  
+                        },
+                        txtNhapLaiMatKhau:{
+                            equalTo: "#password_new"
+                          
+                        }
+                    },
+                    messages:{
+                        txtMatKhauCu: {
+                            required: "Mật khẩu không được rỗng"
+                        },
+                         txtMatKhauMoi:{
+                            required: "Mật khẩu không được rỗng"
+                       
+                        },
+                         txtNhapLaiMatKhau:{
+                            equalTo:"Không trùng khớp",
+                           
+                        }
+                    },
+                    highlight: function(element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function(element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+                    errorPlacement: function(error, element) 
+                    {
+                        if (element.is(':checkbox')) 
+                        {
+                            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                        } 
+                        else 
+                        if (element.is(':radio')) {
+                            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                        }
+                        else 
+                        {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    }
+
+                });
+
+                
+            });
+        </script>
     </body>
 
 </html>

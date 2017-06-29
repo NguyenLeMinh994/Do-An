@@ -154,6 +154,24 @@ License: You must have a valid license purchased only from themeforest(the above
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="portlet light portlet-fit bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class=" icon-layers font-green"></i>
+                                        <span class="caption-subject font-green bold uppercase">Doanh Thu</span>
+                                    </div>
+                                    <div class="actions">
+                                       
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div id="morris_chart_3" style="height:300px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="portlet light portlet-fit bordered">
                                 <div class="portlet-title">
@@ -168,7 +186,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <div id="morris_chart_4" style="height:250px;"></div>
+                                    <div id="morris_chart_4" style="height:300px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -231,6 +249,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             <!-- END EXAMPLE TABLE PORTLET-->
                         </div>
                     </div>
+                     
                     <!-- END PAGE BASE CONTENT -->
                 </div>
                 <!-- END CONTENT BODY -->
@@ -324,6 +343,24 @@ License: You must have a valid license purchased only from themeforest(the above
                     value: <?php echo $r_sl['soluong']; ?>},
                 <?php  } ?>
                   ]
+                });
+
+                // BAR CHART
+                new Morris.Bar({
+                  element: 'morris_chart_3',
+                  data: [
+                  <?php  
+                    $doanhthucanam=thongKeCacNam($cuaHang);
+                    while($r_nam=$doanhthucanam->fetch_assoc()){
+                  ?>
+                    { y: '<?php echo $r_nam['nam'] ?>', a:<?php echo $r_nam['tongtien']; ?>  },
+                  <?php  
+                    }
+                  ?>
+                  ],
+                  xkey: 'y',
+                  ykeys: ['a'],
+                  labels: ['Lợi nhuận']
                 });
             });
         </script>

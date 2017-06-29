@@ -35,13 +35,14 @@
 		return $rt;
 	}
 //------------------------------------------------------------
-	function nhapMatKhauMoi($email,$matkhau)
+	function nhapMatKhauMoi($idNV,$matkhau)
 	{
 		$conn=connect();
 		$matkhau2=md5($matkhau);
+		$id=substr($idNV,4);
 		$sql="UPDATE nhanvien
-				SET nv_matkhau=$matkhau2
-				WHERE nv_email=$email";
+				SET nv_matkhau='$matkhau2'
+				WHERE nv_ma=$id";
 		return $conn->query($sql);
 	}
 	function quenMatKhau($email)
@@ -55,7 +56,8 @@
 			$result = $conn->query($sql);
 			if($result->num_rows > 0)
 			{
-				return true;
+				$row=$result->fetch_assoc();
+				return ("user".$row['nv_ma']);
 			}
 			else
 			{
@@ -137,7 +139,8 @@
 			$row_thongtin=$result->fetch_assoc();
 			$tenkhongdau=to_slug($row_thongtin['nv_hoten']);
 			// đổi tên file hình
-			$newName=$tenkhongdau.'.'.pathinfo($file["name"],PATHINFO_EXTENSION);
+			$date=date("d-m-Y-H-i-s");
+			$newName=$date."-".$tenkhongdau.'.'.pathinfo($file["name"],PATHINFO_EXTENSION);
 			$target_dir = "/public/upload/avatar/";
 			$target_file = $target_dir . basename($newName);
 			$uploadOk = 1;

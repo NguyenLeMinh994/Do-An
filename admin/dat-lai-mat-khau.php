@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    require "func_shop/func_nguoidung.php";
+    require "func_admin/func_nguoidung.php";
     if(!isset($_GET['user']) || empty($_GET['user']))
     {
         header("Location:quen-mat-khau.php");
@@ -18,7 +18,7 @@
             }
         }
     else
-        if(isset($_SESSION['NV']))
+        if(isset($_SESSION['AD']))
         {
             header("Location:index.php");
         }
@@ -46,7 +46,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Tạo Mật Khẩu Mới</title>
+        <title>Đặt Lại Mật Khẩu Mới</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for " name="description" />

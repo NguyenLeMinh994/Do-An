@@ -22,6 +22,11 @@
             echo '<script type="text/javascript">alert("Cập Nhật Thất Bại");</script>';
         }             
     }
+    else
+        if(!isset($_GET['idKM']) || empty($_GET['idKM']))
+        {
+            header("Location:danh-sach-khuyen-mai.php");
+        }
    
 ?>
 
