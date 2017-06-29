@@ -206,7 +206,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th> Doanh Thu </th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
+                                        <!-- <tfoot>
                                             <tr>
                                                  <th> Mã  </th>
                                                 <th> Cửa Hàng</th>
@@ -216,7 +216,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th> Ngày Thuê </th>
                                                 <th> Doanh Thu </th>
                                             </tr>
-                                        </tfoot>
+                                        </tfoot> -->
                                         <tbody>
                                         <?php 
                                             $danhsachcuahang=danhSachCuaHang();
@@ -228,7 +228,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 $sdt_cuahang=$row_cuahang['ch_sdt'];
                                                
                                                 $ngaybatdauthue=date("d/m/Y",strtotime($row_cuahang['ch_ngaybatdauthue']));
-                                                $ngayketthucthue=date("d/m/Y",strtotime($row_cuahang['ch_ngayketthucthue']));
+                                                // $ngayketthucthue=date("d/m/Y",strtotime($row_cuahang['ch_ngayketthucthue']));
 
                                                 $thongtin=layThongTinChuCuaHang($macuahang);
                                                 $row_thongtin=$thongtin->fetch_assoc();
@@ -243,9 +243,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <td> <?php echo $sdt_cuahang; ?> </td>
                                                 <td><?php echo $email; ?></td>
                                                 <td> 
-                                                    <?php echo $ngaybatdauthue." - ". $ngayketthucthue; ?>
+                                                    <?php echo $ngaybatdauthue;?>
                                                 </td>
-                                                <td>  </td>
+                                                <td>  
+                                                </td>
                                             </tr>
                                         <?php } ?>
                                         </tbody>

@@ -1,5 +1,22 @@
 <?php 
     require "top.php";
+    require_once "func_admin/func_trangadmin.php";
+    // Cửa Hàng
+    $ch=soLuongCuaHang();
+    $r_ch=$ch->fetch_assoc();
+
+    //Khách hàng
+    $kh=soLuongKhachHang();
+    $r_kh=$kh->fetch_assoc();
+
+    //Loại Sản Phẩm
+    $lsp=soLuongLoaiSP();
+    $r_lsp=$lsp->fetch_assoc();
+
+    //Hãng
+    $h=soLuongHang();
+    $r_h=$h->fetch_assoc();
+
 ?>
 <!DOCTYPE html>
 <!-- 
@@ -24,7 +41,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | Admin Dashboard 2</title>
+        <title>Trang Admin</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for statistics, charts, recent events and reports" name="description" />
@@ -74,8 +91,8 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>Admin Dashboard 2
-                                <small>statistics, charts, recent events and reports</small>
+                            <h1>Trang Admin
+                               
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
@@ -96,42 +113,42 @@ License: You must have a valid license purchased only from themeforest(the above
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
                     <!-- BEGIN PAGE BASE CONTENT -->
-                     <div class="row">
+                    <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                            <a class="dashboard-stat dashboard-stat-v2 blue" href="danh-sach-khach-hang.php">
                                 <div class="visual">
                                     <i class="fa fa-comments"></i>
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        <span data-counter="counterup" data-value="1349">0</span>
+                                        <span data-counter="counterup" data-value="<?php echo $r_kh['kh_sl']; ?>"></span>
                                     </div>
-                                    <div class="desc"> New Feedbacks </div>
+                                    <div class="desc"> Khách Hàng </div>
                                 </div>
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                            <a class="dashboard-stat dashboard-stat-v2 red" href="danh-sach-cua-hang.php">
                                 <div class="visual">
                                     <i class="fa fa-bar-chart-o"></i>
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        <span data-counter="counterup" data-value="12,5">0</span>M$ </div>
-                                    <div class="desc"> Total Profit </div>
+                                        <span data-counter="counterup" data-value="<?php echo $r_ch['ch_sl']; ?>"></span></div>
+                                    <div class="desc"> Cửa Hàng </div>
                                 </div>
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                            <a class="dashboard-stat dashboard-stat-v2 green" href="danh-sach-hang.php">
                                 <div class="visual">
                                     <i class="fa fa-shopping-cart"></i>
                                 </div>
                                 <div class="details">
                                     <div class="number">
-                                        <span data-counter="counterup" data-value="549">0</span>
+                                        <span data-counter="counterup" data-value="<?php echo $r_h['h_sl']; ?>">0</span>
                                     </div>
-                                    <div class="desc"> New Orders </div>
+                                    <div class="desc"> Hãng Sản Xuất </div>
                                 </div>
                             </a>
                         </div>
@@ -142,11 +159,31 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <div class="details">
                                     <div class="number"> +
-                                        <span data-counter="counterup" data-value="89"></span>% </div>
-                                    <div class="desc"> Brand Popularity </div>
+                                        <span data-counter="counterup" data-value="<?php echo $r_lsp['lsp_sl']; ?>"></span> </div>
+                                    <div class="desc"> Loại Sản Phẩm </div>
                                 </div>
                             </a>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="portlet light portlet-fit bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class=" icon-layers font-green"></i>
+                                        <span class="caption-subject font-green bold uppercase">Pie Chart</span>
+                                    </div>
+                                    <div class="actions">
+                                        
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div id="morris_chart_4" style="height:250px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
                     </div>
                     <!-- END PAGE BASE CONTENT -->
                 </div>
@@ -162,39 +199,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <?php require "footer.php"; ?>
         <!-- END FOOTER -->
         <!-- BEGIN QUICK NAV -->
-        <nav class="quick-nav">
-            <a class="quick-nav-trigger" href="#0">
-                <span aria-hidden="true"></span>
-            </a>
-            <ul>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" target="_blank" class="active">
-                        <span>Purchase Metronic</span>
-                        <i class="icon-basket"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/reviews/4021469?ref=keenthemes" target="_blank">
-                        <span>Customer Reviews</span>
-                        <i class="icon-users"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/showcast/" target="_blank">
-                        <span>Showcase</span>
-                        <i class="icon-user"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/metronic-theme/changelog/" target="_blank">
-                        <span>Changelog</span>
-                        <i class="icon-graph"></i>
-                    </a>
-                </li>
-            </ul>
-            <span aria-hidden="true" class="quick-nav-bg"></span>
-        </nav>
-        <div class="quick-nav-overlay"></div>
+  
         <!-- END QUICK NAV -->
         <!--[if lt IE 9]>
 <script src=".../public/assets/global/plugins/respond.min.js"></script>
@@ -253,6 +258,21 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
         <script src="../public/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
         <!-- END THEME LAYOUT SCRIPTS -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+          
+                // PIE CHART
+                new Morris.Donut({
+                  element: 'morris_chart_4',
+                  data: [
+                  {label: "Cửa Hàng", value: <?php echo $r_ch['ch_sl'] ?>},
+                  {label: "Khách Hàng", value: <?php echo $r_kh['kh_sl']; ?>},
+
+                  ]
+              });
+               
+            });
+        </script>
     </body>
 
 </html>

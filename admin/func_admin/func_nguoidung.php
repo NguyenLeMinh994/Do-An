@@ -1,6 +1,6 @@
 <?php 
 require "../config/connectionstring.php";
-	session_start();
+
 	function kiemTraDangNhapCuaHang($tenDangNhap,$matKhau)
 	{
 		$conn=connect();

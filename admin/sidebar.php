@@ -20,9 +20,9 @@
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item start active open">
-                                    <a href="index.html" class="nav-link ">
+                                    <a href="index.php" class="nav-link ">
                                         <i class="icon-bar-chart"></i>
-                                        <span class="title">Dashboard 1</span>
+                                        <span class="title">Admin</span>
                                         <span class="selected"></span>
                                     </a>
                                 </li>
