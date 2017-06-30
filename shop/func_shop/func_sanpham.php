@@ -27,7 +27,7 @@ function uploadimage($files,$tenSP)
 		// kiểm tra đuôi hình
 		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) 
 		{
-			echo '<script>alert("Kiểm tra lại hình ảnh");</script>';
+			echo '<script>alert("Kiểm tra lại đuôi hình ảnh");</script>';
 			$uploadOk = false;
 		}
 
@@ -50,6 +50,94 @@ function uploadimage($files,$tenSP)
 	else
 		return false;
 }
+//------------------------------------------------
+function path_hinh($files,$tenSP)
+{
+	if(!empty($files['name']))
+	{
+		$date=date('d-m-Y-H-i-s');
+		$newName=$date.'-'.$tenSP.'.'.pathinfo($files["name"],PATHINFO_EXTENSION);
+		$target_dir = "/public/upload/img/";
+		$path = $target_dir . basename($newName);
+		$uploadOk = true;
+		$size=5*1024*1024;
+		$imageFileType = pathinfo($path,PATHINFO_EXTENSION);
+		$check = getimagesize($files["tmp_name"]);
+		if($check == false)  
+		{
+			echo "<script>alert('Đây Không Phải Là File Hình');</script>";
+			$uploadOk = false;
+		}
+		// Kiểm tra dung lượng
+		if ($files["size"] > $size) 
+		{
+		    echo "<script>alert('Thất Bại: File Lớn Hơn 5MB');</script>";
+		    $uploadOk = false;
+		}
+		// kiểm tra đuôi hình
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) 
+		{
+			echo '<script>alert("Kiểm tra lại đuôi hình ảnh");</script>';
+			$uploadOk = false;
+		}
+
+		if ($uploadOk == true) 
+		{
+			if (move_uploaded_file($files["tmp_name"], "..".$path)) 
+			{
+
+				return $path;
+			} 
+			else 
+			{
+				
+				return false;
+			}
+		}
+		else
+			return $uploadOk;
+	}
+	else
+		return false;
+}
+//---------------------------------------------------------------------------
+function chenHinhSanPham($files,$idSP)
+{
+	$conn=connect();
+	$sql="SELECT *
+		FROM sanpham
+		WHERE sp_ma=$idSP";
+	$result=$conn->query($sql);
+
+	if($result->num_rows > 0)
+	{	
+		$r_sp=$result->fetch_assoc();
+		$tenkhongdau=to_slug($r_sp['sp_ten']);
+		$path_hinh=path_hinh($files,$tenkhongdau);
+
+		if($path_hinh!=false)
+		{
+			$sql="INSERT INTO hinhanh(hinh_masanpham,hinh_duongdanhinh,hinh_trangthai) 
+			VALUES($idSP,'$path_hinh',1)";
+			return $conn->query($sql);
+		}
+		else
+		{
+			echo '<script>alert("Upload hình thất bại");</script>';
+		}
+	}
+}
+//---------------------------------------------------------------------------
+function danhSachHinh($idSP)
+{
+	$conn=connect();
+	$sql="SELECT *
+		FROM hinhanh
+		WHERE hinh_masanpham=$idSP
+		AND hinh_trangthai=1";
+	return $conn->query($sql);
+}
+//---------------------------------------------------------------------------
 function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong,$cauHinh,$cuaHang)
 {	
 	$conn=connect();
