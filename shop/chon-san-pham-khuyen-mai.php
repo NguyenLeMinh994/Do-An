@@ -240,7 +240,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 $loaiSanPham=$row_sp['lsp_ten'];
                                                 $hangSanXuat=$row_sp['hsx_ten'];
                                                 $maSanPham=$row_sp['sp_ma'];
-                                                $hinh=$row_sp['sp_hinhdaidien'];
+                                                $hinh=$row_sp['sp_hinh1'];
                                                 
                                         echo"<tr>
                                                 <td>$tenSanPham </td>

@@ -341,7 +341,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <tr>
                                                 <td> <?php echo $r_sp['sp_ten']; ?> </td>
                                                 <td style="width: 30px;"> 
-                                                   <img src="..<?php echo $r_sp['sp_hinhdaidien']; ?>" class="img-rounded" alt="" style="width: 100px;">
+                                                   <img src="..<?php echo $r_sp['sp_hinh1']; ?>" class="img-rounded" alt="" style="width: 100px;">
                                                 </td>
                                                 <td> <?php echo $r_sp['cthd_soluong']; ?> </td>
                                                 <td> <?php echo number_format($r_sp['cthd_dongia']); ?> VNĐ</td>

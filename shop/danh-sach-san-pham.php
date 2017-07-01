@@ -217,7 +217,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         {
                                             $masp=$row_sp['sp_ma'];
                                             $tensp=$row_sp['sp_ten']; 
-                                            $hinhdaidien= "..".$row_sp['sp_hinhdaidien'];
+                                            $hinhdaidien= "..".$row_sp['sp_hinh1'];
                                             $dongiasp=number_format($row_sp['sp_dongia'],0,'.','.')." VND";
                                             $loai=$row_sp['lsp_ten'];
                                             $hang=$row_sp['hsx_ten']; 
