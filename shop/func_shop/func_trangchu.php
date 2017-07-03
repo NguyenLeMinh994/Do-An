@@ -82,10 +82,10 @@ function LuotXem($cuaHang)
 function thongKeCacNam($cuaHang)
 {
 	$conn=connect();
-	$sql="SELECT YEAR(hd_ngaygiao) as nam, SUM(hd_tongtien) as tongtien
-		FROM hoadon 
-		WHERE hd_trangthai=3 AND hd_cuahang=$cuaHang
-		GROUP BY YEAR(hd_ngaygiao)";
+	$sql="SELECT YEAR(hd_ngaydat) as nam, SUM(cthd_soluong*cthd_dongia) as tongtien
+		FROM hoadon,chitiethoadon
+		WHERE hd_trangthai=3 AND hd_cuahang=$cuaHang AND cthd_mahoadon=hd_ma
+		GROUP BY YEAR(hd_ngaydat)";
 
 	return $conn->query($sql);
 }

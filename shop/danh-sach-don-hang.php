@@ -209,6 +209,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th> Số Đơn Hàng </th>
                                                 <th> Tên Khách Hàng </th>
                                                 <th> Tổng Tiền  </th>
+                                                <th>Ngày Mua</th>
                                                 <th> Trạng Thái </th>
                                                 <th> Thao Tác</th>
                                             </tr>
@@ -218,6 +219,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th> Số Đơn Hàng </th>
                                                 <th> Tên Khách Hàng </th>
                                                 <th> Tổng Tiền </th>
+                                                <th>Ngày Mua</th>
                                                 <th> Trạng Thái </th>
                                                 <th> Thao Tác</th>
                                             </tr>
@@ -233,7 +235,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <tr>
                                                     <td> <?php echo $mahd; ?> </td>
                                                     <td> <?php echo $row_donhang['kh_hoten']; ?> </td>
-                                                    <td> <?php echo number_format($row_donhang['hd_tongtien'],0,",","."); ?> VND</td>
+                                                    <td> <?php echo number_format($row_donhang['tongtien']); ?> VND</td>
+                                                    <td> <?php echo date("d/m/Y",strtotime($row_donhang['hd_ngaydat']));?></td>
                                                     <td> 
                                                         <!-- <span class="label label-danger"> Danger </span> -->
                                                         <?php  
@@ -296,6 +299,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th> Số Đơn Hàng </th>
                                                 <th> Tên Khách Hàng </th>
                                                 <th> Tổng Tiền </th>
+                                                <th>Ngày Mua</th>
                                                 <th> Trạng Thái </th>
                                                 <th>Thao Tác</th>
                                             </tr>
@@ -310,7 +314,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <tr>
                                                 <td> <?php echo $mahd; ?></td>
                                                 <td><?php echo $row_donhang['kh_hoten']; ?></td>
-                                                <td> <?php echo number_format($row_donhang['hd_tongtien'],0,",","."); ?> VND</td>
+                                                <td> <?php echo number_format($row_donhang['tongtien']); ?> VND</td>
+                                                <td> <?php echo date("d/m/Y",strtotime($row_donhang['hd_ngaydat']));?></td>
                                                 <td>
                                                     <span class="label label-success"> Đã Giao </span>
                                                 </td>

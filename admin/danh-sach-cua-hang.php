@@ -72,8 +72,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>FixedHeader Extension
-                                <small>rowreorder extension demos</small>
+                            <h1>Quản Lý Cửa Hàng
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
@@ -163,15 +162,12 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!-- BEGIN PAGE BREADCRUMB -->
                     <ul class="page-breadcrumb breadcrumb">
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.php">Trang Admin</a>
                             <i class="fa fa-circle"></i>
                         </li>
+                       
                         <li>
-                            <a href="#">Tables</a>
-                            <i class="fa fa-circle"></i>
-                        </li>
-                        <li>
-                            <span class="active">Datatables</span>
+                            <span class="active">Danh Sách Cửa Hàng</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
@@ -202,7 +198,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th> Chủ Cửa Hàng</th>
                                                 <th> Số Điện Thoại </th>
                                                 <th> Email </th>
-                                                <th> Ngày Thuê </th>
+                                                <th> Ngày Đăng Ký </th>
                                                 <th> Doanh Thu </th>
                                             </tr>
                                         </thead>
@@ -223,11 +219,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                             while ($row_cuahang=$danhsachcuahang->fetch_assoc()) 
                                             {
 
-                                                $tencuahang=$row_cuahang['ch_ten'];
+                                            $tencuahang=$row_cuahang['ch_ten'];
                                                 $macuahang=$row_cuahang['ch_ma'];
                                                 $sdt_cuahang=$row_cuahang['ch_sdt'];
                                                
-                                                $ngaybatdauthue=date("d/m/Y",strtotime($row_cuahang['ch_ngaybatdauthue']));
+                                                $ngaybatdauthue=date("d/m/Y",strtotime($row_cuahang['ch_ngaythamgia']));
                                                 // $ngayketthucthue=date("d/m/Y",strtotime($row_cuahang['ch_ngayketthucthue']));
 
                                                 $thongtin=layThongTinChuCuaHang($macuahang);

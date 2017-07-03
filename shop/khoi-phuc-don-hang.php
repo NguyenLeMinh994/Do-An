@@ -200,19 +200,12 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th> Số Đơn Hàng </th>
                                                 <th> Tên Khách Hàng </th>
                                                 <th> Tổng Tiền  </th>
+                                                <th>Ngày Mua</th>
                                                 <th> Trạng Thái </th>
                                                 <th> Thao Tác</th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
-                                           <tr>
-                                                <th> Số Đơn Hàng </th>
-                                                <th> Tên Khách Hàng </th>
-                                                <th> Tổng Tiền </th>
-                                                <th> Trạng Thái </th>
-                                                <th> Thao Tác</th>
-                                            </tr>
-                                        </tfoot>
+
                                         <tbody>
                                             <?php  
                                             $donHang=danhSachDonHangBiHuy($cuaHang);
@@ -224,30 +217,22 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <tr>
                                                     <td> <?php echo $mahd; ?> </td>
                                                     <td> <?php echo $row_donhang['kh_hoten']; ?> </td>
-                                                    <td> <?php echo number_format($row_donhang['hd_tongtien']); ?> VNĐ</td>
+                                                    <td> <?php echo number_format($row_donhang['tongtien']); ?> VNĐ</td>
+                                                    <td>
+                                                    <?php echo date("d/m/Y",strtotime($row_donhang['hd_ngaydat']));?>
+                                                    </td>
                                                     <td> 
-                                                        <!-- <span class="label label-danger"> Danger </span> -->
-                                                        <?php  
-                                                        if($row_donhang['hd_trangthai']==1)
-                                                        {
-                                                           echo '<span class="badge badge-info badge-roundless"> Chưa Giao </span>'; 
-                                                        }
-                                                        else
-                                                            if($row_donhang['hd_trangthai']==2)
-                                                            {
-                                                                echo '<span class="badge badge-warning badge-roundless"> Đang Giao </span>';
-                                                            }
-                                                            else
-                                                                echo '<span class="badge badge-success badge-roundless"> Đã Giao </span>';    
-                                                    ?>
-                                                </td>
-                                                <td>
-                                                 <a href='chi-tiet-don-hang.php?idHD=<?php echo $mahd; ?>' class='btn dark btn-outline uppercase'> 
-                                                    Xem
-                                                </a>
-                                                <a href='?idDH=<?php echo $mahd; ?>' class='btn red btn-outline uppercase'> 
-                                                    Khôi Phục
-                                                </a>
+                                                        <span class="label label-danger"> Hủy </span>
+                                                      
+                                                    </td>
+                                                
+                                                    <td>
+                                                       <a href='chi-tiet-don-hang.php?idHD=<?php echo $mahd; ?>' class='btn dark btn-outline uppercase'> 
+                                                        Xem
+                                                    </a>
+                                                    <a href='?idDH=<?php echo $mahd; ?>' class='btn red btn-outline uppercase'> 
+                                                        Khôi Phục
+                                                    </a>
                                                 </td>
                                             </tr>
                                             <?php  

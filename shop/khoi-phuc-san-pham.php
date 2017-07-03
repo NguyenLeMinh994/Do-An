@@ -201,8 +201,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <thead>
                                             <tr>
                                                 <th>Tên </th>
-                                                <th>Hình</th>
-                                                <th>Giá (VND)</th>
+                                                <th style="width:11%">Hình</th>
+                                                <th>Giá</th>
                                                 <th>Hãng</th>
                                                 <th>Loại</th>
                                                 <th>Nhà Cung Cấp</th>
@@ -231,8 +231,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                         ?>
                                             <tr>
                                                 <td><?php echo $tensp; ?></td>
-                                                <td style="width:11%">
-                                                <img src="<?php echo $hinhdaidien;?>" class="img-rounded" alt="" style="width:100%"></td>
+                                                <td style="width:8%">
+                                                <img src="<?php echo $hinhdaidien;?>" class="img-rounded" alt="" style="width:100%">
+                                                </td>
                                                 <td><?php echo $dongiasp; ?></td>
                                                 <td><?php echo $hang; ?></td>
                                                 <td><?php echo $loai; ?></td>

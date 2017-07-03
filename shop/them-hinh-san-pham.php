@@ -242,7 +242,16 @@ License: You must have a valid license purchased only from themeforest(the above
                                                         <div class="alert alert-success display-hide" <?php echo $success ?>>Thêm thành công 
                                                             <button class="close" data-close="alert"></button> 
                                                         </div>
-                                                        
+                                                        <?php 
+                                                            $sp=laySanPhamTheoID($_GET['idSP']);
+                                                            $r_sp=$sp->fetch_assoc(); 
+                                                        ?>
+                                                        <div class="form-group ">
+                                                            <label class="col-md-3 control-label">Tên Sản Phẩm</label>
+                                                            <div class="col-md-4">
+                                                                <span class="form-control-static"><?php echo $r_sp['sp_ten']; ?></span>
+                                                            </div>
+                                                        </div>
                                                         <div class="form-group">
                                                             <label class="control-label col-md-3">Hình</label>
                                                             <div class="col-md-9">

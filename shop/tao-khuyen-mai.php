@@ -66,10 +66,10 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN PAGE LEVEL PLUGINS Mới -->
 
         <!-- BEGIN Validate -->
-        <!-- 
+        
         <link href="../public/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+       <!--  <link href="../public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" type="text/css" />
         -->
@@ -249,27 +249,30 @@ License: You must have a valid license purchased only from themeforest(the above
                                                         
                                                         <div class="form-group">
                                                             <label class="col-md-3 control-label">
-                                                            Tên Khuyến Mãi
-                                                            <span class="required"> * </span>
+                                                                Tên Khuyến Mãi
+                                                                <span class="required"> * </span>
                                                             </label>
                                                             <div class="col-md-4">
                                                                 <input type="text" name="txtTenKhuyenMai" class="form-control" required>
                                                             </div>
                                                         </div>
                                                         
-                                                          <div class="form-group" >
+                                                        <div class="form-group" >
                                                             <label class="col-md-3 control-label">Giảm Giá
-                                                            <span class="required"> * </span>
+                                                               
+                                                                <span class="required" id=""> * </span>
                                                             </label>
-                                                            <div class="col-md-4">
-                                                                <div class="input-icon right">
-                                                                <input type="text" id="mask_number" name="txtPhanTram" class="form-control" placeholder="Số Phần Trăm" required>
+                                                            <div class="col-md-4 input-group select2-bootstrap-append select2-bootstrap-prepend input-large">
+                                                                
+                                                                    <input type="text" id="mask_number" name="txtPhanTram" class="form-control" placeholder="Số Phần Trăm" required>
+                                                                    <div class="input-group-addon">%</div> 
+                                                               
                                                             </div>
-                                                            </div>
+
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label col-md-3">Thời Gian Khuyến Mãi
-                                                            <span class="required"> * </span>
+                                                                <span class="required"> * </span>
                                                             </label>
                                                             <div class="col-md-4">
                                                                 <div class="input-group input-large date-picker input-daterange" data-date="11/6/2017" data-date-format="dd-mm-yyyy">
@@ -277,16 +280,17 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                     <span class="input-group-addon"> đến </span>
                                                                     <input type="text" class="form-control" readonly name="txtTo" required> </div>
                                                                     <!-- /input-group -->
-                                                            </div>
-                                                        </div>    
-                                                    </div>
+                                                                </div>
+                                                            </div>    
 
-                                                    <div class="form-actions">
-                                                        <div class="row">
-                                                            <div class="col-md-offset-3 col-md-9">
-                                                                <button type="submit" class="btn btn-circle green" name="btnTaoKhuyenMai">Tạo Khuyến Mãi</button>
+
+                                                            <div class="form-actions">
+                                                                <div class="row">
+                                                                    <div class="col-md-offset-3 col-md-9">
+                                                                        <button type="submit" class="btn btn-circle green" name="btnTaoKhuyenMai">Tạo Khuyến Mãi</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
                                                     </div>
                                                 </form>
                                                 <!-- END FORM-->
@@ -888,9 +892,9 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS Mới-->
         <!-- BEGIN Validate -->
-        <!-- 
+        
         <script src="../public/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+        <!-- <script src="../public/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
@@ -932,6 +936,7 @@ License: You must have a valid license purchased only from themeforest(the above
          <!-- Cách 2 -->
         <!-- <script src="../public/assets/pages/scripts/form-validation-md.min.js" type="text/javascript"></script>-->
         <!-- Cách 3 -->
+        <script src="../public/assets/pages/scripts/components-select2.min.js" type="text/javascript"></script>
         <script src="../public/js/jquery/validate.js" type="text/javascript"></script>      
         <!-- END Validate -->
         <script src="../public/assets/pages/scripts/components-bootstrap-touchspin.min.js" type="text/javascript"></script>

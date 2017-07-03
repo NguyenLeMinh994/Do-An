@@ -1,10 +1,21 @@
 <?php 
     require "top.php";
     require "func_shop/func_sanpham.php";
-    if(!isset($_GET['idSP'])|| empty($_GET['idSP']))
+    if(isset($_GET['idAn']))
     {
-        header("Location:danh-sach-san-pham.php");
+        anHinh($_GET['idAn']);
     }
+    else
+        if(isset($_GET['idHien']))
+        {
+            hienHinh($_GET['idHien']);
+        }
+        else
+            if(!isset($_GET['idSP'])|| empty($_GET['idSP']))
+            {
+                header("Location:danh-sach-san-pham.php");
+            }
+
  ?>
 <!DOCTYPE html>
 <!-- 
@@ -29,7 +40,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Thêm Hình</title>
+        <title>Danh Sách Hình</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for form layouts" name="description" />
@@ -203,7 +214,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="portlet-title">
                                     <div class="caption font-dark">
                                         <i class="icon-settings font-dark"></i>
-                                        <span class="caption-subject bold uppercase"> Danh Sách Hình</span>
+                                        <?php 
+                                            $sp=laySanPhamTheoID($_GET['idSP']);
+                                            $r_sp=$sp->fetch_assoc(); 
+                                        ?>
+                                        <span class="caption-subject bold uppercase"> Danh Sách Hình <?php echo $r_sp['sp_ten']; ?></span>
                                     </div>
                                     <div class="actions">
                                       <!--   <div class="btn-group btn-group-devided" data-toggle="buttons">
@@ -219,7 +234,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="btn-group">
-                                                    <a href="them-hinh-san-pham.php" id="sample_editable_1_new" class="btn sbold green">Thêm hình
+                                                    <a href="them-hinh-san-pham.php?idSP=<?php echo $_GET['idSP']; ?>" id="sample_editable_1_new" class="btn sbold green">Thêm hình
                                                         <i class="fa fa-plus"></i>
                                                     </a>
                                                 </div>
@@ -257,10 +272,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     <span class="label label-sm label-success">Hiện</span>
                                                 </td>
                                                 <td>
-                                                    <a href="xxxxx?idSP=<?php echo $mahinh; ?>" class="btn blue btn-outline uppercase"> 
+                                                    <a href="cap-nhat-hinh-san-pham.php?idSP=<?php echo $_GET['idSP'].'&idHinh='.$mahinh; ?>" class="btn blue btn-outline uppercase"> 
                                                         <i class="icon-wrench"></i>
                                                     </a>
-                                                    <a href="?idSP=<?php echo $mahinh; ?>" class="btn dark btn-outline uppercase"> 
+                                                    <a href="?idSP=<?php echo $_GET['idSP'].'&idAn='.$mahinh; ?>" class="btn dark btn-outline uppercase"> 
                                                         <i class="icon-trash"></i>
                                                     </a>
                                                 </td>
@@ -318,20 +333,32 @@ License: You must have a valid license purchased only from themeforest(the above
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="odd gradeX">
+                                            <?php 
+                                            $hinh=danhSachHinhBiAn($_GET['idSP']);
+                                            while($r_hinh=$hinh->fetch_assoc())
+                                            { 
+                                                $mahinh=$r_hinh['hinh_ma'];
+                                                ?>
+                                                <tr class="odd gradeX">
+                                                    <td>
+                                                       <?php echo $mahinh; ?>
+                                                   </td>
+
+                                                   <td style="width:5%">
+                                                       <img src="..<?php echo $r_hinh['hinh_duongdanhinh'];?>" class="img-rounded" alt="" style="width:100%">
+                                                   </td>
+                                                   <td class="center">
+                                                    <span class="label label-default"> Ẩn </span>
+                                                </td>
                                                 <td>
                                                    
+                                                    <a href="?idSP=<?php echo $_GET['idSP'].'&idHien='.$mahinh; ?>" class="btn dark btn-outline uppercase"> 
+                                                        Hiện
+                                                    </a>
                                                 </td>
-                                               
-                                                <td>
-                                                   
-                                                </td>
-                                                <td>
-                                                    <span class="label label-sm label-success">Hiện</span>
-                                                </td>
-                                                <td></td>
                                                 
                                             </tr>
+                                            <?php } ?>
                                            
                                         </tbody>
                                     </table>

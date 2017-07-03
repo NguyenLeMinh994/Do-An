@@ -5,7 +5,7 @@ function uploadimage($files,$tenSP)
 	if(!empty($files['name']))
 	{
 
-		$date=date('d-m-Y');
+		$date=date('d-m-Y-H-i-s');
 		$newName=$date.'-'.$tenSP.'.'.pathinfo($files["name"],PATHINFO_EXTENSION);
 		$target_dir = "/public/upload/img/";
 		$path = $target_dir . basename($newName);
@@ -137,28 +137,44 @@ function danhSachHinh($idSP)
 		AND hinh_trangthai=1";
 	return $conn->query($sql);
 }
+function danhSachHinhBiAn($idSP)
+{
+	$conn=connect();
+	$sql="SELECT *
+		FROM hinhanh
+		WHERE hinh_masanpham=$idSP
+		AND hinh_trangthai=2";
+	return $conn->query($sql);
+}
 //---------------------------------------------------------------------------
-function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong,$cauHinh,$cuaHang)
+function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$tomTat,$cauHinh,$cuaHang)
 {	
 	$conn=connect();
 	//chuyễn đổi chuỗi html
 	$nd=$conn->real_escape_string($noiDung);
 	$cauhinh=$conn->real_escape_string($cauHinh);
+	$tomtat=$conn->real_escape_string($tomTat);
+
 	$date=date("Y-m-d");
+
 	$tenkhongdau=to_slug($tenSP);
+
 	$path_Hinh=uploadimage($files,$tenkhongdau);
+
+	$dongia=formatNumber($donGia);
 	if($path_Hinh==false)
 	{
 		echo '<script type="text/javascript">alert("Upload hình lên server thất bại");</script>';
 	}
 	else
 	{
-		$sql="INSERT INTO sanpham(sp_macuahang,sp_loaisanpham,sp_hangsanxuat,sp_nhacungcap,sp_ten,sp_tenkhongdau,sp_hinhdaidien,sp_noidung,sp_soluong,sp_dongia,sp_xemnhieunhat,sp_ngaydang,sp_trangthai,sp_cauhinh)
-		VALUES ($cuaHang,$loaiSP,$hsx,$ncc,'$tenSP','$tenkhongdau','$path_Hinh','$nd',$soLuong,$donGia,0,'$date',1,'$cauhinh')
+		
+		$sql="INSERT INTO sanpham(sp_macuahang,sp_loaisanpham,sp_hangsanxuat,sp_nhacungcap,sp_ten,sp_tenkhongdau,sp_hinh1,sp_noidung,sp_soluong,sp_dongia,sp_luotxem,sp_ngaydang,sp_trangthai,sp_cauhinh,sp_tomtat)
+		VALUES ($cuaHang,$loaiSP,$hsx,$ncc,'$tenSP','$tenkhongdau','$path_Hinh','$nd',1,$dongia,0,'$date',1,'$cauhinh','$tomtat')
 		";
+	
 		if ($conn->query($sql) === TRUE) 
 		{	
-			
 			$last_id = $conn->insert_id;
 			$sql="INSERT INTO danhgia(dg_masanpham,dg_loai1,dg_loai2,dg_loai3,dg_loai4,dg_loai5)
 				VALUES ($last_id,0,0,0,0,0)";
@@ -173,21 +189,37 @@ function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong,$
 		}
 	}
 }
+//-----------------------------------------------------------------
+function formatNumber($donGia)
+{
+	$tien=$donGia;
+	$arr=explode(",",$tien);
+	$strSo="";
+	foreach($arr as $val)
+	{
+	   $strSo.=$val;
+	}
+	$iSo=(double)$strSo;
+	return $iSo;
+}
 // ----------------------------------------------------------------
-function capNhatSanPham($idSP,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$soLuong,$cauHinh)
+function capNhatSanPham($idSP,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$tomTat,$cauHinh)
 {
 	$conn=connect();
 	$nd=$conn->real_escape_string($noiDung);
 	$ch=$conn->real_escape_string($cauHinh);
+	$tt=$conn->real_escape_string($tomTat);
+	$dongia=formatNumber($donGia);
 	$date=date("Y-m-d");
 	$tenkhongdau=to_slug($tenSP);
 	$sql="UPDATE sanpham
 		  SET sp_ten='$tenSP',
 		  sp_tenkhongdau='$tenkhongdau',
 		  sp_noidung='$nd',
+		  sp_dongia=$dongia,
 		  sp_nhacungcap=$ncc,
 		  sp_loaisanpham=$loaiSP,
-		  sp_soluong=$soLuong,
+		  sp_tomtat='$tt',
 		  sp_hangsanxuat=$hsx,
 		  sp_cauhinh='$ch'
 		  WHERE sp_ma=$idSP";
@@ -213,7 +245,7 @@ function capNhatHinh($idSP,$tenSP,$files)
 	else
 	{
 		$sql="UPDATE sanpham
-			  SET sp_hinhdaidien='$path_Hinh'
+			  SET sp_hinh1='$path_Hinh'
 			  WHERE sp_ma=$idSP";
 		return $conn->query($sql);
 	}
@@ -233,7 +265,8 @@ function layDanhSachLoai()
 {
 	$conn=connect();
 	$sql="SELECT * 
-		FROM loaisanpham";
+		FROM loaisanpham
+		WHERE lsp_trangthai=1";
 	return $conn->query($sql);
 }
 
@@ -241,7 +274,8 @@ function layDanhSachHang()
 {
 	$conn=connect();
 	$sql="SELECT * 
-		FROM hangsanxuat";
+		FROM hangsanxuat
+		WHERE hsx_trangthai=1";
 	return $conn->query($sql);	
 }
 
@@ -250,7 +284,7 @@ function layDanhSachCungCap($cuaHang)
 	$conn=connect();
 	$sql="SELECT * 
 		FROM nhacungcap
-		WHERE ncc_macuahang=$cuaHang";
+		WHERE ncc_macuahang=$cuaHang AND ncc_trangthai=1";
 	return $conn->query($sql);
 }
 
@@ -291,5 +325,60 @@ function khoiPhucSanPham($maSP)
 				sp_ma=$maSP";
 	return $conn->query($sql);
 }
+//---------------------------------------------------------------------	
+function anHinh($idHinh)
+{
+	$conn=connect();
+	$sql="UPDATE hinhanh
+			SET 
+				hinh_trangthai=2
+			WHERE 
+				hinh_ma=$idHinh";
+	if($conn->query($sql)==true)
+	{
+		echo '<script>alert("Ẩn Hình Thành Công");</script>';
+	}
+}
+function hienHinh($idHinh)
+{
+	$conn=connect();
+	$sql="UPDATE hinhanh
+			SET 
+				hinh_trangthai=1
+			WHERE 
+				hinh_ma=$idHinh";
+	if($conn->query($sql)==true)
+	{
+		echo '<script>alert("Hiện Hình Thành Công");</script>';
+	}
+}
+//---------------------------------------------------------------------
+function capNhatDanhSachHinh($idHinh,$idSP,$file)
+{
+	$conn=connect();
+	$sql="SELECT count(*)+1 as dem FROM hinhanh WHERE hinh_masanpham=$idSP";
+	$result=$conn->query($sql);
+	$r_dem=$result->fetch_assoc();
+	$hinh=path_hinh($file,$r_dem['dem']);
+	if($hinh!=false)
+	{
+		$sql="UPDATE hinhanh
+			SET 
+				hinh_duongdanhinh='$hinh'
+			WHERE 
+				hinh_ma=$idHinh";
+		return $conn->query($sql);
+		
+	}
+
+}
+function showHinh($idHinh)
+{
+	$conn=connect();
+	$sql="SELECT * FROM hinhanh,sanpham WHERE hinh_masanpham=sp_ma AND hinh_ma=$idHinh";
+	return $conn->query($sql);
+}
+
+//----------------------------------------------------------------------
 
 ?>

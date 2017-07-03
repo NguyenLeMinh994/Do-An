@@ -235,11 +235,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
                                         ?>
                                             <tr>
-                                                <td> <?php echo $r_view['sp_ten']; ?></td>
-                                                <td> <?php echo $r_view['sp_dongia']; ?> </td>
-                                                <td> <?php echo $r_view['lsp_ten']; ?></td>
-                                                <td> <?php echo ($r_view['sp_xemnhieunhat']>0?$r_view['sp_xemnhieunhat']:'N/A'); ?></td>
-                                                
+                                                <td><?php echo $r_view['sp_ten']; ?></td>
+                                                <td><?php echo number_format($r_view['sp_dongia']);?> VNĐ</td>
+                                                <td><?php echo $r_view['lsp_ten']; ?></td>
+                                                <td><?php echo ($r_view['sp_luotxem']>0?$r_view['sp_luotxem']:'N/A'); ?></td>
                                             </tr>                                        
                                           <?php } ?>
                                         </tbody>

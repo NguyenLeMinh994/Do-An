@@ -236,9 +236,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                                             <!--/span-->
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label class="control-label col-md-3">Ngày Giao:</label>
+                                                                    <label class="control-label col-md-3">Ngày Mua:</label>
                                                                     <div class="col-md-9">
-                                                                        <p class="form-control-static"><?php echo date("d/m/Y",strtotime($r_khachhang['hd_ngaygiao']));?> </p>
+                                                                        <p class="form-control-static"><?php echo date("d/m/Y",strtotime($r_khachhang['hd_ngaydat']));?> </p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -249,7 +249,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-3">Tổng tiền:</label>
                                                                     <div class="col-md-9">
-                                                                        <p class="form-control-static"><?php echo number_format($r_khachhang['hd_tongtien']);?> VND</p>
+                                                                        <p class="form-control-static"><?php echo number_format($r_khachhang['tongtien']);?> VNĐ</p>
                                                                     </div>
                                                                 </div>
                                                             </div>

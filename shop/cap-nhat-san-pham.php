@@ -9,13 +9,13 @@
     {
         if(empty($_FILES['hinhanh']['name']))
         {
-            capNhatSanPham($_GET['idSP'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtSoLuong'],$_POST['txtCauHinh']);
+            capNhatSanPham($_GET['idSP'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtTomTat'],$_POST['txtCauHinh']);
         }
         else
         {
             if(capNhatHinh($_GET['idSP'],$_POST['txtTenSP'],$_FILES['hinhanh'])==true)
             {
-                capNhatSanPham($_GET['idSP'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtSoLuong'],$_POST['txtCauHinh']);
+                capNhatSanPham($_GET['idSP'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtTomTat'],$_POST['txtCauHinh']);
             }
             // else
             // {
@@ -47,7 +47,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | Form Layouts</title>
+        <title>Cập Nhật Sản Phẩm</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for form layouts" name="description" />
@@ -250,8 +250,6 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                $tenncc=$row_ncc['ncc_ten'];
 
                                                                $idncc=$row_ncc['ncc_ma'];
-                                                               
-                                                           
                                                        ?>
                                                         <option value="<?php echo $idncc; ?>" <?php echo ($idncc==$mancc?'selected':''); ?> ><?php echo $tenncc; ?></option>
                                                        <?php 
@@ -262,20 +260,15 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 </select>
                                             </div>                                    
                                         </div>  
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">Số Lượng
-                                            <span class="required"> * </span>
-                                            </label>
-                                            <div class="col-md-4">
-                                                <input id="touchspin_6" type="text" value="<?php echo $r_sp['sp_soluong']; ?>" name="txtSoLuong" class="form-control"> 
-                                            </div>
-                                        </div>
+                                        
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Đơn Giá
                                             <span class="required"> * </span>
                                             </label>
-                                            <div class="col-md-4">
-                                                <input id="touchspin_2" type="text" value="<?php echo $r_sp['sp_dongia']; ?>" name="txtDonGia" class="form-control"> 
+                                            <div class="col-md-4 input-group select2-bootstrap-append select2-bootstrap-prepend input-large">
+                                                                       
+                                                <input value="<?php echo number_format($r_sp['sp_dongia']); ?>" onkeyup="FormatNumber(this);" type="text" name="txtDonGia" class="form-control"> 
+                                                <div class="input-group-addon">VNĐ</div> 
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -285,7 +278,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <div class="col-md-9">
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                        <img src="..<?php echo $r_sp['sp_hinhdaidien']; ?>" alt="" /> </div>
+                                                        <img src="..<?php echo $r_sp['sp_hinh1']; ?>" alt="" /> </div>
                                                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> 
                                                         </div>
 
@@ -301,7 +294,17 @@ License: You must have a valid license purchased only from themeforest(the above
                                                         <div class="clearfix margin-top-10"></div>
                                                         </div>
                                                     </div>
-
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Tóm Tắt
+                                                            <span class="required"> * </span>
+                                                        </label>
+                                                        <div class="col-md-9">
+                                                            <textarea class="ckeditor form-control" name="txtTomTat" rows="6" data-error-container="#editor2_error" >
+                                                                <?php echo $r_sp['sp_tomtat']; ?>
+                                                            </textarea>
+                                                            <div id="editor2_error"> </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group">
                                                         <label class="control-label col-md-3">Nội Dung
                                                             <span class="required"> * </span>
@@ -983,6 +986,9 @@ License: You must have a valid license purchased only from themeforest(the above
                 var form1 = $("#frmSanPham");
                    var error1 = $('.alert-danger', form1);
                    var success1 = $('.alert-success', form1);
+                    $.validator.addMethod("currency", function (value, element) {
+                        return this.optional(element) || /^\$?(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?$/.test(value);
+                    }, "kiểm tra lại đơn giá");
 
                    form1.on('submit', function() {
                       for(var instanceName in CKEDITOR.instances) {
@@ -999,15 +1005,12 @@ License: You must have a valid license purchased only from themeforest(the above
                         txtTenSP:{
                             required:true
                         },
-                        txtSoLuong:{
-                            required:true,
-                            number:true,
-                            min: 1,
+                        txtTomTat:{
+                            required:true
                         },
                         txtDonGia:{
                             required:true,
-                            number:true
-                            
+                          
                         },
                         txtNoiDung:{
                             required:true
@@ -1020,14 +1023,13 @@ License: You must have a valid license purchased only from themeforest(the above
                         txtTenSP: {
                             required:"Tên sản phẩm không có giá trị rỗng"
                         },
-                        txtSoLuong:{
-                            required:"Số lượng không có giá trị rỗng",
-                            number:"Nhập số phần trăm",
-                            min:"Ít nhất 1",
+                         txtTomTat:{
+                            required:"Tóm tắt không có giá trị rỗng"
                         },
+                        
                         txtDonGia:{
                             required:"Đơn giá không có giá trị rỗng",
-                            number:"Nhập Số",
+                            
                         },
                         txtNoiDung:{
                             required:"Nội dung không có giá trị rỗng",
@@ -1080,6 +1082,26 @@ License: You must have a valid license purchased only from themeforest(the above
                        }
                 }); 
             });
+function FormatNumber(obj) {
+    var strvalue;
+    if (eval(obj))
+        strvalue = eval(obj).value;
+    else
+        strvalue = obj; 
+    var num;
+    num = strvalue.toString().replace(/\$|\,/g,'');
+
+    if(isNaN(num))
+        num = "";
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    num = Math.floor(num/100).toString();
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+','+
+    num.substring(num.length-(4*i+3));
+                //return (((sign)?'':'-') + num);
+                eval(obj).value = (((sign)?'':'-') + num);
+            }
         </script>
     </body>
 </html>

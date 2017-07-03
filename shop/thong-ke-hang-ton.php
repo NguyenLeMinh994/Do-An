@@ -1,7 +1,15 @@
 <?php  
     require "top.php";
     require  "func_shop/func_thongke.php";
+    if(isset($_GET['idCon']) && !empty($_GET['idCon']))
+    {
 
+    }
+    else
+       if(isset($_GET['idHet']) && !empty($_GET['idHet']))
+       {
+            capNhatHetHang($_GET['idHet']);
+       }
 ?>
 <!DOCTYPE html>
 <!-- 
@@ -191,10 +199,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <tr>
                                                 <th> Mã </th>
                                                 <th> Tên </th>
-                                                <th> Số Lượng</th>
                                                 <th> Loại </th>
                                                 <th> Hãng</th>
                                                 <th>Cung Cấp</th>
+                                                <th> Số Lượng</th>
                                                 <th>Thao Tác</th>
                                             </tr>
                                         </thead>
@@ -209,15 +217,43 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <tr>
                                                 <td> <?php echo $masp; ?> </td>
                                                 <td> <?php echo $r_hanton['sp_ten']; ?> </td>
-                                                <td>  <?php echo $r_hanton['sp_soluong']; ?> </td>
                                                 <td> <?php echo $r_hanton['lsp_ten']; ?> </td>
                                                 <td> <?php echo $r_hanton['hsx_ten']; ?> </td>
                                                 <td> <?php echo $r_hanton['ncc_ten']; ?> </td>
+                                                <td> 
+                                                <?php 
+                                                    if($r_hanton['sp_soluong']==1)
+                                                    {
+                                                        echo '<span class="label label-success"> Còn hàng </span>';
+                                                    } 
+                                                    else
+                                                    {
+                                                        echo '<span class="label label-danger"> Hết hàng </span>';
+                                                    }
+                                                ?> 
+                                                </td>
                                                 <td>
-                                                <a href="cap-nhat-hang-ton?idSP=<?php echo $masp; ?>" class="btn dark btn-outline uppercase"> 
+                                                <?php  
+                                                    if($r_hanton['sp_soluong'])
+                                                    {
+
+                                                ?>
+                                                <a href="?idHet=<?php echo $masp; ?>" class="btn red btn-outline uppercase"> 
                                                     <i class="fa fa-edit"></i>
                                                     Cập nhật
                                                 </a>  
+                                                <?php  
+                                                    }
+                                                    else
+                                                    {
+                                                        ?>
+                                                        <a href="?idCon=<?php echo $masp; ?>" class="btn green btn-outline uppercase"> 
+                                                            <i class="fa fa-edit"></i>
+                                                            Cập nhật
+                                                        </a> 
+                                                        <?php
+                                                    }
+                                                ?>
                                                 </td>
                                             </tr>
                                         <?php } ?>

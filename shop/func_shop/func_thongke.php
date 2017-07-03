@@ -53,7 +53,7 @@
 		if(!empty($nam))
 		{
 			$sql="SELECT
-			MONTH(hd_ngaygiao) AS thang,
+			MONTH(hd_ngaydat) AS thang,
 			SUM(cthd_soluong * cthd_dongia) AS sotien
 			FROM
 			hoadon
@@ -62,10 +62,34 @@
 			ON
 			hd_ma = cthd_mahoadon
 			WHERE
-			YEAR(hd_ngaygiao) = $nam AND hd_trangthai=3 AND hd_cuahang=$cuaHang
+			YEAR(hd_ngaydat) = $nam AND hd_trangthai=3 AND hd_cuahang=$cuaHang
 			GROUP BY
-			MONTH(hd_ngaygiao)";
+			MONTH(hd_ngaydat)";
 		}
 		return $conn->query($sql);
+	}
+//------------------------------------------------------------------
+	function capNhatHetHang($maSP)
+	{
+		$conn=connect();
+		$sql="UPDATE sanpham
+			 SET sp_soluong=0
+			 WHERE sp_ma=$maSP";
+		if($conn->query($sql)==true)
+		{
+			echo '<script>alert("Cập nhật trạng thái thành công");</script>';
+		}
+	}
+
+	function capNhatConHang($maSP)
+	{
+		$conn=connect();
+		$sql="UPDATE sanpham
+			 SET sp_soluong=1
+			 WHERE sp_ma=$maSP";
+		if($conn->query($sql)==true)
+		{
+			echo '<script>alert("Cập nhật trạng thái thành công");</script>';
+		}
 	}
 ?>
