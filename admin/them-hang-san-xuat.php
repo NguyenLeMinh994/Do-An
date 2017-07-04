@@ -3,7 +3,7 @@
     
     if(isset($_POST['btnThemHang']))
     {
-       themHang($_POST['txtTenHang']);
+       themHang($_POST['txtTenHang'],$_POST['txtNoiDung'],$_FILES['file_hinh']);
     }
 ?>
 <!DOCTYPE html>
@@ -42,6 +42,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="../public/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
@@ -59,7 +60,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
         <!-- BEGIN HEADER -->
-      <?php require "header.php"; ?>
+      <?php require_once "header.php"; ?>
         <!-- END HEADER -->
         <!-- BEGIN HEADER & CONTENT DIVIDER -->
         <div class="clearfix"> </div>
@@ -67,7 +68,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <!-- BEGIN SIDEBAR -->
-            <?php require "sidebar.php"; ?>
+            <?php require_once "sidebar.php"; ?>
             <!-- END SIDEBAR -->
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
@@ -196,19 +197,53 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <div class="portlet-body form">
                                     <!-- BEGIN FORM-->
-                                    <form action="#" class="form-horizontal form-bordered" method="post">
+                                    <form  class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
                                         <div class="form-body">
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Tên hãng:</label>
                                                 <div class="col-md-4">
-                                                    <input type="text" name="txtTenHang" class="form-control input-circle" placeholder="Tên Hãng">
+                                                    <input type="text" name="txtTenHang" class="form-control" placeholder="Tên Hãng">
                                                 </div>
-                                            </div>                      
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Hình Ảnh
+                                                    <span class="required"> * </span>
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                        <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
+                                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> 
+                                                            </div>
+
+                                                            <div>
+                                                                <span class="btn default btn-file">
+                                                                    <span class="fileinput-new"> Select image </span>
+                                                                    <span class="fileinput-exists"> Change </span>
+                                                                    <input type="file" name="file_hinh" > </span>
+                                                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="clearfix margin-top-10"></div>
+                                                        </div>
+                                            </div> 
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Giới Thiệu
+                                                    <span class="required"> * </span>
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <textarea class="ckeditor form-control" name="txtNoiDung" rows="6" data-error-container="#editor2_error" >
+                                                     
+                                                    </textarea>
+                                                    <div id="editor2_error"> </div>
+                                                </div>
+                                            </div>                     
                                         </div>
                                         <div class="form-actions">
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
-                                                    <button type="submit" name="btnThemHang" class="btn btn-circle green">Thêm hãng</button>
+                                                    <button type="submit" name="btnThemHang" class="btn green">Thêm hãng</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -231,15 +266,7 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
-        <div class="page-footer">
-            <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
-                <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
-                <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
-            </div>
-            <div class="scroll-to-top">
-                <i class="icon-arrow-up"></i>
-            </div>
-        </div>
+     <?php require_once 'footer.php'; ?>
         <!-- END FOOTER -->
         <!-- BEGIN QUICK NAV -->
         
@@ -264,8 +291,10 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
+        <script src="../public/ck/ckeditor/ckeditor.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
+        <script src="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
         <script src="../public/assets/pages/scripts/table-datatables-rowreorder.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
@@ -277,3 +306,4 @@ License: You must have a valid license purchased only from themeforest(the above
     </body>
 
 </html>
+<?php require_once 'bottom.php'; ?>
