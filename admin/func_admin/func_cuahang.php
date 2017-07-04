@@ -6,7 +6,8 @@
 		$sql="SELECT
 				  *
 				FROM
-				  cuahang";
+				  cuahang
+				WHERE ch_trangthai=1";
 		return $conn->query($sql);
 	}
 	function layThongTinChuCuaHang($maCuaHang)

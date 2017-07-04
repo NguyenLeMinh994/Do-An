@@ -200,6 +200,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <table class="table table-striped table-bordered table-hover order-column" id="sample_4">
                                         <thead>
                                             <tr>
+                                                <th>Mã</th>
                                                 <th>Tên</th>
                                                 <th>Hình</th>
                                                 <th>Giá</th>
@@ -231,6 +232,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         
                                         ?>
                                             <tr>
+                                                <td><?php echo $masp; ?></td>
                                                 <td><?php echo $tensp; ?></td>
                                                 <td style="width:11%">
                                                 <img src="<?php echo $hinhdaidien;?>" class="img-rounded" alt="" style="width:100%">

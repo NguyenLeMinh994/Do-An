@@ -4,7 +4,7 @@
     
     if(isset($_POST['btnThemLoai']))
     {
-        themLoaiSanPham($_POST['txtTenLoai']);
+        themLoaiSanPham($_POST['txtTenLoai'],$_POST['txtLaiXuat']);
     }
 ?>
 <!DOCTYPE html>
@@ -202,17 +202,25 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Tên loại</label>
                                                 <div class="col-md-4">
-                                                    <input type="text" name="txtTenLoai" class="form-control input-circle" placeholder="Tên Loại">
-                                                </div>
-                                            </div>                      
-                                        </div>
-                                        <div class="form-actions">
-                                            <div class="row">
-                                                <div class="col-md-offset-3 col-md-9">
-                                                    <button type="submit" name="btnThemLoai" class="btn btn-circle green">Thêm Loại</button>
+                                                    <input type="text" name="txtTenLoai" class="form-control" placeholder="Tên Loại">
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">Lại Xuất</label>
+                                                <div class="col-md-4 input-group select2-bootstrap-append select2-bootstrap-prepend input-large">
+                                                    <input type="text" name="txtLaiXuat" class="form-control" placeholder="Lãi xuất">
+                                                    <div class="input-group-addon">%</div> 
+                                                </div>
+                                            </div>
+                                            <div class="form-actions">
+                                                <div class="row">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button type="submit" name="btnThemLoai" class="btn btn-circle green">Thêm Loại</button>
+                                                    </div>
+                                                </div>
+                                            </div>                     
                                         </div>
+                                        
                                         </form>   
                                         <!-- END FORM-->
                                     </div>

@@ -1,5 +1,10 @@
-<?php require "top.php"; 
-    require "func_admin/func_cuahang.php";
+<?php 
+    require_once "top.php";
+    require "func_shop/func_yeucau.php";
+    if(isset($_POST['btnGui']))
+    {
+        themYeuCau($cuaHang,$_POST['txtTieuDe'],$_POST['txtNoiDung']);
+    }
 ?>
 <!DOCTYPE html>
 <!-- 
@@ -24,10 +29,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Danh Sách Cửa Hàng</title>
+        <title>Thêm Yêu Cầu</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
+        <meta content="Preview page of Metronic Admin Theme #4 for select2, selectboxit & multi select examples" name="description" />
         <meta content="" name="author" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -37,8 +42,6 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="../public/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <link href="../public/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="../public/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
@@ -54,7 +57,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
         <!-- BEGIN HEADER -->
-        <?php require "header.php"; ?>
+        <?php require_once "header.php"; ?>
         <!-- END HEADER -->
         <!-- BEGIN HEADER & CONTENT DIVIDER -->
         <div class="clearfix"> </div>
@@ -62,7 +65,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <!-- BEGIN SIDEBAR -->
-           <?php require "sidebar.php"; ?>
+            <?php require_once "sidebar.php"; ?>
             <!-- END SIDEBAR -->
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
@@ -72,7 +75,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>Quản Lý Cửa Hàng
+                            <h1>Gửi Yêu Cầu Admin
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
@@ -162,96 +165,63 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!-- BEGIN PAGE BREADCRUMB -->
                     <ul class="page-breadcrumb breadcrumb">
                         <li>
-                            <a href="index.php">Trang Admin</a>
+                            <a href="index.php">Trang Chủ</a>
                             <i class="fa fa-circle"></i>
                         </li>
-                       
                         <li>
-                            <span class="active">Danh Sách Cửa Hàng</span>
+                            <span class="active">Yêu Cầu</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
                     <!-- BEGIN PAGE BASE CONTENT -->
+                    
                     <div class="row">
                         <div class="col-md-12">
-                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                           
-                            <!-- END EXAMPLE TABLE PORTLET-->
-                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <div class="portlet box red">
+                            <!-- BEGIN PORTLET-->
+                            <div class="portlet light form-fit bordered">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-globe"></i>Danh Sách Cửa Hàng</div>
+                                        <i class="icon-social-dribbble font-green"></i>
+                                        <span class="caption-subject font-green bold uppercase">Gửi Yêu Cầu Admin</span>
+                                    </div>
                                     <div class="actions">
-                                        <a href="javascript:;" class="btn btn-default btn-sm btn-circle">
-                                            <i class="fa fa-plus"></i> Add </a>
-                                        <a href="javascript:;" class="btn btn-default btn-sm btn-circle">
-                                            <i class="fa fa-print"></i> Print </a>
+                                        
                                     </div>
                                 </div>
-                                <div class="portlet-body">
-                                    <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
-                                        <thead>
-                                            <tr>
-                                                <th> Mã  </th>
-                                                <th> Cửa Hàng</th>
-                                                <th> Chủ Cửa Hàng</th>
-                                                <th> Số Điện Thoại </th>
-                                                <th> Email </th>
-                                                <th> Ngày Đăng Ký </th>
-                                                <th> Doanh Thu </th>
-                                            </tr>
-                                        </thead>
-                                        <!-- <tfoot>
-                                            <tr>
-                                                 <th> Mã  </th>
-                                                <th> Cửa Hàng</th>
-                                                <th> Chủ Cửa Hàng</th>
-                                                <th> Số Điện Thoại </th>
-                                                <th> Email </th>
-                                                <th> Ngày Thuê </th>
-                                                <th> Doanh Thu </th>
-                                            </tr>
-                                        </tfoot> -->
-                                        <tbody>
-                                        <?php 
-                                            $danhsachcuahang=danhSachCuaHang();
-                                            while ($row_cuahang=$danhsachcuahang->fetch_assoc()) 
-                                            {
-
-                                            $tencuahang=$row_cuahang['ch_ten'];
-                                                $macuahang=$row_cuahang['ch_ma'];
-                                                $sdt_cuahang=$row_cuahang['ch_sdt'];
-                                               
-                                                $ngaybatdauthue=date("d/m/Y",strtotime($row_cuahang['ch_ngaythamgia']));
-                                                // $ngayketthucthue=date("d/m/Y",strtotime($row_cuahang['ch_ngayketthucthue']));
-
-                                                $thongtin=layThongTinChuCuaHang($macuahang);
-                                                $row_thongtin=$thongtin->fetch_assoc();
-                                                $email=$row_thongtin['nv_email'];
-                                                $chucuahang=$row_thongtin['nv_hoten'];
-
-                                        ?>
-                                            <tr>
-                                                <td> <?php echo $macuahang; ?> </td>
-                                                <td> <?php echo $tencuahang; ?> </td>
-                                                <td> <?php echo $chucuahang; ?> </td>
-                                                <td> <?php echo $sdt_cuahang; ?> </td>
-                                                <td><?php echo $email; ?></td>
-                                                <td> 
-                                                    <?php echo $ngaybatdauthue;?>
-                                                </td>
-                                                <td>  
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                        </tbody>
-                                    </table>
+                                <div class="portlet-body form">
+                                    <form id="form-username" class="form-horizontal form-bordered" method="post">
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">Tiêu Đề</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" placeholder="Tiêu đề" name="txtTieuDe">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                               <label class="col-md-3 control-label">Nội Dung</label>
+                                               <div class="col-md-9">
+                                                   <textarea class="form-control autosizeme" rows="4" placeholder="Nội dung khiếu nại" name="txtNoiDung"></textarea>
+                                                   
+                                               </div>
+                                            </div>  
+                                        </div>
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button type="submit" name="btnGui" class="btn red">
+                                                        <i class="fa fa-check"></i> Gửi
+                                                    </button>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <!-- END EXAMPLE TABLE PORTLET-->
+                            <!-- END PORTLET-->
                         </div>
                     </div>
+                    
                     <!-- END PAGE BASE CONTENT -->
                 </div>
                 <!-- END CONTENT BODY -->
@@ -821,50 +791,10 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
-        <div class="page-footer">
-            <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
-                <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
-                <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
-            </div>
-            <div class="scroll-to-top">
-                <i class="icon-arrow-up"></i>
-            </div>
-        </div>
+        <?php require_once "footer.php"; ?>
         <!-- END FOOTER -->
         <!-- BEGIN QUICK NAV -->
-        <nav class="quick-nav">
-            <a class="quick-nav-trigger" href="#0">
-                <span aria-hidden="true"></span>
-            </a>
-            <ul>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" target="_blank" class="active">
-                        <span>Purchase Metronic</span>
-                        <i class="icon-basket"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/reviews/4021469?ref=keenthemes" target="_blank">
-                        <span>Customer Reviews</span>
-                        <i class="icon-users"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/showcast/" target="_blank">
-                        <span>Showcase</span>
-                        <i class="icon-user"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/metronic-theme/changelog/" target="_blank">
-                        <span>Changelog</span>
-                        <i class="icon-graph"></i>
-                    </a>
-                </li>
-            </ul>
-            <span aria-hidden="true" class="quick-nav-bg"></span>
-        </nav>
-        <div class="quick-nav-overlay"></div>
+        
         <!-- END QUICK NAV -->
         <!--[if lt IE 9]>
 <script src="../public/assets/global/plugins/respond.min.js"></script>
@@ -880,15 +810,16 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <script src="../public/assets/global/scripts/datatable.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/bootstrap-pwstrength/pwstrength-bootstrap.min.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/autosize/autosize.min.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
-        <script src="../public/assets/pages/scripts/table-datatables-fixedheader.min.js" type="text/javascript"></script>
+        <script src="../public/assets/pages/scripts/components-form-tools.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <script src="../public/assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>
@@ -899,4 +830,4 @@ License: You must have a valid license purchased only from themeforest(the above
     </body>
 
 </html>
-<?php require "bottom.php"; ?>
+<?php require_once "bottom.php"; ?>

@@ -263,10 +263,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                 <span class="required" id=""> * </span>
                                                             </label>
                                                             <div class="col-md-4 input-group select2-bootstrap-append select2-bootstrap-prepend input-large">
-                                                                
                                                                     <input type="text" id="mask_number" name="txtPhanTram" class="form-control" placeholder="Số Phần Trăm" required>
                                                                     <div class="input-group-addon">%</div> 
-                                                               
                                                             </div>
 
                                                         </div>

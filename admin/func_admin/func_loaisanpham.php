@@ -1,6 +1,6 @@
 <?php 
 	require "../config/connectionstring.php";
-	function themLoaiSanPham($tenLoai)
+	function themLoaiSanPham($tenLoai,$laiXuat)
 	{
 		$conn=connect();
 		if($tenLoai!="")
@@ -8,9 +8,9 @@
 			$ngayHienTai=date("Y-m-d");
 			$tenKhongDau=to_slug($tenLoai);
 			$sql="INSERT INTO loaisanpham
-				(lsp_ten,lsp_tenkhongdau,lsp_ngaycapnhat,lsp_trangthai)
+				(lsp_ten,lsp_tenkhongdau,lsp_ngaycapnhat,lsp_laixuat,lsp_trangthai)
 				VALUES
-				('$tenLoai', '$tenKhongDau', '$ngayHienTai', 1)";
+				('$tenLoai', '$tenKhongDau', '$ngayHienTai',$laiXuat, 1)";
 			// var_dump($sql);
 			if ($conn->query($sql) === TRUE) 
 			{

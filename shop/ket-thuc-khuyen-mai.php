@@ -25,7 +25,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Kết Thúc Khuyến Mãi</title>
+        <title>Lịch Sử Khuyến Mãi</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
@@ -171,7 +171,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <span class="active">Kết Thúc Khuyến Mãi</span>
+                            <span class="active">Lịch Sử Khuyến Mãi</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
@@ -186,7 +186,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="glyphicon glyphicon-cloud"></i>
-                                        Kết Thúc Khuyến Mãi
+                                        Lịch Sử Khuyến Mãi
                                     </div>
                                     <div class="actions">
                                         

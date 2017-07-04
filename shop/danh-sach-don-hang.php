@@ -1,20 +1,20 @@
 <?php  
     require "top.php";
     require "func_shop/func_donhang.php";
-    if(isset($_GET['idGiaoHang']))
-    {
-        donHangDangGiao($_GET['idGiaoHang']);
-    }
-    else
-        if(isset($_GET['idHoanThanh']))
-        {
-            donHangDaGiao($_GET['idHoanThanh']);
-        }
-        else
-            if(isset($_GET['idHuy']))
-            {
-                huyDonHang($_GET['idHuy']);
-            }
+    // if(isset($_GET['idGiaoHang']))
+    // {
+    //     donHangDangGiao($_GET['idGiaoHang']);
+    // }
+    // else
+    //     if(isset($_GET['idHoanThanh']))
+    //     {
+    //         donHangDaGiao($_GET['idHoanThanh']);
+    //     }
+    //     else
+    //         if(isset($_GET['idHuy']))
+    //         {
+    //             huyDonHang($_GET['idHuy']);
+    //         }
 ?>
 <!DOCTYPE html>
 <!-- 
@@ -210,20 +210,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th> Tên Khách Hàng </th>
                                                 <th> Tổng Tiền  </th>
                                                 <th>Ngày Mua</th>
-                                                <th> Trạng Thái </th>
+                                                
                                                 <th> Thao Tác</th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
-                                           <tr>
-                                                <th> Số Đơn Hàng </th>
-                                                <th> Tên Khách Hàng </th>
-                                                <th> Tổng Tiền </th>
-                                                <th>Ngày Mua</th>
-                                                <th> Trạng Thái </th>
-                                                <th> Thao Tác</th>
-                                            </tr>
-                                        </tfoot>
+                                      
                                         <tbody>
                                             <?php  
                                             $donHang=danhSachDonHang($cuaHang);
@@ -237,39 +228,14 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     <td> <?php echo $row_donhang['kh_hoten']; ?> </td>
                                                     <td> <?php echo number_format($row_donhang['tongtien']); ?> VND</td>
                                                     <td> <?php echo date("d/m/Y",strtotime($row_donhang['hd_ngaydat']));?></td>
-                                                    <td> 
-                                                        <!-- <span class="label label-danger"> Danger </span> -->
-                                                        <?php  
-                                                        if($row_donhang['hd_trangthai']==1)
-                                                        {
-                                                           echo '<span class="badge badge-info badge-roundless"> Chưa Giao </span>'; 
-                                                        }
-                                                        else
-                                                            echo '<span class="badge badge-warning badge-roundless"> Đang Giao </span>';
-                                                    ?>
-                                                </td>
+                                                   
                                                 <td>
-                                                    <?php  
-                                                        if($row_donhang['hd_trangthai']==1)
-                                                        {
-                                                            echo "<a href='?idGiaoHang=$mahd' class='btn blue btn-outline uppercase'> 
-                                                                    Xác Nhận
-                                                                </a>";
-                                                        }
-                                                        else
-                                                            if($row_donhang['hd_trangthai']==2)
-                                                            {
-                                                                echo "<a href='?idHoanThanh=$mahd' class='btn yellow btn-outline uppercase'> 
-                                                                    Xác Nhận
-                                                                </a>";
-                                                            }
-                                                    ?>
                                                      <a href='chi-tiet-don-hang.php?idHD=<?php echo $mahd; ?>' class='btn dark btn-outline uppercase'> 
                                                         Xem
                                                     </a>
-                                                    <a href='?idHuy=<?php echo $mahd; ?>' class='btn red btn-outline uppercase'> 
+                                                   <!--  <a href='?idHuy=<?php echo $mahd; ?>' class='btn red btn-outline uppercase'> 
                                                         Hủy
-                                                    </a>
+                                                    </a> -->
                                                 </td>
                                             </tr>
                                             <?php  
@@ -282,12 +248,12 @@ License: You must have a valid license purchased only from themeforest(the above
                             </div>
                             <!-- END EXAMPLE TABLE PORTLET-->
                              <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                             <div class="portlet box green">
+                            <div class="portlet box green">
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="icon-settings font-dark"></i>
                                         <span class="caption-subject bold uppercase">
-                                        Đơn Hàng Đã Giao
+                                        Đơn Hàng Đã Chuyển
                                         </span>
                                     </div>
                                     <div class="tools"> </div>
@@ -317,7 +283,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <td> <?php echo number_format($row_donhang['tongtien']); ?> VND</td>
                                                 <td> <?php echo date("d/m/Y",strtotime($row_donhang['hd_ngaydat']));?></td>
                                                 <td>
-                                                    <span class="label label-success"> Đã Giao </span>
+                                                    <span class="label label-success"> Đã Chuyển </span>
                                                 </td>
                                                 <td>
                                                     <a href='chi-tiet-don-hang.php?idHD=<?php echo $mahd; ?>' class='btn dark btn-outline uppercase'> 

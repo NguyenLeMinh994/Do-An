@@ -1,6 +1,5 @@
-<?php 
-
-require "../config/connectionstring.php";
+<?php
+require_once "../config/connectionstring.php";
 	
 	function themHang($tenHang="")
 	{

@@ -1,8 +1,9 @@
 <?php 
-    require_once "func_shop/func_trangchu.php"; 
-    $soLuongdonhang=soLuongDonHang($cuaHang)
+require_once "func_shop/func_trangchu.php"; 
+$soLuongdonhang=soLuongDonHang($cuaHang);
+$soluongbinhluan=soluongBinhLuan($cuaHang);
 ?>
- <div class="page-sidebar-wrapper">
+<div class="page-sidebar-wrapper">
     <!-- BEGIN SIDEBAR -->
     <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
     <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
@@ -54,6 +55,12 @@
                             </span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="thong-ke-hang-ton.php" class="nav-link ">
+                        <span class="title">Cập Nhật Hàng Tồn Kho
+                            </span>
+                        </a>
+                    </li>
                     <li class="nav-item  ">
                         <a href="khoi-phuc-san-pham.php" class="nav-link ">
                             <span class="title">Khôi Phục Sản Phẩm
@@ -63,33 +70,33 @@
                 </ul>
             </li>
             
-        <li class="nav-item  ">
-            <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="icon-diamond"></i>
-                <span class="title">Quản Lý Nhà Cung Cấp</span>
-                <span class="arrow"></span>
-            </a>
-            <ul class="sub-menu"> 
-             <li class="nav-item ">
-                <a href="them-nha-cung-cap.php" class="nav-link ">
-                    <span class="title">Thêm Nhà Cung Cấp
-                    </span>
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-diamond"></i>
+                    <span class="title">Quản Lý Nhà Cung Cấp</span>
+                    <span class="arrow"></span>
                 </a>
-            </li>
-            <li class="nav-item ">
-                <a href="danh-sach-nha-cung-cap.php" class="nav-link ">
-                    <span class="title">Danh Sách Nhà Cung Cấp
-                    </span>
-                </a>
-            </li>
-             <li class="nav-item ">
-                <a href="khoi-phuc-nha-cung-cap.php" class="nav-link ">
-                    <span class="title">Khôi Phục Nhà Cung Cấp
-                    </span>
-                </a>
-            </li>   
-        </ul>
-    </li>
+                <ul class="sub-menu"> 
+                   <li class="nav-item ">
+                    <a href="them-nha-cung-cap.php" class="nav-link ">
+                        <span class="title">Thêm Nhà Cung Cấp
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a href="danh-sach-nha-cung-cap.php" class="nav-link ">
+                        <span class="title">Danh Sách Nhà Cung Cấp
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a href="khoi-phuc-nha-cung-cap.php" class="nav-link ">
+                        <span class="title">Khôi Phục Nhà Cung Cấp
+                        </span>
+                    </a>
+                </li>   
+            </ul>
+        </li>
         <li class="nav-item  ">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-diamond"></i>
@@ -97,7 +104,7 @@
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu"> 
-               <li class="nav-item  ">
+             <li class="nav-item  ">
                 <a href="tao-khuyen-mai.php" class="nav-link ">
                     <span class="title">Tạo Khuyến Mãi
                     </span>
@@ -117,7 +124,7 @@
             </li>
             <li class="nav-item  ">
                 <a href="ket-thuc-khuyen-mai.php" class="nav-link ">
-                    <span class="title">Kết Thúc Khuyến Mãi
+                    <span class="title">Lịch Sử Khuyến Mãi
                     </span>
                 </a>
             </li>
@@ -143,47 +150,79 @@
                 <a href="khoi-phuc-don-hang.php" class="nav-link ">
                     <span class="title">Khôi Phục Đơn Hàng
                     </span>
-                    
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item">
+        <a href="javascript:;" class="nav-link nav-toggle">
+            <i class="icon-puzzle"></i>
+            <span class="title">Quản Lý Bình Luận</span>
+            <span class="arrow"></span>
+        </a>
+        <!-- BEGIN -->
+        <!-- END -->
+        <ul class="sub-menu"> 
+            <li class="nav-item  ">
+                <a href="danh-sach-binh-luan.php" class="nav-link ">
+                    <span class="title">Duyệt Bình Luận
+                    </span>
+                    <span class="badge badge-success"><?php echo $soluongbinhluan; ?></span>
+                </a>
+            </li>
+            <li class="nav-item  ">
+                <a href="danh-sach-an-binh-luan.php" class="nav-link ">
+                    <span class="title">Ẩn Bình Luần
+                    </span>
                 </a>
             </li>
         </ul>
     </li>
     <li class="nav-item ">
-                <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-bar-chart"></i>
-                    <span class="title">Thống Kê</span>
-                    <span class="arrow"></span>
+        <a href="javascript:;" class="nav-link nav-toggle">
+            <i class="icon-bar-chart"></i>
+            <span class="title">Thống Kê</span>
+            <span class="arrow"></span>
+        </a>
+        <ul class="sub-menu"> 
+
+            <li class="nav-item">
+                <a href="thong-ke-san-pham.php" class="nav-link ">
+                    <span class="title">Doanh Thu Sản Phẩm
+                    </span>
                 </a>
-                <ul class="sub-menu"> 
-                 <li class="nav-item">
-                    <a href="thong-ke-hang-ton.php" class="nav-link ">
-                        <span class="title">Hàng Tồn Kho
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="thong-ke-san-pham.php" class="nav-link ">
-                        <span class="title">Doanh Thu Sản Phẩm
-                        </span>
-                    </a>
-                </li>
-                 <li class="nav-item">
-                    <a href="doanh-thu-theo-nam.php" class="nav-link">
-                        <span class="title">Doanh Thu Theo Năm
-                        </span>
-                    </a>
-                </li>
-            </ul>
+            </li>
+            <li class="nav-item">
+                <a href="doanh-thu-theo-nam.php" class="nav-link">
+                    <span class="title">Doanh Thu Theo Năm
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item ">
+        <a href="javascript:;" class="nav-link nav-toggle">
+            <i class="icon-bar-chart"></i>
+            <span class="title">Yêu Cầu</span>
+            <span class="arrow"></span>
+        </a>
+        <ul class="sub-menu"> 
+           <li class="nav-item">
+            <a href="them-yeu-cau.php" class="nav-link ">
+                <span class="title">Yêu cầu Admin
+                </span>
+            </a>
         </li>
-                        <!-- <li class="nav-item">
-                            <a href="them-hang-san-xuat.html" class="nav-link ">
-                                <i class="icon-puzzle"></i>
-                                <span class="title">Quản Lý Hãng Sản Xuất</span>
-                                <span class="selected"></span>
-                            </a>
-                        </li> -->
+        <li class="nav-item">
+            <a href="lich-su-yeu-cau.php" class="nav-link ">
+                <span class="title">Lịch Sử Yêu Cầu
+                </span>
+            </a>
+        </li>
     </ul>
-                    <!-- END SIDEBAR MENU -->
+</li>
+</ul>
+<!-- END SIDEBAR MENU -->
 </div>
-                <!-- END SIDEBAR -->
+<!-- END SIDEBAR -->
 </div>

@@ -1,5 +1,5 @@
 <?php 
-require "../config/connectionstring.php";
+require_once "../config/connectionstring.php";
 function uploadHinhCuaHang($cuahang,$file)
 {
 	$conn=connect();

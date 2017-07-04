@@ -1,18 +1,16 @@
-<?php 
-require "top.php"; 
-require "func_shop/func_donhang.php";
-if(!isset($_GET['idHD']) && empty($_GET['idHD']))
+<?php require_once "top.php"; 
+require "func_shop/func_binhluan.php";
+if(isset($_GET['idDuyet']) && !empty($_GET['idDuyet']))
 {
-    header('Location: danh-sach-don-hang.php');
+    capNhatTrangThaiBinhLuan($_GET['idDuyet']);
 }
 else
-    if(isset($_GET['idGiaoHang']) && !empty($_GET['idGiaoHang']))
+    if(isset($_GET['idAn']) && !empty($_GET['idAn']))
     {
-        donHangDangGiao($_GET['idGiaoHang'],$cuaHang);
-        capNhatTrangThaiHoaDon($_GET['idGiaoHang']);
+        anBinhLuan($_GET['idAn']);
     }
 ?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <!-- 
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.7
 Version: 4.7.1
@@ -35,7 +33,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <head>
     <meta charset="utf-8" />
-    <title>Thông Tin Đơn Hàng</title>
+    <title>Danh Sách Bình Luận</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
@@ -65,7 +63,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
         <!-- BEGIN HEADER -->
-        <?php require_once "header.php"; ?>
+        <?php require_once 'header.php'; ?>
         <!-- END HEADER -->
         <!-- BEGIN HEADER & CONTENT DIVIDER -->
         <div class="clearfix"> </div>
@@ -73,7 +71,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <!-- BEGIN SIDEBAR -->
-            <?php require_once "sidebar.php"; ?>
+            <?php require_once 'sidebar.php'; ?>  
             <!-- END SIDEBAR -->
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
@@ -83,27 +81,105 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>Quản Lý Đơn Hàng
+                            <h1>Quản Lý Bình Luận
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
                         <!-- BEGIN PAGE TOOLBAR -->
-                        
+                        <div class="page-toolbar">
+                            <!-- BEGIN THEME PANEL -->
+                            <div class="btn-group btn-theme-panel">
+                                <a href="javascript:;" class="btn dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon-settings"></i>
+                                </a>
+                                <div class="dropdown-menu theme-panel pull-right dropdown-custom hold-on-click">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            <h3>HEADER</h3>
+                                            <ul class="theme-colors">
+                                                <li class="theme-color theme-color-default active" data-theme="default">
+                                                    <span class="theme-color-view"></span>
+                                                    <span class="theme-color-name">Dark Header</span>
+                                                </li>
+                                                <li class="theme-color theme-color-light " data-theme="light">
+                                                    <span class="theme-color-view"></span>
+                                                    <span class="theme-color-name">Light Header</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8 col-xs-12 seperator">
+                                            <h3>LAYOUT</h3>
+                                            <ul class="theme-settings">
+                                                <li> Theme Style
+                                                    <select class="layout-style-option form-control input-small input-sm">
+                                                        <option value="square">Square corners</option>
+                                                        <option value="rounded" selected="selected">Rounded corners</option>
+                                                    </select>
+                                                </li>
+                                                <li> Layout
+                                                    <select class="layout-option form-control input-small input-sm">
+                                                        <option value="fluid" selected="selected">Fluid</option>
+                                                        <option value="boxed">Boxed</option>
+                                                    </select>
+                                                </li>
+                                                <li> Header
+                                                    <select class="page-header-option form-control input-small input-sm">
+                                                        <option value="fixed" selected="selected">Fixed</option>
+                                                        <option value="default">Default</option>
+                                                    </select>
+                                                </li>
+                                                <li> Top Dropdowns
+                                                    <select class="page-header-top-dropdown-style-option form-control input-small input-sm">
+                                                        <option value="light">Light</option>
+                                                        <option value="dark" selected="selected">Dark</option>
+                                                    </select>
+                                                </li>
+                                                <li> Sidebar Mode
+                                                    <select class="sidebar-option form-control input-small input-sm">
+                                                        <option value="fixed">Fixed</option>
+                                                        <option value="default" selected="selected">Default</option>
+                                                    </select>
+                                                </li>
+                                                <li> Sidebar Menu
+                                                    <select class="sidebar-menu-option form-control input-small input-sm">
+                                                        <option value="accordion" selected="selected">Accordion</option>
+                                                        <option value="hover">Hover</option>
+                                                    </select>
+                                                </li>
+                                                <li> Sidebar Position
+                                                    <select class="sidebar-pos-option form-control input-small input-sm">
+                                                        <option value="left" selected="selected">Left</option>
+                                                        <option value="right">Right</option>
+                                                    </select>
+                                                </li>
+                                                <li> Footer
+                                                    <select class="page-footer-option form-control input-small input-sm">
+                                                        <option value="fixed">Fixed</option>
+                                                        <option value="default" selected="selected">Default</option>
+                                                    </select>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END THEME PANEL -->
+                        </div>
                         <!-- END PAGE TOOLBAR -->
                     </div>
                     <!-- END PAGE HEAD-->
                     <!-- BEGIN PAGE BREADCRUMB -->
                     <ul class="page-breadcrumb breadcrumb">
                         <li>
-                            <a href="index.php">Trang Chủ</a>
+                            <a href="index.html">Home</a>
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <a href="danh-sach-don-hang.php">Danh Sách Đơn Hàng</a>
+                            <a href="#">Tables</a>
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <span class="active">Đơn Hàng</span>
+                            <span class="active">Datatables</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
@@ -111,237 +187,106 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <div class="portlet box blue">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="fa fa-gift"></i>
-                                        Thông tin Khách Hàng
-                                    </div>
-                                    <div class="tools">
-                                     <a href="javascript:;" class="collapse"> </a>
-                                 </div>
-                             </div>
-                             <div class="portlet-body form">
-                                <!-- BEGIN FORM-->
-                                <?php  
-                                $thongtinkhachhang=thongTinKhachHang($_GET['idHD'],$cuaHang);
-                                $r_khachhang=$thongtinkhachhang->fetch_assoc();
 
-                                ?>
-                                <form class="form-horizontal" role="form">
-                                    <div class="form-body">
-                                        <h2 class="margin-bottom-20"> Đơn Hàng  - <?php echo $r_khachhang['kh_hoten']; ?> </h2>
-                                        <h3 class="form-section">Thông Tin</h3>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                             <div class="form-group">
-                                                <label class="control-label col-md-3">Họ Tên:</label>
-                                                <div class="col-md-9">
-                                                    <p class="form-control-static"><?php echo $r_khachhang['kh_hoten']; ?> </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">Email:</label>
-                                                <div class="col-md-9">
-                                                    <p class="form-control-static"><?php echo $r_khachhang['kh_email'];?></p>
-                                                </div>
-                                            </div>
-                                        </div>                      <!--/span-->
-                                    </div>
-                                    <!--/row-->
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">SĐT:</label>
-                                                <div class="col-md-9">
-                                                    <p class="form-control-static"><?php echo $r_khachhang['kh_sdt'];?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--/span-->                            <!--/span-->
-                                    </div>
-                                    <!--/row-->
-                                    <h3 class="form-section">Địa Chỉ Giao Hàng</h3>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">Địa Chỉ:</label>
-                                                <div class="col-md-9">
-                                                    <p class="form-control-static"><?php echo $r_khachhang['hd_diachigiaohang']; ?> </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">Trạng Thái:</label>
-                                                <div class="col-md-9">
-                                                    <p class="form-control-static">
-                                                        <?php  
-                                                        if($r_khachhang['cthd_trangthai']==1)
-                                                        {
-                                                            echo '<span class="label label-info"> Chưa Chuyển </span>';
-                                                        }
-                                                        else
-                                                        {
-                                                            echo '<span class="label label-success"> Đã Chuyển </span>';
-                                                        }
-                                                            ?>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>  
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3"><?php echo $r_khachhang['tp_t_loai']; ?>:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static"> <?php echo $r_khachhang['tp_t_ten']; ?></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3"><?php echo $r_khachhang['q_h_loai'];?>:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static"><?php echo $r_khachhang['q_h_ten'];?></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <!--/row-->
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Số Hóa Đơn:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static"><?php echo $r_khachhang['hd_ma'];?></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Ngày Mua:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static"><?php echo date("d/m/Y",strtotime($r_khachhang['hd_ngaydat']));?> </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Tổng tiền:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static"><?php echo number_format($r_khachhang['tongtien']);?> VNĐ</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-
-                                            <!--/span-->
-                                        </div>
-                                    </div>
-                                    <div class="form-actions">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="row">
-                                                    <div class="col-md-offset-3 col-md-9">
-                                                        <?php  
-                                                        if($r_khachhang['cthd_trangthai']==1)
-                                                        {
-                                                            ?>
-                                                            <a href="?idHD=<?php echo $_GET['idHD'].'&idGiaoHang='.$_GET['idHD']; ?>" class="btn blue">
-                                                                <i class="fa fa-pencil"></i> Xác Nhận
-                                                            </a>
-                                                            <?php  
-                                                        }
-                                                        else
-                                
-                                                            ?>
-                                                            <a href="danh-sach-don-hang.php" class="btn default">Trở Về</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6"> </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- END FORM-->
-                                </div>
-                            </div>
                             <!-- END EXAMPLE TABLE PORTLET-->
                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
                             <div class="portlet box red">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-globe"></i>Đơn Hàng
+                                        <i class="fa fa-globe"></i>
+                                        Duyệt Bình Luận
                                     </div>
-                                    <div class="tools">
-                                       <a href="javascript:;" class="collapse"> </a>
-                                   </div>
-                               </div>
-                               <div class="portlet-body">
-                                <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
-                                    <thead>
-                                        <tr>
-                                            <th> Tên sản phẩm </th>
-                                            <th> Hình </th>
-                                            <th> Số lượng</th>
-                                            <th> Đơn giá </th>
-                                            <th> Thành tiền </th>
-                                            <th> Trạng Thai </th>
+                                    <div class="actions">
 
-                                        </tr>
-                                    </thead>
-                                     
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
+                                        <thead>
+                                            <tr>
+                                                <th> Mã</th>
+                                                <th> Sảm Phẩm </th>
+                                                <th> Khách Hàng </th>
+                                                <th> Tiêu Đề</th>
+                                                <th> Nội Dung</th>
+                                                <th> Trạng thái </th>
+                                                <th> Thao Tác</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                             <?php  
-                                            $chitietdonhang=chiTietDonHang($_GET['idHD'],$cuaHang);
-                                            while($r_sp=$chitietdonhang->fetch_assoc())
+                                            $binhluan=danhSachBinhLuanChuaDuyet($cuaHang);
+                                            while ($r_bl=$binhluan->fetch_assoc()) 
                                             {
-
-
                                                 ?>
                                                 <tr>
-                                                    <td> <?php echo $r_sp['sp_ten']; ?> </td>
-                                                    <td style="width: 30px;"> 
-                                                     <img src="..<?php echo $r_sp['sp_hinh1']; ?>" class="img-rounded" alt="" style="width: 100px;">
+                                                    <td> <?php echo $r_bl['bl_ma']; ?> </td>
+                                                    <td><?php echo $r_bl['sp_ten']; ?> </td>
+                                                    <td><?php echo $r_bl['kh_hoten']; ?></td>
+                                                    <td> <?php echo $r_bl['bl_tieude']; ?> </td>
+                                                    <td>  <?php echo $r_bl['bl_noidung']; ?> </td>
+                                                    <td>
+                                                     <span class="badge badge-info badge-roundless"> Chờ duyệt </span>
                                                  </td>
-                                                 <td> <?php echo $r_sp['cthd_soluong']; ?> </td>
-                                                 <td> <?php echo number_format($r_sp['cthd_dongia']); ?> VNĐ</td>
-
                                                  <td>
-                                                    <?php 
-                                                    $thanhtien=(int)$r_sp['cthd_soluong']*(double)$r_sp['cthd_dongia'];
-                                                    echo number_format($thanhtien) ;
-                                                    ?>
-                                                    VNĐ
-                                                </td>
-                                                <td>
-                                                    <?php  
-                                                        if($r_sp['cthd_trangthai']==1)
-                                                        {
-                                                            echo '<span class="label label-info"> Chưa Chuyển </span>';
-                                                        }
-                                                        else
-                                                        {
-                                                            echo '<span class="label label-success"> Đã Chuyển </span>';
-                                                        }
-                                                    ?>
-                                                </td>
-                                            </tr>
-                                            <?php  
-                                        }
-                                        ?>
+                                                   <a href="?idDuyet=<?php echo $r_bl['bl_ma']; ?>" class="btn green btn-outline uppercase"> 
+                                                    <i class="fa fa-check-square-o"></i>
+                                                </a>
+                                                <a href="?idAn=<?php echo $r_bl['bl_ma']; ?>" class="btn dark btn-outline uppercase"> 
+                                                    <i class="icon-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php } ?> 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- END EXAMPLE TABLE PORTLET-->
+                    </div>
+                    <div class="col-md-12">
+                        <!-- BEGIN EXAMPLE TABLE PORTLET-->
 
+                        <!-- END EXAMPLE TABLE PORTLET-->
+                        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                        <div class="portlet box green">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-globe"></i>
+                                    Bình Luận Đã Duyệt
+                                </div>
+                                <div class="actions">
+
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_1">
+                                    <thead>
+                                        <tr>
+                                            <th> Mã</th>
+                                            <th> Sảm Phẩm </th>
+                                            <th> Khách Hàng </th>
+                                            <th> Tiêu Đề</th>
+                                            <th> Nội Dung</th>
+                                            <th> Thao Tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php  
+                                        $binhluan=danhSachBinhLuanDaDuyet($cuaHang);
+                                        while ($r_bl=$binhluan->fetch_assoc()) 
+                                        {
+                                            ?>
+                                            <tr>
+                                                <td> <?php echo $r_bl['bl_ma']; ?> </td>
+                                                <td><?php echo $r_bl['sp_ten']; ?> </td>
+                                                <td><?php echo $r_bl['kh_hoten']; ?></td>
+                                                <td> <?php echo $r_bl['bl_tieude']; ?> </td>
+                                                <td>  <?php echo $r_bl['bl_noidung']; ?> </td>
+                                                <td>
+                                                </td>
+                                        </tr>
+                                        <?php } ?> 
                                     </tbody>
                                 </table>
                             </div>
@@ -918,9 +863,18 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                     </div>
                                                                     <!-- END CONTAINER -->
                                                                     <!-- BEGIN FOOTER -->
-                                                                    <?php require_once "footer.php"; ?>
+                                                                    <div class="page-footer">
+                                                                        <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
+                                                                            <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
+                                                                            <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
+                                                                        </div>
+                                                                        <div class="scroll-to-top">
+                                                                            <i class="icon-arrow-up"></i>
+                                                                        </div>
+                                                                    </div>
                                                                     <!-- END FOOTER -->
                                                                     <!-- BEGIN QUICK NAV -->
+                                                                   
                                                                     <!-- END QUICK NAV -->
         <!--[if lt IE 9]>
 <script src="../public/assets/global/plugins/respond.min.js"></script>
@@ -955,4 +909,3 @@ License: You must have a valid license purchased only from themeforest(the above
 </body>
 
 </html>
-<?php require_once "bottom.php"; ?>

@@ -21,8 +21,8 @@ function uploadimage($files,$tenSP)
 		// Kiểm tra dung lượng
 		if ($files["size"] > $size) 
 		{
-		    echo "<script>alert('Thất Bại: File Lớn Hơn 5MB');</script>";
-		    $uploadOk = false;
+			echo "<script>alert('Thất Bại: File Lớn Hơn 5MB');</script>";
+			$uploadOk = false;
 		}
 		// kiểm tra đuôi hình
 		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) 
@@ -71,8 +71,8 @@ function path_hinh($files,$tenSP)
 		// Kiểm tra dung lượng
 		if ($files["size"] > $size) 
 		{
-		    echo "<script>alert('Thất Bại: File Lớn Hơn 5MB');</script>";
-		    $uploadOk = false;
+			echo "<script>alert('Thất Bại: File Lớn Hơn 5MB');</script>";
+			$uploadOk = false;
 		}
 		// kiểm tra đuôi hình
 		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) 
@@ -105,8 +105,8 @@ function chenHinhSanPham($files,$idSP)
 {
 	$conn=connect();
 	$sql="SELECT *
-		FROM sanpham
-		WHERE sp_ma=$idSP";
+	FROM sanpham
+	WHERE sp_ma=$idSP";
 	$result=$conn->query($sql);
 
 	if($result->num_rows > 0)
@@ -132,18 +132,18 @@ function danhSachHinh($idSP)
 {
 	$conn=connect();
 	$sql="SELECT *
-		FROM hinhanh
-		WHERE hinh_masanpham=$idSP
-		AND hinh_trangthai=1";
+	FROM hinhanh
+	WHERE hinh_masanpham=$idSP
+	AND hinh_trangthai=1";
 	return $conn->query($sql);
 }
 function danhSachHinhBiAn($idSP)
 {
 	$conn=connect();
 	$sql="SELECT *
-		FROM hinhanh
-		WHERE hinh_masanpham=$idSP
-		AND hinh_trangthai=2";
+	FROM hinhanh
+	WHERE hinh_masanpham=$idSP
+	AND hinh_trangthai=2";
 	return $conn->query($sql);
 }
 //---------------------------------------------------------------------------
@@ -172,16 +172,9 @@ function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$tomTat,$c
 		$sql="INSERT INTO sanpham(sp_macuahang,sp_loaisanpham,sp_hangsanxuat,sp_nhacungcap,sp_ten,sp_tenkhongdau,sp_hinh1,sp_noidung,sp_soluong,sp_dongia,sp_luotxem,sp_ngaydang,sp_trangthai,sp_cauhinh,sp_tomtat)
 		VALUES ($cuaHang,$loaiSP,$hsx,$ncc,'$tenSP','$tenkhongdau','$path_Hinh','$nd',1,$dongia,0,'$date',1,'$cauhinh','$tomtat')
 		";
-	
 		if ($conn->query($sql) === TRUE) 
 		{	
-			$last_id = $conn->insert_id;
-			$sql="INSERT INTO danhgia(dg_masanpham,dg_loai1,dg_loai2,dg_loai3,dg_loai4,dg_loai5)
-				VALUES ($last_id,0,0,0,0,0)";
-			if($conn->query($sql) === TRUE)
-			{
-				echo '<script>alert("Thêm Sản Phẩm Thành Công");</script>';
-			}
+			echo '<script>alert("Thêm Sản Phẩm Thành Công");</script>';
 		} 
 		else 
 		{
@@ -197,7 +190,7 @@ function formatNumber($donGia)
 	$strSo="";
 	foreach($arr as $val)
 	{
-	   $strSo.=$val;
+		$strSo.=$val;
 	}
 	$iSo=(double)$strSo;
 	return $iSo;
@@ -213,16 +206,16 @@ function capNhatSanPham($idSP,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$tomTat,
 	$date=date("Y-m-d");
 	$tenkhongdau=to_slug($tenSP);
 	$sql="UPDATE sanpham
-		  SET sp_ten='$tenSP',
-		  sp_tenkhongdau='$tenkhongdau',
-		  sp_noidung='$nd',
-		  sp_dongia=$dongia,
-		  sp_nhacungcap=$ncc,
-		  sp_loaisanpham=$loaiSP,
-		  sp_tomtat='$tt',
-		  sp_hangsanxuat=$hsx,
-		  sp_cauhinh='$ch'
-		  WHERE sp_ma=$idSP";
+	SET sp_ten='$tenSP',
+	sp_tenkhongdau='$tenkhongdau',
+	sp_noidung='$nd',
+	sp_dongia=$dongia,
+	sp_nhacungcap=$ncc,
+	sp_loaisanpham=$loaiSP,
+	sp_tomtat='$tt',
+	sp_hangsanxuat=$hsx,
+	sp_cauhinh='$ch'
+	WHERE sp_ma=$idSP";
 
 	if($conn->query($sql)===true)
 	{
@@ -245,8 +238,8 @@ function capNhatHinh($idSP,$tenSP,$files)
 	else
 	{
 		$sql="UPDATE sanpham
-			  SET sp_hinh1='$path_Hinh'
-			  WHERE sp_ma=$idSP";
+		SET sp_hinh1='$path_Hinh'
+		WHERE sp_ma=$idSP";
 		return $conn->query($sql);
 	}
 }
@@ -256,8 +249,8 @@ function laySanPhamTheoID($idSP)
 {
 	$conn=connect();
 	$sql="SELECT * 
-		FROM sanpham
-		WHERE sp_ma=$idSP";
+	FROM sanpham
+	WHERE sp_ma=$idSP";
 	return $conn->query($sql);
 }
 // -----------------------------------------------------------------
@@ -265,8 +258,8 @@ function layDanhSachLoai()
 {
 	$conn=connect();
 	$sql="SELECT * 
-		FROM loaisanpham
-		WHERE lsp_trangthai=1";
+	FROM loaisanpham
+	WHERE lsp_trangthai=1";
 	return $conn->query($sql);
 }
 
@@ -274,8 +267,8 @@ function layDanhSachHang()
 {
 	$conn=connect();
 	$sql="SELECT * 
-		FROM hangsanxuat
-		WHERE hsx_trangthai=1";
+	FROM hangsanxuat
+	WHERE hsx_trangthai=1";
 	return $conn->query($sql);	
 }
 
@@ -283,8 +276,8 @@ function layDanhSachCungCap($cuaHang)
 {
 	$conn=connect();
 	$sql="SELECT * 
-		FROM nhacungcap
-		WHERE ncc_macuahang=$cuaHang AND ncc_trangthai=1";
+	FROM nhacungcap
+	WHERE ncc_macuahang=$cuaHang AND ncc_trangthai=1";
 	return $conn->query($sql);
 }
 
@@ -292,8 +285,8 @@ function danhSachSanPham($cuaHang)
 {
 	$conn=connect();
 	$sql="SELECT * 
-		FROM sanpham,loaisanpham,hangsanxuat,nhacungcap
-		WHERE (sp_loaisanpham=lsp_ma AND sp_hangsanxuat=hsx_ma AND sp_nhacungcap=ncc_ma) AND sp_macuahang=$cuaHang AND sp_trangthai=1";
+	FROM sanpham,loaisanpham,hangsanxuat,nhacungcap
+	WHERE (sp_loaisanpham=lsp_ma AND sp_hangsanxuat=hsx_ma AND sp_nhacungcap=ncc_ma) AND sp_macuahang=$cuaHang AND sp_trangthai=1";
 	return $conn->query($sql);
 }
 
@@ -301,8 +294,8 @@ function xoaSanPham($maSP)
 {
 	$conn=connect();
 	$sql="UPDATE sanpham
-		  SET sp_trangthai=2
-		  WHERE sp_ma=$maSP";
+	SET sp_trangthai=2
+	WHERE sp_ma=$maSP";
 	return $conn->query($sql);
 }
 
@@ -310,8 +303,8 @@ function danhSachSanPhamBiHuy($cuaHang)
 {
 	$conn=connect();
 	$sql="SELECT * 
-		FROM sanpham,loaisanpham,hangsanxuat,nhacungcap
-		WHERE (sp_loaisanpham=lsp_ma AND sp_hangsanxuat=hsx_ma AND sp_nhacungcap=ncc_ma) AND sp_macuahang=$cuaHang AND sp_trangthai=2";
+	FROM sanpham,loaisanpham,hangsanxuat,nhacungcap
+	WHERE (sp_loaisanpham=lsp_ma AND sp_hangsanxuat=hsx_ma AND sp_nhacungcap=ncc_ma) AND sp_macuahang=$cuaHang AND sp_trangthai=2";
 	return $conn->query($sql);
 }
 
@@ -319,10 +312,10 @@ function khoiPhucSanPham($maSP)
 {
 	$conn=connect();
 	$sql="UPDATE sanpham
-			SET 
-				sp_trangthai=1
-			WHERE 
-				sp_ma=$maSP";
+	SET 
+	sp_trangthai=1
+	WHERE 
+	sp_ma=$maSP";
 	return $conn->query($sql);
 }
 //---------------------------------------------------------------------	
@@ -330,10 +323,10 @@ function anHinh($idHinh)
 {
 	$conn=connect();
 	$sql="UPDATE hinhanh
-			SET 
-				hinh_trangthai=2
-			WHERE 
-				hinh_ma=$idHinh";
+	SET 
+	hinh_trangthai=2
+	WHERE 
+	hinh_ma=$idHinh";
 	if($conn->query($sql)==true)
 	{
 		echo '<script>alert("Ẩn Hình Thành Công");</script>';
@@ -343,10 +336,10 @@ function hienHinh($idHinh)
 {
 	$conn=connect();
 	$sql="UPDATE hinhanh
-			SET 
-				hinh_trangthai=1
-			WHERE 
-				hinh_ma=$idHinh";
+	SET 
+	hinh_trangthai=1
+	WHERE 
+	hinh_ma=$idHinh";
 	if($conn->query($sql)==true)
 	{
 		echo '<script>alert("Hiện Hình Thành Công");</script>';
@@ -363,10 +356,10 @@ function capNhatDanhSachHinh($idHinh,$idSP,$file)
 	if($hinh!=false)
 	{
 		$sql="UPDATE hinhanh
-			SET 
-				hinh_duongdanhinh='$hinh'
-			WHERE 
-				hinh_ma=$idHinh";
+		SET 
+		hinh_duongdanhinh='$hinh'
+		WHERE 
+		hinh_ma=$idHinh";
 		return $conn->query($sql);
 		
 	}
@@ -380,5 +373,34 @@ function showHinh($idHinh)
 }
 
 //----------------------------------------------------------------------
-
+function capNhatConHang($maSP)
+{
+	$conn=connect();
+	$sql="UPDATE sanpham
+	SET sp_soluong=1
+	WHERE sp_ma=$maSP";
+	if($conn->query($sql)==true)
+	{
+		echo '<script>alert("Cập nhật trạng thái thành công");</script>';
+	}
+}
+function capNhatHetHang($maSP)
+{
+	$conn=connect();
+	$sql="UPDATE sanpham
+	SET sp_soluong=0
+	WHERE sp_ma=$maSP";
+	if($conn->query($sql)==true)
+	{
+		echo '<script>alert("Cập nhật trạng thái thành công");</script>';
+	}
+}
+function danhSachHangTonKho($cuaHang)
+{
+	$conn=connect();
+	$sql="SELECT * 
+	FROM sanpham,loaisanpham,hangsanxuat,nhacungcap
+	WHERE (sp_loaisanpham=lsp_ma AND sp_hangsanxuat=hsx_ma AND sp_nhacungcap=ncc_ma) AND sp_macuahang=$cuaHang AND sp_trangthai=1";
+	return $conn->query($sql);
+}
 ?>
