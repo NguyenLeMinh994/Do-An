@@ -1,31 +1,10 @@
-<?php 
-    require "top.php";
-    require "func_shop/func_sanpham.php";
-    if(isset($_POST['btnCapNhatSP']))
+<?php require "top.php"; 
+    require "func_admin/func_cuahang.php";
+    if(!isset($_GET['idSP']) || empty($_GET['idSP']))
     {
-        if(empty($_FILES['hinhanh']['name']))
-        {
-            capNhatSanPham($_GET['idSP'],$_POST['txtDanhMuc'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtTomTat'],$_POST['txtCauHinh']);
-        }
-        else
-        {
-            if(capNhatHinh($_GET['idSP'],$_POST['txtTenSP'],$_FILES['hinhanh'])==true)
-            {
-                capNhatSanPham($_GET['idSP'],$_POST['txtDanhMuc'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtTomTat'],$_POST['txtCauHinh']);
-            }
-            // else
-            // {
-            //     echo '<script>alert("Upload hình lên server thất bại");</script>';
-            // }
-        }
+        header("Location:danh-sach-cua-hang.php");
     }
-    else
-        if(!isset($_GET['idSP']) || empty($_GET['idSP']))
-        {
-            header("Location:danh-sach-san-pham.php");
-        }
-   
- ?>
+?>
 <!DOCTYPE html>
 <!-- 
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.7
@@ -49,10 +28,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Cập Nhật Sản Phẩm</title>
+        <title>Nôi Dung Khiếu Nại</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Preview page of Metronic Admin Theme #4 for form layouts" name="description" />
+        <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
         <meta content="" name="author" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -60,30 +39,14 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="../public/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-       
         <!-- END GLOBAL MANDATORY STYLES -->
-        <!-- BEGIN PAGE LEVEL PLUGINS Mới -->
-        <!-- BEHIN Select -->
-        <link href="../public/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- END   Select -->
-        <!-- BEGIN UP FILE HÌNH -->
-          <link href="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
-          <!--END UP FILE HÌNH   -->
-        <link href="../public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css" />
-        <!-- BEGIN SỐ -->
-        <link href="../public/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.css" rel="stylesheet" type="text/css" />
-        <!-- END SỐ -->
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="../public/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="../public/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
         <link href="../public/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
-	
         <!-- END THEME GLOBAL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <link href="../public/assets/layouts/layout4/css/layout.min.css" rel="stylesheet" type="text/css" />
@@ -103,7 +66,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <!-- BEGIN SIDEBAR -->
-            <?php require "sidebar.php"; ?>
+           <?php require "sidebar.php"; ?>
             <!-- END SIDEBAR -->
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
@@ -113,265 +76,152 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>Sản Phẩm
-                                
+                            <h1>Quản Lý Cửa Hàng
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
                         <!-- BEGIN PAGE TOOLBAR -->
-                      
+                        <div class="page-toolbar">
+                            <!-- BEGIN THEME PANEL -->
+                            <div class="btn-group btn-theme-panel">
+                                <a href="javascript:;" class="btn dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon-settings"></i>
+                                </a>
+                                <div class="dropdown-menu theme-panel pull-right dropdown-custom hold-on-click">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            <h3>HEADER</h3>
+                                            <ul class="theme-colors">
+                                                <li class="theme-color theme-color-default active" data-theme="default">
+                                                    <span class="theme-color-view"></span>
+                                                    <span class="theme-color-name">Dark Header</span>
+                                                </li>
+                                                <li class="theme-color theme-color-light " data-theme="light">
+                                                    <span class="theme-color-view"></span>
+                                                    <span class="theme-color-name">Light Header</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8 col-xs-12 seperator">
+                                            <h3>LAYOUT</h3>
+                                            <ul class="theme-settings">
+                                                <li> Theme Style
+                                                    <select class="layout-style-option form-control input-small input-sm">
+                                                        <option value="square">Square corners</option>
+                                                        <option value="rounded" selected="selected">Rounded corners</option>
+                                                    </select>
+                                                </li>
+                                                <li> Layout
+                                                    <select class="layout-option form-control input-small input-sm">
+                                                        <option value="fluid" selected="selected">Fluid</option>
+                                                        <option value="boxed">Boxed</option>
+                                                    </select>
+                                                </li>
+                                                <li> Header
+                                                    <select class="page-header-option form-control input-small input-sm">
+                                                        <option value="fixed" selected="selected">Fixed</option>
+                                                        <option value="default">Default</option>
+                                                    </select>
+                                                </li>
+                                                <li> Top Dropdowns
+                                                    <select class="page-header-top-dropdown-style-option form-control input-small input-sm">
+                                                        <option value="light">Light</option>
+                                                        <option value="dark" selected="selected">Dark</option>
+                                                    </select>
+                                                </li>
+                                                <li> Sidebar Mode
+                                                    <select class="sidebar-option form-control input-small input-sm">
+                                                        <option value="fixed">Fixed</option>
+                                                        <option value="default" selected="selected">Default</option>
+                                                    </select>
+                                                </li>
+                                                <li> Sidebar Menu
+                                                    <select class="sidebar-menu-option form-control input-small input-sm">
+                                                        <option value="accordion" selected="selected">Accordion</option>
+                                                        <option value="hover">Hover</option>
+                                                    </select>
+                                                </li>
+                                                <li> Sidebar Position
+                                                    <select class="sidebar-pos-option form-control input-small input-sm">
+                                                        <option value="left" selected="selected">Left</option>
+                                                        <option value="right">Right</option>
+                                                    </select>
+                                                </li>
+                                                <li> Footer
+                                                    <select class="page-footer-option form-control input-small input-sm">
+                                                        <option value="fixed">Fixed</option>
+                                                        <option value="default" selected="selected">Default</option>
+                                                    </select>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END THEME PANEL -->
+                        </div>
                         <!-- END PAGE TOOLBAR -->
                     </div>
                     <!-- END PAGE HEAD-->
                     <!-- BEGIN PAGE BREADCRUMB -->
                     <ul class="page-breadcrumb breadcrumb">
                         <li>
-                            <a href="index.php">Trang Chủ</a>
+                            <a href="index.php">Trang Admin</a>
                             <i class="fa fa-circle"></i>
                         </li>
+                       
                         <li>
-                            <span class="active">Cập nhật sản Phẩm</span>
+                            <span class="active">Sản Phẩm Khiếu Nại</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
                     <!-- BEGIN PAGE BASE CONTENT -->
-                    
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="tabbable-line boxless tabbable-reversed">
-                              
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab_0">
-                                        <div class="portlet box green">
-                                            <div class="portlet-title">
-                                                <div class="caption">
-                                                    <i class="fa fa-gift"></i>
-                                                    Cập Nhật Sản Phẩm 
-                                                </div>
-                                                <div class="tools">
-                                                    <a href="javascript:;" class="collapse"> </a>
-                        
-                                                </div>
-                                            </div>
-                                            <div class="portlet-body form">
-                                                <!-- BEGIN FORM-->
-                                                <!-- BEGIN cập nhật Sản Phẩm -->
-                                                <?php  
-                                                    $laysanphamtheoID=laySanPhamTheoID($_GET['idSP']);
-                                                    $r_sp=$laysanphamtheoID->fetch_assoc();
-                                                ?>
-                                                <form id="frmSanPham" class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
-                                                    <div class="form-body">
-                                                        <div class="alert alert-danger display-hide">
-                                                            <button class="close" data-close="alert">
-                                                                
-                                                            </button>  Nhập đầy đủ các trường dữ liệu.
-                                                        </div>
-                                                        <div class="alert alert-success display-hide">
-                                                            <button class="close" data-close="alert">
-                                                                
-                                                            </button> Cập nhật sản phẩm thành công.
-                                                        </div>
-                                                        <div class="form-group">
-                                                           <label class="col-md-3 control-label">Tên Sản Phẩm
-                                                           <span class="required"> * </span>
-                                                           </label>
-                                                           <div class="col-md-4">
-                                                            <input value="<?php echo $r_sp['sp_ten']; ?>" type="text" class="form-control" name="txtTenSP" placeholder="Tên sản phẩm">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                       <label class="col-md-3 control-label">Loại Sản Phẩm
-                                                       <span class="required"> * </span>
-                                                       </label>
-                                                       <div class="col-md-4">
-                                                        <select id="select2-single-input-sm" class="form-control input-sm select2-multiple" name="txtLoai">
-                                                            <optgroup label="Chọn Loại Sản Phẩm">
-                                                            <?php  
-                                                                $danhSachLoai=layDanhSachLoai();
-                                                                $maloai=$r_sp['sp_loaisanpham'];
-                                                                while($row_loai=$danhSachLoai->fetch_assoc())
-                                                                {
-                                                                    $tenloai=$row_loai['lsp_ten'];
-
-                                                                    $idloai=$row_loai['lsp_ma'];
-                                                                    
-                                                               
-                                                            ?>
-                                                            <option value="<?php echo $idloai; ?>" <?php echo ($idloai==$maloai?'selected':''); ?>><?php echo $tenloai; ?></option>
-                                                            <?php  
-                                                             }
-                                                            ?> 
-                                                    
-                                                            </optgroup>
-
-                                                        </select>
-                                                    </div>                                    
-                                                </div>
-                                                <div class="form-group">
-                                                   <label class="col-md-3 control-label">Hãng Sản Xuất
-                                                   <span class="required"> * </span>
-                                                   </label>
-                                                   <div class="col-md-4">
-
-                                                    <select id="select2-single-input-sm" class="form-control input-sm select2-multiple" name="txtHSX">
-                                                        <optgroup label="Chọn Hãng Sản Xuất">
-                                                            <?php  
-                                                                $danhSachHang=layDanhSachHang();
-                                                                $mahang=$r_sp['sp_hangsanxuat'];
-                                                                while($row_hang=$danhSachHang->fetch_assoc())
-                                                                {
-                                                                    $tenhang=$row_hang['hsx_ten'];
-
-                                                                    $idhang=$row_hang['hsx_ma'];
-                                                                    #($idhang==2?'selected':'')
-                                                            ?>
-                                                            <option value="<?php echo $idhang; ?>" <?php echo ($idhang==$mahang?'selected':''); ?> ><?php echo $tenhang; ?></option>
-                                                                <?php
-                                                                }
-                                                            ?>
-                                                        </optgroup>
-
-                                                    </select>
-                                                </div>                                    
-                                            </div>
-                                            <div class="form-group">
-                                               <label class="col-md-3 control-label">
-                                                   Nhà Cung Cấp<span class="required"> * </span>
-                                               </label>
-                                               <div class="col-md-4">
-
-                                                <select id="select2-single-input-sm" class="form-control input-sm select2-multiple" name="txtNCC">
-                                                    <optgroup label="Chọn Nhà Cung Cấp">
-                                                       <?php  
-                                                           $danhSachNhaCungCap=layDanhSachCungCap($cuaHang);
-                                                           $mancc=$r_sp['sp_nhacungcap'];
-                                                           while($row_ncc=$danhSachNhaCungCap->fetch_assoc())
-                                                           {
-                                                               $tenncc=$row_ncc['ncc_ten'];
-
-                                                               $idncc=$row_ncc['ncc_ma'];
-                                                       ?>
-                                                        <option value="<?php echo $idncc; ?>" <?php echo ($idncc==$mancc?'selected':''); ?> ><?php echo $tenncc; ?></option>
-                                                       <?php 
-                                                        }
-                                                        ?>
-                                                    </optgroup>
-
-                                                </select>
-                                            </div>                                    
-                                        </div>
-                                        <div class="form-group">
-                                               <label class="col-md-3 control-label">
-                                                   Danh Mục<span class="required"> * </span>
-                                               </label>
-                                               <div class="col-md-4">
-
-                                                <select id="select2-single-input-sm" class="form-control input-sm select2-multiple" name="txtDanhMuc">
-                                                    <optgroup label="Chọn Danh Mục">
-                                                       <?php  
-                                                           $danhmuc=layDanhMuc();
-                                                           $danhmucsp=$r_sp['sp_danhmuc'];
-                                                           while($row_dm=$danhmuc->fetch_assoc())
-                                                           {
-                                                               $ten=$row_dm['dm_ten'];
-
-                                                               $id=$row_dm['dm_ma'];
-                                                               ?>
-                                                              <option value="<?php echo $id; ?>" <?php echo ($danhmucsp==$id?'selected':''); ?> ><?php echo $ten; ?></option>
-                                                        <?php
-                                                           }
-                                                       ?>
-                                                    </optgroup>
-
-                                                </select>
-                                            </div>                                    
-                                        </div> 
-                                        
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">Đơn Giá
-                                            <span class="required"> * </span>
-                                            </label>
-                                            <div class="col-md-4 input-group select2-bootstrap-append select2-bootstrap-prepend input-large">
-                                                                       
-                                                <input value="<?php echo number_format($r_sp['sp_dongia']); ?>" onkeyup="FormatNumber(this);" type="text" name="txtDonGia" class="form-control"> 
-                                                <div class="input-group-addon">VNĐ</div> 
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">Hình Ảnh
-                                            <span class="required"> * </span>
-                                            </label>
-                                            <div class="col-md-9">
-                                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                        <img src="..<?php echo $r_sp['sp_hinh1']; ?>" alt="" /> </div>
-                                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> 
-                                                        </div>
-
-                                                        <div>
-                                                            <span class="btn default btn-file">
-                                                                <span class="fileinput-new"> Select image </span>
-                                                                <span class="fileinput-exists"> Change </span>
-                                                                <input type="file" name="hinhanh" > </span>
-                                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="clearfix margin-top-10"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3">Tóm Tắt
-                                                            <span class="required"> * </span>
-                                                        </label>
-                                                        <div class="col-md-9">
-                                                            <textarea class="ckeditor form-control" name="txtTomTat" rows="6" data-error-container="#editor2_error" >
-                                                                <?php echo $r_sp['sp_tomtat']; ?>
-                                                            </textarea>
-                                                            <div id="editor2_error"> </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3">Nội Dung
-                                                            <span class="required"> * </span>
-                                                        </label>
-                                                        <div class="col-md-9">
-                                                            <textarea class="ckeditor form-control" name="txtNoiDung" rows="6" data-error-container="#editor2_error" >
-                                                                <?php echo $r_sp['sp_noidung']; ?>
-                                                            </textarea>
-                                                            <div id="editor2_error"> </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3">Thông Số
-                                                            <span class="required"> * </span>
-                                                        </label>
-                                                        <div class="col-md-9">
-                                                            <textarea class="ckeditor form-control" name="txtCauHinh" rows="6" data-error-container="#editor2_error" >
-                                                                <?php echo $r_sp['sp_cauhinh']; ?>
-                                                            </textarea>
-                                                            <div id="editor2_error"> </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-actions">
-                                                    <div class="row">
-                                                        <div class="col-md-offset-3 col-md-9">
-                                                            <button type="submit" class="btn green" name="btnCapNhatSP">Cập Nhật Sản Phẩm</button>
-                                                             <a href="danh-sach-san-pham.php" class="btn grey-salsa btn-outline">Trở Về</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <!-- END Thêm Sản Phẩm -->
-                                                <!-- END FORM-->
-                                            </div>
-                                        </div>
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                           
+                            <!-- END EXAMPLE TABLE PORTLET-->
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <div class="portlet box dark">
+                                <div class="portlet-title">
+                                    <div class="caption ">
+                                        <i class="fa fa-globe"></i>Sản Phẩm Khiếu Nại</div>
+                                    <div class="actions">
+                                       
                                     </div>
                                 </div>
+                                <div class="portlet-body">
+                                    <table class="table table-striped table-bordered table-hover dt-responsive" id="sample_2">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="all">Tên khách hàng</th>
+                                                <th class="min-phone-l">Email</th>
+                                                <th class="min-tablet">Nội Dung</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php 
+                                            $noidung=noidungkhieunai($_GET['idSP']);
+                                            while ($row_nd=$noidung->fetch_assoc()) 
+                                            {
+                                        ?>
+                                            <tr>
+                                                <th></th>
+                                                <td> <?php echo $row_nd['bcch_tenkhachhang']; ?> </td>
+                                                <td> <?php echo $row_nd['bcch_email']; ?> </td>
+                                                <td> <?php echo $row_nd['bcch_noidung']; ?> </td>
+                                                
+                                            </tr>
+                                        <?php 
+                                    } 
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                            <!-- END EXAMPLE TABLE PORTLET-->
                         </div>
                     </div>
                     <!-- END PAGE BASE CONTENT -->
@@ -943,7 +793,7 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
-        <?php require "footer.php"; ?>
+        <?php require_once 'footer.php'; ?>
         <!-- END FOOTER -->
         <!-- BEGIN QUICK NAV -->
         
@@ -961,47 +811,17 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
-        <!-- BEGIN PAGE LEVEL PLUGINS Mới-->
-        <!--  -->
-         <script src="../public/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
-        <!--  -->
-        <script src="../public/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-        <!-- BEGIN FILE UP HÌNH -->
-        <script src="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
-        <!-- END FILE UP HÌNH -->
-        <!-- BEGIN CKEDITOR-->
-        <script src="../public/ck/ckeditor/ckeditor.js" type="text/javascript"></script>
-        <!-- END CKEDITOR -->
-        <!--  -->
-        <!-- <script src="../public/assets/global/plugins/bootstrap-markdown/lib/markdown.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js" type="text/javascript"></script> -->
-        <!--  -->
-        <script src="../public/assets/global/plugins/moment.min.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-        <script src="../public/assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>
-        <!-- BEGIN SỐ -->
-        <script src="../public/assets/global/plugins/fuelux/js/spinner.min.js" type="text/javascript">
-             
-        </script>
-        <script src="../public/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript">
-            
-        </script>
-        <!-- END SỐ -->
-
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <script src="../public/assets/global/scripts/datatable.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
-        <!-- BEGIN PAGE LEVEL SCRIPTS Mới-->
-        <!--  -->
-         <script src="../public/assets/pages/scripts/components-select2.min.js" type="text/javascript"></script>
-        <!--  -->
-        <script src="../public/assets/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
-        <script src="../public/assets/pages/scripts/form-samples.min.js" type="text/javascript"></script>
-        <script src="../public/assets/pages/scripts/components-bootstrap-touchspin.min.js" type="text/javascript"></script>
+        <!-- BEGIN PAGE LEVEL SCRIPTS -->
+        <!-- <script src="../public/assets/pages/scripts/table-datatables-fixedheader.min.js" type="text/javascript"></script> -->
+        <script src="../public/assets/pages/scripts/table-datatables-responsive.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <script src="../public/assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>
@@ -1009,128 +829,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
         <script src="../public/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
         <!-- END THEME LAYOUT SCRIPTS -->
-        <script type="text/javascript">
-            $(document).ready(function(){
-                var form1 = $("#frmSanPham");
-                   var error1 = $('.alert-danger', form1);
-                   var success1 = $('.alert-success', form1);
-                    $.validator.addMethod("currency", function (value, element) {
-                        return this.optional(element) || /^\$?(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?$/.test(value);
-                    }, "kiểm tra lại đơn giá");
-
-                   form1.on('submit', function() {
-                      for(var instanceName in CKEDITOR.instances) {
-                          CKEDITOR.instances[instanceName].updateElement();
-                      }
-                  })
-                   
-                form1.validate({
-                    errorElement: 'span', //default input error message container
-                    errorClass: 'help-block help-block-error', // default input error message class
-                    focusInvalid: false, // do not focus the last invalid input
-                    ignore: "", // validate all fields including form hidden input
-                    rules: {
-                        txtTenSP:{
-                            required:true
-                        },
-                        txtTomTat:{
-                            required:true
-                        },
-                        txtDonGia:{
-                            required:true,
-                          
-                        },
-                        txtNoiDung:{
-                            required:true
-                        },
-                        txtCauHinh:{
-                            required:true
-                        }
-                    },
-                    messages: {
-                        txtTenSP: {
-                            required:"Tên sản phẩm không có giá trị rỗng"
-                        },
-                         txtTomTat:{
-                            required:"Tóm tắt không có giá trị rỗng"
-                        },
-                        
-                        txtDonGia:{
-                            required:"Đơn giá không có giá trị rỗng",
-                            
-                        },
-                        txtNoiDung:{
-                            required:"Nội dung không có giá trị rỗng",
-                        },
-                         txtCauHinh:{
-                            required:"Cấu Hình không có giá trị rỗng",
-                        }
-
-                    },
-                       errorPlacement: function(error, element) {
-
-                           if (element.is(':checkbox')) 
-                           {
-                               error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                           } 
-                           else 
-                           if (element.is(':radio')) {
-                               error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                           }
-                           else 
-                           {
-                               error.insertAfter(element); // for other inputs, just perform default behavior
-                           }
-                            // console.log(error);
-                           // console.log(element);
-                        
-                           // var i=$(element).parent(".input-group");
-                           // i?i.after(error):element.after(error);
-                       },
-                       invalidHandler: function(event, validator) { //display error alert on form submit              
-                           success1.hide();
-                           error1.show();
-                           App.scrollTo(error1, -200);
-                       },
-                       highlight: function(element) { // hightlight error inputs
-                           $(element)
-                               .closest('.form-group').addClass('has-error'); // set error class to the control group
-                       },
-
-                       unhighlight: function(element) { // revert the change done by hightlight
-                           $(element)
-                               .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                       },
-                       submitHandler: function(form,e) {
-                         e.preventDefault();
-                         success1.show().slideUp(5000);
-                         error1.hide();
-                         form.submit();
-                         
-                       }
-                }); 
-            });
-function FormatNumber(obj) {
-    var strvalue;
-    if (eval(obj))
-        strvalue = eval(obj).value;
-    else
-        strvalue = obj; 
-    var num;
-    num = strvalue.toString().replace(/\$|\,/g,'');
-
-    if(isNaN(num))
-        num = "";
-    sign = (num == (num = Math.abs(num)));
-    num = Math.floor(num*100+0.50000000001);
-    num = Math.floor(num/100).toString();
-    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
-        num = num.substring(0,num.length-(4*i+3))+','+
-    num.substring(num.length-(4*i+3));
-                //return (((sign)?'':'-') + num);
-                eval(obj).value = (((sign)?'':'-') + num);
-            }
-        </script>
     </body>
+
 </html>
 <?php require "bottom.php"; ?>

@@ -3,7 +3,7 @@
     require "func_shop/func_sanpham.php";
     if(isset($_POST['btnThemSP']))
     {
-        themSanPham($_FILES['hinhanh'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtTomTat'],$_POST['txtCauHinh'],$cuaHang);
+        themSanPham($_FILES['hinhanh'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtTomTat'],$_POST['txtCauHinh'],$cuaHang,$_POST['txtDanhMuc']);
     }
  ?>
 <!DOCTYPE html>
@@ -48,7 +48,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="../public/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- END   Select -->
         <!-- BEGIN UP FILE HÌNH -->
-          <link href="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
           <!--END UP FILE HÌNH   -->
         <link href="../public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
@@ -227,7 +227,30 @@ License: You must have a valid license purchased only from themeforest(the above
 
                                                 </select>
                                             </div>                                    
-                                        </div>  
+                                        </div>
+                                                <div class="form-group">
+                                                   <label class="col-md-3 control-label">
+                                                       Danh Mục<span class="required"> * </span>
+                                                   </label>
+                                                   <div class="col-md-4">
+
+                                                    <select id="select2-single-input-sm" class="form-control input-sm select2-multiple" name="txtDanhMuc">
+                                                        <optgroup label="Chọn Danh Mục">
+                                                           <?php  
+                                                               $danhmuc=layDanhMuc();
+                                                               while($row_dm=$danhmuc->fetch_assoc())
+                                                               {
+                                                                   $ten=$row_dm['dm_ten'];
+
+                                                                   $id=$row_dm['dm_ma'];
+                                                                   echo "<option value='$id'>$ten</option>";
+                                                               }
+                                                           ?>
+                                                        </optgroup>
+
+                                                    </select>
+                                                </div>                                    
+                                            </div>    
                                         
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Đơn Giá
@@ -241,7 +264,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Hình Ảnh
-                                            <span class="required"> * </span>
+                                                <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-9">
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -260,9 +283,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                                         </div>
 
                                                         <div class="clearfix margin-top-10"></div>
-                                                        </div>
                                                     </div>
-                                                    <div class="form-group">
+                                                </div>
+                                                <div class="form-group">
                                                         <label class="control-label col-md-3">Tóm Tắt
                                                             <span class="required"> * </span>
                                                         </label>

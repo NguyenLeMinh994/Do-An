@@ -9,7 +9,7 @@ else
     if(isset($_GET['idGiaoHang']) && !empty($_GET['idGiaoHang']))
     {
         donHangDangGiao($_GET['idGiaoHang'],$cuaHang);
-        capNhatTrangThaiHoaDon($_GET['idGiaoHang']);
+        capNhatTrangThaiHoaDon($_GET['idGiaoHang'],$cuaHang);
     }
 ?>
         <!DOCTYPE html>

@@ -84,7 +84,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
                             <h1>
-                            Trang Chủ Admin
+                            Trang Chủ
                             </h1>
                         </div>
                         <!-- END PAGE TITLE -->
@@ -168,6 +168,24 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <div class="portlet-body">
                                     <div id="morris_chart_3" style="height:300px;"></div>
+                                
+                                <div class="modal fade" id="basic" tabindex="-1" role="basic" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                <h4 class="modal-title">Cảnh Báo</h4>
+                                            </div>
+                                            <div class="modal-body"> Cửa Hàng Đã Vi Phạm Hợp Đồng Cho Thuê</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                                <!-- <button type="button" class="btn green">Save changes</button> -->
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -362,6 +380,8 @@ License: You must have a valid license purchased only from themeforest(the above
                   ykeys: ['a'],
                   labels: ['Lợi nhuận']
                 });
+
+                $('#basic').modal('show');
             });
         </script>
     </body>

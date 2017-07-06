@@ -171,15 +171,11 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!-- BEGIN PAGE BREADCRUMB -->
                     <ul class="page-breadcrumb breadcrumb">
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.php">Trang Chủ</a>
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <a href="#">Tables</a>
-                            <i class="fa fa-circle"></i>
-                        </li>
-                        <li>
-                            <span class="active">Datatables</span>
+                            <span class="active">Danh Sách Bình Luận</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
@@ -229,12 +225,17 @@ License: You must have a valid license purchased only from themeforest(the above
                                                      <span class="badge badge-info badge-roundless"> Chờ duyệt </span>
                                                  </td>
                                                  <td>
-                                                   <a href="?idDuyet=<?php echo $r_bl['bl_ma']; ?>" class="btn green btn-outline uppercase"> 
-                                                    <i class="fa fa-check-square-o"></i>
-                                                </a>
-                                                <a href="?idAn=<?php echo $r_bl['bl_ma']; ?>" class="btn dark btn-outline uppercase"> 
-                                                    <i class="icon-trash"></i>
-                                                </a>
+                                                    <a href="xem-binh-luan.php?idBL=<?php echo $r_bl['bl_ma']; ?>" class="btn red btn-outline uppercase"> 
+                                                        Xem
+                                                    </a>
+
+                                                    <a href="?idDuyet=<?php echo $r_bl['bl_ma']; ?>" class="btn green btn-outline uppercase"> 
+                                                        <i class="fa fa-check-square-o"></i>
+                                                    </a>
+
+                                                    <a href="?idAn=<?php echo $r_bl['bl_ma']; ?>" class="btn dark btn-outline uppercase"> 
+                                                        <i class="icon-trash"></i>
+                                                    </a>
                                             </td>
                                         </tr>
                                         <?php } ?> 

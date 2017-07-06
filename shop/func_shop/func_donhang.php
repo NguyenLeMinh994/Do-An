@@ -120,7 +120,7 @@ function chiTietDonHang($maDH,$cuaHang)
 	return $conn->query($sql);
 }
 
-function capNhatTrangThaiHoaDon($maDH)
+function capNhatTrangThaiHoaDon($maDH,$maCuaHang)
 {
 	$conn=connect();
 	$sql1 = "SELECT count(cthd_trangthai) as demTR
@@ -137,7 +137,19 @@ function capNhatTrangThaiHoaDon($maDH)
 		$sql="UPDATE hoadon
 		SET hd_trangthai=3
 		WHERE hd_ma=$maDH";
-		$conn->query($sql);
+		if($conn->query($sql)==true)
+		{
+			$sql="SELECT ch_tonghoadon as tong FROM cuahang WHERE ch_ma=$maCuaHang";
+			$result=$conn->query($sql);
+			$r=$result->fetch_assoc();
+			$tong= $r['tong']+1;
+
+			$sql="UPDATE cuahang
+			SET ch_tonghoadon=$tong
+			WHERE ch_ma=$maCuaHang";
+			$conn->query($sql);
+		}
+
 	}
 
 

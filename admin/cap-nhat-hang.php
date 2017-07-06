@@ -224,13 +224,19 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <div class="portlet-body form">
                                     <!-- BEGIN FORM-->
-                                    <form class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
+                                    <form class="form-horizontal form-bordered" id="frmHang" method="post" enctype="multipart/form-data">
                                         <div class="form-body">
+                                            <div class="alert alert-danger display-hide">
+                                                <button class="close" data-close="alert"></button> Kiểm tra lại các trường dữ liệu. 
+                                            </div>
+                                            <div class="alert alert-success display-hide">
+                                                <button class="close" data-close="alert"></button> Cập nhật thành công! 
+                                            </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Tên hãng:
                                                 </label>
                                                 <div class="col-md-4">
-                                                    <input type="text" name="txtTenHang" class="form-control input-circle" placeholder="Tên Hãng"
+                                                    <input type="text" name="txtTenHang" class="form-control" placeholder="Tên Hãng"
                                                     value="<?php echo $tenhang; ?>">
                                                 </div>
                                             </div>
@@ -268,11 +274,12 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     <div id="editor2_error"> </div>
                                                 </div>
                                             </div>                       
-                                        </div>
-                                        <div class="form-actions">
-                                            <div class="row">
-                                                <div class="col-md-offset-3 col-md-9">
-                                                    <button type="submit" name="btnCapNhatHang" class="btn green">Cập nhật</button>
+                                        
+                                            <div class="form-actions">
+                                                <div class="row">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button type="submit" name="btnCapNhatHang" class="btn green">Cập nhật</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -327,11 +334,12 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
+        <script src="../public/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
         <script src="../public/ck/ckeditor/ckeditor.js" type="text/javascript"></script>
-<script src="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+        <script src="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
         <script src="../public/assets/pages/scripts/table-datatables-rowreorder.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
@@ -339,6 +347,69 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/layouts/layout4/scripts/demo.min.js" type="text/javascript"></script>
         <script src="../public/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
         <script src="../public/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var form1 = $("#frmHang");
+                var error1 = $('.alert-danger', form1);
+                var success1 = $('.alert-success', form1);
+
+                form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "", // validate all fields including form hidden input
+                rules:{
+                    txtTenHang:{
+                        required:true
+                        
+                    },
+                },
+                messages:{
+                    txtTenHang:{
+                        required:"Tên hãng không có giá trị rỗng",
+                        
+                    }
+                },
+                errorPlacement: function(error, element) {
+
+                 if (element.is(':checkbox')) 
+                 {
+                     error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                 } 
+                 else 
+                     if (element.is(':radio')) {
+                         error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                     }
+                     else 
+                     {
+                           error.insertAfter(element); // for other inputs, just perform default behavior
+                       }
+                   },
+                   invalidHandler: function(event, validator) { //display error alert on form submit              
+                     success1.hide();
+                     error1.show();
+                     App.scrollTo(error1, -200);
+                 },
+                   highlight: function(element) { // hightlight error inputs
+                     $(element)
+                           .closest('.form-group').addClass('has-error'); // set error class to the control group
+                       },
+
+                   unhighlight: function(element) { // revert the change done by hightlight
+                     $(element)
+                           .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                       },
+                       submitHandler: function(form,e) {
+                           e.preventDefault();
+                           success1.show().slideUp(5000);
+                           error1.hide();
+                           form.submit();
+
+                       }
+
+                   });
+            });
+        </script>
         <!-- END THEME LAYOUT SCRIPTS -->
     </body>
 

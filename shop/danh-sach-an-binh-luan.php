@@ -29,7 +29,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <head>
     <meta charset="utf-8" />
-    <title>Danh Sách Bình Luận</title>
+    <title>Danh Sách Ẩn Bình Luận</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
@@ -187,7 +187,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="fa fa-globe"></i>
-                                        Duyệt Bình Luận
+                                        Ẩn Bình Luận
                                     </div>
                                     <div class="actions">
 
@@ -202,7 +202,6 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th> Khách Hàng </th>
                                                 <th> Tiêu Đề</th>
                                                 <th> Nội Dung</th>
-                                                <th> Trạng thái </th>
                                                 <th> Thao Tác</th>
                                             </tr>
                                         </thead>
@@ -218,9 +217,6 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     <td><?php echo $r_bl['kh_hoten']; ?></td>
                                                     <td> <?php echo $r_bl['bl_tieude']; ?> </td>
                                                     <td>  <?php echo $r_bl['bl_noidung']; ?> </td>
-                                                    <td>
-                                                     <span class="badge badge-info badge-roundless"> Chờ duyệt </span>
-                                                 </td>
                                                  <td>
                                                    <a href="?idKP=<?php echo $r_bl['bl_ma']; ?>" class="btn red btn-outline uppercase"> 
                                                     <i class="fa fa-check-square-o"></i>

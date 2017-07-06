@@ -1,9 +1,15 @@
-<?php require "top.php"; 
-     require "./func_admin/func_loaisanpham.php";
-     if(isset($_GET['idLoaiSP']))
-     {
-        khoiPhucLoaiSP($_GET['idLoaiSP']);
-     }
+<?php 
+require_once "top.php"; 
+require "func_admin/func_danhmuc.php";
+if(isset($_GET['idDM']) || !empty($_GET['idDM']))
+{
+    anDanhMuc($_GET['idDM']);
+}
+else
+    if (isset($_GET['idDMHien']) || !empty($_GET['idDMHien'])) 
+    {
+        hienDanhMuc($_GET['idDMHien']);
+    }
 
 ?>
 
@@ -30,7 +36,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Khôi Phục Loại</title>
+        <title>Danh Sách Danh Mục</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
@@ -86,81 +92,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <!-- BEGIN PAGE TOOLBAR -->
                         <div class="page-toolbar">
                             <!-- BEGIN THEME PANEL -->
-                            <div class="btn-group btn-theme-panel">
-                                <a href="javascript:;" class="btn dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-settings"></i>
-                                </a>
-                                <div class="dropdown-menu theme-panel pull-right dropdown-custom hold-on-click">
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-4 col-xs-12">
-                                            <h3>HEADER</h3>
-                                            <ul class="theme-colors">
-                                                <li class="theme-color theme-color-default active" data-theme="default">
-                                                    <span class="theme-color-view"></span>
-                                                    <span class="theme-color-name">Dark Header</span>
-                                                </li>
-                                                <li class="theme-color theme-color-light " data-theme="light">
-                                                    <span class="theme-color-view"></span>
-                                                    <span class="theme-color-name">Light Header</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-8 col-sm-8 col-xs-12 seperator">
-                                            <h3>LAYOUT</h3>
-                                            <ul class="theme-settings">
-                                                <li> Theme Style
-                                                    <select class="layout-style-option form-control input-small input-sm">
-                                                        <option value="square">Square corners</option>
-                                                        <option value="rounded" selected="selected">Rounded corners</option>
-                                                    </select>
-                                                </li>
-                                                <li> Layout
-                                                    <select class="layout-option form-control input-small input-sm">
-                                                        <option value="fluid" selected="selected">Fluid</option>
-                                                        <option value="boxed">Boxed</option>
-                                                    </select>
-                                                </li>
-                                                <li> Header
-                                                    <select class="page-header-option form-control input-small input-sm">
-                                                        <option value="fixed" selected="selected">Fixed</option>
-                                                        <option value="default">Default</option>
-                                                    </select>
-                                                </li>
-                                                <li> Top Dropdowns
-                                                    <select class="page-header-top-dropdown-style-option form-control input-small input-sm">
-                                                        <option value="light">Light</option>
-                                                        <option value="dark" selected="selected">Dark</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Mode
-                                                    <select class="sidebar-option form-control input-small input-sm">
-                                                        <option value="fixed">Fixed</option>
-                                                        <option value="default" selected="selected">Default</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Menu
-                                                    <select class="sidebar-menu-option form-control input-small input-sm">
-                                                        <option value="accordion" selected="selected">Accordion</option>
-                                                        <option value="hover">Hover</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Position
-                                                    <select class="sidebar-pos-option form-control input-small input-sm">
-                                                        <option value="left" selected="selected">Left</option>
-                                                        <option value="right">Right</option>
-                                                    </select>
-                                                </li>
-                                                <li> Footer
-                                                    <select class="page-footer-option form-control input-small input-sm">
-                                                        <option value="fixed">Fixed</option>
-                                                        <option value="default" selected="selected">Default</option>
-                                                    </select>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        
                             <!-- END THEME PANEL -->
                         </div>
                         <!-- END PAGE TOOLBAR -->
@@ -174,7 +106,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         </li>
                         
                         <li>
-                            <span class="active">Khôi Phục Loại Sản Phẩm</span>
+                            <span class="active">Danh Sách Loại Sản Phẩm</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
@@ -188,7 +120,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="fa fa-globe"></i>
-                                    Khôi Phục Loại Sản Phẩm
+                                    Danh Sách Danh Mục
                                     </div>
                                     <div class="tools"> </div>
                                 </div>
@@ -196,29 +128,33 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <table class="table table-striped table-bordered table-hover" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> Tên Loại </th>
-                                                <th> Lãi Xuất</th>
+                                                <th> Mã</th>
+                                                <th> Danh mục cha</th>
+                                                <th> Tên</th>
                                                 <th> Thao Tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php  
-                                            $danhSachLoaiBiHuy = danhSachLoaiBiHuy();
-                                            while ($row_loai = $danhSachLoaiBiHuy->fetch_assoc()) 
+                                            $danhSachLoai = danhSachDanhMuc();
+                                            while ($r_dm = $danhSachLoai->fetch_assoc()) 
                                             {
-                                                $tenloai=$row_loai['lsp_ten'];
-                                                $maloaisp=$row_loai['lsp_ma'];
+                                                $maDM=$r_dm['dm_ma'];
 
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $tenloai; ?> </td>
-                                                    <td><?php echo $row_loai['lsp_laixuat']; ?> %</td>
+                                                    <td><?php echo $maDM ?> </td>
+                                                    <td><?php echo $r_dm['dm_kethua']; ?></td>
+                                                    <td><?php echo $r_dm['dm_ten']; ?></td>
                                                     <td>
-                                                        <a href='?idLoaiSP=<?php echo $maloaisp; ?>' class='btn red btn-outline uppercase'> 
-                                                            <i class='fa fa-caret-square-o-left'></i>
+                                                        <a href='cap-nhat-danh-muc.php?idDM=<?php echo $maDM; ?>' class='btn blue btn-outline uppercase'> 
+                                                            <i class='icon-wrench'></i>
+                                                        </a> 
+                                                        <a href='?idDM=<?php echo $maDM; ?>' class='btn dark btn-outline uppercase'> 
+                                                            <i class='icon-trash'></i>
                                                         </a> 
                                                     </td>
-                                                   
+                                      
                                                 </tr>
 
                                                 <?php 
@@ -229,6 +165,51 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                             </div>
                             <!-- END EXAMPLE TABLE PORTLET-->
+                            <div class="portlet box red">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-globe"></i>
+                                    Danh Sách Ẩn
+                                    </div>
+                                    <div class="tools"> </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <table class="table table-striped table-bordered table-hover" id="sample_2">
+                                        <thead>
+                                            <tr>
+                                                <th> Mã</th>
+                                                <th> Danh mục cha</th>
+                                                <th> Tên</th>
+                                                <th> Thao Tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php  
+                                            $danhSachLoai = danhSachAn();
+                                            while ($r_dm = $danhSachLoai->fetch_assoc()) 
+                                            {
+                                                $maDM=$r_dm['dm_ma'];
+
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $maDM ?> </td>
+                                                    <td><?php echo $r_dm['dm_kethua']; ?></td>
+                                                    <td><?php echo $r_dm['dm_ten']; ?></td>
+                                                    <td>
+                                                        <a href='?idDMHien=<?php echo $maDM; ?>' class='btn dark btn-outline uppercase'> 
+                                                            Hiện
+                                                        </a> 
+                                                    </td>
+                                      
+                                                </tr>
+
+                                                <?php 
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- END PAGE BASE CONTENT -->

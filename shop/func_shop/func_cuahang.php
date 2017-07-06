@@ -14,7 +14,7 @@ function uploadHinhCuaHang($cuahang,$file)
 		$tenkhongdau=to_slug($row_thongtin['ch_ten']);
 		// đổi tên file hình
 		$newName=$tenkhongdau.'.'.pathinfo($file["name"],PATHINFO_EXTENSION);
-		$target_dir = "/public/upload/logo/";
+		$target_dir = "/public/upload/logo_cuahang/";
 		$target_file = $target_dir . basename($newName);
 		$uploadOk = 1;
 		$size=5*1024*1024;

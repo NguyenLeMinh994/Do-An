@@ -4,10 +4,9 @@ function uploadimage($files,$tenSP)
 {
 	if(!empty($files['name']))
 	{
-
 		$date=date('d-m-Y-H-i-s');
 		$newName=$date.'-'.$tenSP.'.'.pathinfo($files["name"],PATHINFO_EXTENSION);
-		$target_dir = "/public/upload/img/";
+		$target_dir = "/public/upload/danhmuc/";
 		$path = $target_dir . basename($newName);
 		$uploadOk = true;
 		$size=5*1024*1024;
@@ -128,6 +127,15 @@ function chenHinhSanPham($files,$idSP)
 	}
 }
 //---------------------------------------------------------------------------
+function layDanhMuc()
+{
+	$conn=connect();
+	$sql="SELECT *
+	FROM danhmuc
+	WHERE dm_trangthai=1";
+	return $conn->query($sql);
+}
+//---------------------------------------------------------------------------
 function danhSachHinh($idSP)
 {
 	$conn=connect();
@@ -147,7 +155,7 @@ function danhSachHinhBiAn($idSP)
 	return $conn->query($sql);
 }
 //---------------------------------------------------------------------------
-function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$tomTat,$cauHinh,$cuaHang)
+function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$tomTat,$cauHinh,$cuaHang,$danhmuc)
 {	
 	$conn=connect();
 	//chuyễn đổi chuỗi html
@@ -169,8 +177,8 @@ function themSanPham($files,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$tomTat,$c
 	else
 	{
 		
-		$sql="INSERT INTO sanpham(sp_macuahang,sp_loaisanpham,sp_hangsanxuat,sp_nhacungcap,sp_ten,sp_tenkhongdau,sp_hinh1,sp_noidung,sp_soluong,sp_dongia,sp_luotxem,sp_ngaydang,sp_trangthai,sp_cauhinh,sp_tomtat)
-		VALUES ($cuaHang,$loaiSP,$hsx,$ncc,'$tenSP','$tenkhongdau','$path_Hinh','$nd',1,$dongia,0,'$date',1,'$cauhinh','$tomtat')
+		$sql="INSERT INTO sanpham(sp_macuahang,sp_loaisanpham,sp_hangsanxuat,sp_nhacungcap,sp_ten,sp_tenkhongdau,sp_hinh1,sp_noidung,sp_soluong,sp_dongia,sp_luotxem,sp_ngaydang,sp_trangthai,sp_cauhinh,sp_tomtat,sp_danhmuc)
+		VALUES ($cuaHang,$loaiSP,$hsx,$ncc,'$tenSP','$tenkhongdau','$path_Hinh','$nd',1,$dongia,0,'$date',1,'$cauhinh','$tomtat',$danhmuc)
 		";
 		if ($conn->query($sql) === TRUE) 
 		{	
@@ -196,8 +204,9 @@ function formatNumber($donGia)
 	return $iSo;
 }
 // ----------------------------------------------------------------
-function capNhatSanPham($idSP,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$tomTat,$cauHinh)
+function capNhatSanPham($idSP,$danhmuc,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$tomTat,$cauHinh)
 {
+	//sp_danhmuc=$danhmuc,
 	$conn=connect();
 	$nd=$conn->real_escape_string($noiDung);
 	$ch=$conn->real_escape_string($cauHinh);
@@ -211,6 +220,7 @@ function capNhatSanPham($idSP,$noiDung,$tenSP,$loaiSP,$hsx,$ncc,$donGia,$tomTat,
 	sp_noidung='$nd',
 	sp_dongia=$dongia,
 	sp_nhacungcap=$ncc,
+	sp_danhmuc=$danhmuc,
 	sp_loaisanpham=$loaiSP,
 	sp_tomtat='$tt',
 	sp_hangsanxuat=$hsx,

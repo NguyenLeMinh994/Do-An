@@ -1,6 +1,10 @@
 <?php  
 require_once 'top.php';
 require 'func_shop/func_binhluan.php';
+if(!isset($_GET['idBL']) && !empty($_GET['idBL']))
+{
+    header('Location:danh-sach-binh-luan.php');
+}
 ?>
 <!DOCTYPE html>
 <!-- 
@@ -78,81 +82,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <!-- BEGIN PAGE TOOLBAR -->
                         <div class="page-toolbar">
                             <!-- BEGIN THEME PANEL -->
-                            <div class="btn-group btn-theme-panel">
-                                <a href="javascript:;" class="btn dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-settings"></i>
-                                </a>
-                                <div class="dropdown-menu theme-panel pull-right dropdown-custom hold-on-click">
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-4 col-xs-12">
-                                            <h3>HEADER</h3>
-                                            <ul class="theme-colors">
-                                                <li class="theme-color theme-color-default active" data-theme="default">
-                                                    <span class="theme-color-view"></span>
-                                                    <span class="theme-color-name">Dark Header</span>
-                                                </li>
-                                                <li class="theme-color theme-color-light " data-theme="light">
-                                                    <span class="theme-color-view"></span>
-                                                    <span class="theme-color-name">Light Header</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-8 col-sm-8 col-xs-12 seperator">
-                                            <h3>LAYOUT</h3>
-                                            <ul class="theme-settings">
-                                                <li> Theme Style
-                                                    <select class="layout-style-option form-control input-small input-sm">
-                                                        <option value="square">Square corners</option>
-                                                        <option value="rounded" selected="selected">Rounded corners</option>
-                                                    </select>
-                                                </li>
-                                                <li> Layout
-                                                    <select class="layout-option form-control input-small input-sm">
-                                                        <option value="fluid" selected="selected">Fluid</option>
-                                                        <option value="boxed">Boxed</option>
-                                                    </select>
-                                                </li>
-                                                <li> Header
-                                                    <select class="page-header-option form-control input-small input-sm">
-                                                        <option value="fixed" selected="selected">Fixed</option>
-                                                        <option value="default">Default</option>
-                                                    </select>
-                                                </li>
-                                                <li> Top Dropdowns
-                                                    <select class="page-header-top-dropdown-style-option form-control input-small input-sm">
-                                                        <option value="light">Light</option>
-                                                        <option value="dark" selected="selected">Dark</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Mode
-                                                    <select class="sidebar-option form-control input-small input-sm">
-                                                        <option value="fixed">Fixed</option>
-                                                        <option value="default" selected="selected">Default</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Menu
-                                                    <select class="sidebar-menu-option form-control input-small input-sm">
-                                                        <option value="accordion" selected="selected">Accordion</option>
-                                                        <option value="hover">Hover</option>
-                                                    </select>
-                                                </li>
-                                                <li> Sidebar Position
-                                                    <select class="sidebar-pos-option form-control input-small input-sm">
-                                                        <option value="left" selected="selected">Left</option>
-                                                        <option value="right">Right</option>
-                                                    </select>
-                                                </li>
-                                                <li> Footer
-                                                    <select class="page-footer-option form-control input-small input-sm">
-                                                        <option value="fixed">Fixed</option>
-                                                        <option value="default" selected="selected">Default</option>
-                                                    </select>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <!-- END THEME PANEL -->
                         </div>
                         <!-- END PAGE TOOLBAR -->
@@ -177,16 +107,18 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="icon-edit font-dark"></i>
-                                        <span class="caption-subject font-dark bold uppercase">Notes</span>
+                                        <span class="caption-subject font-dark bold uppercase" id="idTenKH"></span>
                                     </div>
                                     <div class="actions">
-
+                                        <a href="danh-sach-binh-luan.php" class="btn default btn-outline uppercase"> 
+                                        Trở vê
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
                                     <div class="note note-info">
-                                        <h4 class="block">Info! Some Header Goes Here</h4>
-                                        <p> Duis mollis, est non commodo luctus, nisi erat porttitor ligula, mattis consectetur purus sit amet eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. </p>
+                                        <h4 class="block" id="idTieuDe"></h4>
+                                        <p id="idNoiDung"></p>
                                     </div>
                                 </div>
                             </div>
@@ -776,6 +708,24 @@ License: You must have a valid license purchased only from themeforest(the above
 <![endif]-->
 <!-- BEGIN CORE PLUGINS -->
 <script src="../public/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+      $.ajax({
+            url:'json_xembinhluan.php',
+            type : "get",
+            dataType:'json',
+            data:{
+                idBL:<?php echo $_GET['idBL'];  ?>
+            },
+            success:function(data) {
+                // console.log(data);
+                $('#idTenKH').text(data[0].kh_hoten+" - "+data[0].sp_ten);
+                $('#idTieuDe').text(data[0].bl_tieude); 
+                $('#idNoiDung').text(data[0].bl_noidung);       
+            }
+        });
+  });
+</script>
 <script src="../public/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="../public/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
 <script src="../public/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -798,17 +748,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="../public/assets/layouts/layout4/scripts/demo.min.js" type="text/javascript"></script>
 <script src="../public/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <script src="../public/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-      $.ajax({
-        url:'json_xembinhluan.php',
-        dataType:'json',
-        success:function(data) {
-            console.log(data)        
-        }
-    });
-  });
-</script>
+
 <!-- END THEME LAYOUT SCRIPTS -->
 </body>
 

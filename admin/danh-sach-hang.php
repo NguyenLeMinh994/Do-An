@@ -30,7 +30,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | Rowreorder Extension</title>
+        <title>Danh Sách Hãng</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
@@ -197,6 +197,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <thead>
                                             <tr>
                                                 <th> Tên Hãng</th>
+                                                <th> Logo</th>
                                                 <th> Thao Tác</th>
                                             </tr>
                                         </thead>
@@ -211,6 +212,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $tenhang; ?> </td>
+                                                    <td style="width:5%">
+                                                        <img src="..<?php echo $row_hang['hsx_logo'];?>" class="img-rounded" alt="" style="width:100%">
+                                                    </td>
                                                     <td>
                                                         <a href='cap-nhat-hang.php?idHang=<?php echo $mahang; ?>'  class='btn blue btn-outline uppercase'> 
                                                             <i class='icon-wrench'></i>

@@ -197,7 +197,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <div class="portlet-body form">
                                     <!-- BEGIN FORM-->
-                                    <form action="#" class="form-horizontal form-bordered" method="post">
+                                    <form id="frloai" class="form-horizontal form-bordered" method="post">
                                         <div class="form-body">
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Tên loại</label>
@@ -272,6 +272,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
+        <script src="../public/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
@@ -283,6 +284,69 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
         <script src="../public/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
         <!-- END THEME LAYOUT SCRIPTS -->
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var form1 = $("#frmHang");
+                var error1 = $('.alert-danger', form1);
+                var success1 = $('.alert-success', form1);
+
+                form1.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "", // validate all fields including form hidden input
+                rules:{
+                    txtTenHang:{
+                        required:true
+                        
+                    },
+                },
+                messages:{
+                    txtTenHang:{
+                        required:"Tên hãng không có giá trị rỗng",
+                        
+                    }
+                },
+                errorPlacement: function(error, element) {
+
+                 if (element.is(':checkbox')) 
+                 {
+                     error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                 } 
+                 else 
+                     if (element.is(':radio')) {
+                         error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                     }
+                     else 
+                     {
+                           error.insertAfter(element); // for other inputs, just perform default behavior
+                       }
+                   },
+                   invalidHandler: function(event, validator) { //display error alert on form submit              
+                     success1.hide();
+                     error1.show();
+                     App.scrollTo(error1, -200);
+                 },
+                   highlight: function(element) { // hightlight error inputs
+                     $(element)
+                           .closest('.form-group').addClass('has-error'); // set error class to the control group
+                       },
+
+                   unhighlight: function(element) { // revert the change done by hightlight
+                     $(element)
+                           .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                       },
+                       submitHandler: function(form,e) {
+                           e.preventDefault();
+                           success1.show().slideUp(5000);
+                           error1.hide();
+                           form.submit();
+
+                       }
+
+                   });
+            });
+        </script>
     </body>
 
 </html>

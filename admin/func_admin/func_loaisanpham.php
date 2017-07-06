@@ -25,7 +25,7 @@
 			echo "<script>alert('Thêm thất bại')</script>";
 	}
 
-	function capNhatLoaiSanPham($maLoai,$tenLoai)
+	function capNhatLoaiSanPham($maLoai,$tenLoai,$laiXuat)
 	{
 		$conn=connect();
 		if($tenLoai!="")
@@ -37,16 +37,17 @@
 				SET	
 					lsp_ten='$tenLoai',
 					lsp_tenkhongdau='$tenKhongDau',
-					lsp_ngaycapnhat='$ngayHienTai'
+					lsp_ngaycapnhat='$ngayHienTai',
+					lsp_laixuat=$laiXuat
 				WHERE	
 					lsp_ma=$maLoai";
 			if ($conn->query($sql) === TRUE) 
 			{
-			    echo "<script>alert('Thêm thành công')</script>";
+			   
 			} 
 			else 
 			{
-			   echo "<script>alert('Thêm thất bại')</script>";
+			   echo "<script>alert('Cập nhật thất bại')</script>";
 			}
 		}
 		else

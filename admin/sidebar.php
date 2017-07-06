@@ -33,7 +33,7 @@
             </li>
             <li class="nav-item  ">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-bar-chart"></i>
+                    <i class="fa fa-signal"></i>
                     <span class="title">Quản Lý Cửa Hàng</span>
                     <span class="arrow"></span>
                 </a>
@@ -47,7 +47,7 @@
             </li>
             <li class="nav-item">
                 <a href="javascript:;" class="nav-link ">
-                    <i class="icon-diamond"></i>
+                    <i class="fa fa-soccer-ball-o"></i>
                     <span class="title">Quản Lý Loại</span>
                     <span class="arrow"></span>
                 </a>
@@ -71,6 +71,31 @@
                         <i class="icon-bar-chart"></i>
                         <span class="title">Khôi Phục Loại</span>
                         <span class="selected"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-users"></i>
+                <span class="title">Quản Lý Danh Mục</span>
+                <span class="arrow"></span>
+            </a>
+            <!-- BEGIN -->
+            <!-- END -->
+            <ul class="sub-menu"> 
+                <li class="nav-item  ">
+                    <a href="them-danh-muc.php" class="nav-link ">
+                        <span class="title">Thêm Danh Mục
+                        </span>
+                        <span class="badge badge-success"></span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="danh-sach-danh-muc.php" class="nav-link ">
+                        <span class="title">Danh Mục
+                        </span>
+                        <span class="badge badge-success"></span>
                     </a>
                 </li>
             </ul>
@@ -130,7 +155,7 @@
 </li>
 <li class="nav-item">
     <a href="javascript:;" class="nav-link ">
-        <i class="icon-puzzle"></i>
+        <i class="icon-bar-chart"></i>
         <span class="title">Quản Lý Thống Kê</span>
         <span class="arrow"></span>
     </a>
@@ -147,7 +172,7 @@
 </li>
 <li class="nav-item">
     <a href="javascript:;" class="nav-link ">
-        <i class="icon-puzzle"></i>
+        <i class="fa fa-send-o"></i>
         <span class="title">Quản Lý Yêu Cầu</span>
         <span class="arrow"></span>
     </a>

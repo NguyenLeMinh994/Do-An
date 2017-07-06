@@ -1,30 +1,31 @@
 <?php 
-    require "top.php";
-    require "func_shop/func_sanpham.php";
-    if(isset($_POST['btnCapNhatSP']))
+    require_once "top.php";
+    require "func_admin/func_danhmuc.php";
+    if(isset($_POST['btnCapNhatDanhMuc']))
     {
-        if(empty($_FILES['hinhanh']['name']))
+        if(!empty($_FILES['file_hinh']['name']))
         {
-            capNhatSanPham($_GET['idSP'],$_POST['txtDanhMuc'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtTomTat'],$_POST['txtCauHinh']);
+            if(capNhatHinh($_GET['idDM'],$_POST['txtTenDanhMuc'],$_FILES['file_hinh'])==true)
+            {
+                capNhatDanhMuc($_GET['idDM'],$_POST['txtTenDanhMuc'],$_POST['txtGioiThieu'],$_POST['txtDanhMuc']);
+            }
+            else
+            {
+                echo "<script>alert('Cập nhật thất bại');</script>";
+            }
+            
         }
         else
         {
-            if(capNhatHinh($_GET['idSP'],$_POST['txtTenSP'],$_FILES['hinhanh'])==true)
-            {
-                capNhatSanPham($_GET['idSP'],$_POST['txtDanhMuc'],$_POST['txtNoiDung'],$_POST['txtTenSP'],$_POST['txtLoai'],$_POST['txtHSX'],$_POST['txtNCC'],$_POST['txtDonGia'],$_POST['txtTomTat'],$_POST['txtCauHinh']);
-            }
-            // else
-            // {
-            //     echo '<script>alert("Upload hình lên server thất bại");</script>';
-            // }
+            capNhatDanhMuc($_GET['idDM'],$_POST['txtTenDanhMuc'],$_POST['txtGioiThieu'],$_POST['txtDanhMuc']);
         }
+       
     }
     else
-        if(!isset($_GET['idSP']) || empty($_GET['idSP']))
-        {
-            header("Location:danh-sach-san-pham.php");
-        }
-   
+    if(!isset($_GET['idDM']) || empty($_GET['idDM']))
+    {
+        header('Location:danh-sach-danh-muc.php');
+    }
  ?>
 <!DOCTYPE html>
 <!-- 
@@ -49,7 +50,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Cập Nhật Sản Phẩm</title>
+        <title>Thêm Danh Mục</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for form layouts" name="description" />
@@ -68,7 +69,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="../public/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- END   Select -->
         <!-- BEGIN UP FILE HÌNH -->
-          <link href="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+        <link href="../public/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
           <!--END UP FILE HÌNH   -->
         <link href="../public/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
         <link href="../public/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
@@ -113,7 +114,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>Sản Phẩm
+                            <h1>Quản Lý Danh Mục
                                 
                             </h1>
                         </div>
@@ -130,7 +131,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <span class="active">Cập nhật sản Phẩm</span>
+                            <span class="active">Cập nhật danh mục</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
@@ -146,7 +147,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <div class="portlet-title">
                                                 <div class="caption">
                                                     <i class="fa fa-gift"></i>
-                                                    Cập Nhật Sản Phẩm 
+                                                    Cập Nhật Danh Mục
                                                 </div>
                                                 <div class="tools">
                                                     <a href="javascript:;" class="collapse"> </a>
@@ -155,12 +156,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                             </div>
                                             <div class="portlet-body form">
                                                 <!-- BEGIN FORM-->
-                                                <!-- BEGIN cập nhật Sản Phẩm -->
-                                                <?php  
-                                                    $laysanphamtheoID=laySanPhamTheoID($_GET['idSP']);
-                                                    $r_sp=$laysanphamtheoID->fetch_assoc();
-                                                ?>
-                                                <form id="frmSanPham" class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
+                                                <!-- BEGIN Thêm Sản Phẩm -->
+                                                <form id="frmDanhMuc" class="form-horizontal form-bordered" method="post" enctype="multipart/form-data">
                                                     <div class="form-body">
                                                         <div class="alert alert-danger display-hide">
                                                             <button class="close" data-close="alert">
@@ -170,143 +167,57 @@ License: You must have a valid license purchased only from themeforest(the above
                                                         <div class="alert alert-success display-hide">
                                                             <button class="close" data-close="alert">
                                                                 
-                                                            </button> Cập nhật sản phẩm thành công.
+                                                            </button> Cập nhật thành công.
                                                         </div>
+                                                        <?php  
+                                                            $danhmuc=danhmuctheoid($_GET['idDM']);
+                                                            $r=$danhmuc->fetch_assoc();
+                                                        ?>
                                                         <div class="form-group">
-                                                           <label class="col-md-3 control-label">Tên Sản Phẩm
+                                                           <label class="col-md-3 control-label">Tên Danh Mục
                                                            <span class="required"> * </span>
                                                            </label>
                                                            <div class="col-md-4">
-                                                            <input value="<?php echo $r_sp['sp_ten']; ?>" type="text" class="form-control" name="txtTenSP" placeholder="Tên sản phẩm">
+                                                            <input type="text" class="form-control" value="<?php echo $r['dm_ten']; ?>" name="txtTenDanhMuc" placeholder="Tên danh mục">
                                                         </div>
                                                     </div>
-
-                                                    <div class="form-group">
-                                                       <label class="col-md-3 control-label">Loại Sản Phẩm
-                                                       <span class="required"> * </span>
-                                                       </label>
-                                                       <div class="col-md-4">
-                                                        <select id="select2-single-input-sm" class="form-control input-sm select2-multiple" name="txtLoai">
-                                                            <optgroup label="Chọn Loại Sản Phẩm">
-                                                            <?php  
-                                                                $danhSachLoai=layDanhSachLoai();
-                                                                $maloai=$r_sp['sp_loaisanpham'];
-                                                                while($row_loai=$danhSachLoai->fetch_assoc())
-                                                                {
-                                                                    $tenloai=$row_loai['lsp_ten'];
-
-                                                                    $idloai=$row_loai['lsp_ma'];
-                                                                    
-                                                               
-                                                            ?>
-                                                            <option value="<?php echo $idloai; ?>" <?php echo ($idloai==$maloai?'selected':''); ?>><?php echo $tenloai; ?></option>
-                                                            <?php  
-                                                             }
-                                                            ?> 
                                                     
+                                                    <div class="form-group">
+                                                       <label class="col-md-3 control-label">Danh mục
+                                                       </label>
+                                                       <div class="col-md-5">
+                                                        <select id="select2-single-input-sm" class="form-control input-sm select2-multiple" name="txtDanhMuc">
+                                                            <optgroup label="Chọn Loại Sản Phẩm">
+                                                                <option value="0">Danh mục cha</option>
+                                                                <?php  
+                                                                    
+                                                                    $res=danhSachDanhMuc();
+                                                                    while ($r_dm=$res->fetch_assoc()) 
+                                                                    {
+                                                                        if($r_dm['dm_ma']!=$r['dm_ma'])
+                                                                        {
+
+                                                                ?>
+                                                                    <option value="<?php echo $r_dm['dm_ma']; ?>" <?php echo ($r['dm_kethua']==$r_dm['dm_ma']?'selected':''); ?>
+                                                                    ><?php echo $r_dm['dm_ten']; ?></option>
+                                                                <?php  
+                                                                        }
+                                                                    }
+                                                                ?>
                                                             </optgroup>
 
                                                         </select>
                                                     </div>                                    
                                                 </div>
-                                                <div class="form-group">
-                                                   <label class="col-md-3 control-label">Hãng Sản Xuất
-                                                   <span class="required"> * </span>
-                                                   </label>
-                                                   <div class="col-md-4">
-
-                                                    <select id="select2-single-input-sm" class="form-control input-sm select2-multiple" name="txtHSX">
-                                                        <optgroup label="Chọn Hãng Sản Xuất">
-                                                            <?php  
-                                                                $danhSachHang=layDanhSachHang();
-                                                                $mahang=$r_sp['sp_hangsanxuat'];
-                                                                while($row_hang=$danhSachHang->fetch_assoc())
-                                                                {
-                                                                    $tenhang=$row_hang['hsx_ten'];
-
-                                                                    $idhang=$row_hang['hsx_ma'];
-                                                                    #($idhang==2?'selected':'')
-                                                            ?>
-                                                            <option value="<?php echo $idhang; ?>" <?php echo ($idhang==$mahang?'selected':''); ?> ><?php echo $tenhang; ?></option>
-                                                                <?php
-                                                                }
-                                                            ?>
-                                                        </optgroup>
-
-                                                    </select>
-                                                </div>                                    
-                                            </div>
-                                            <div class="form-group">
-                                               <label class="col-md-3 control-label">
-                                                   Nhà Cung Cấp<span class="required"> * </span>
-                                               </label>
-                                               <div class="col-md-4">
-
-                                                <select id="select2-single-input-sm" class="form-control input-sm select2-multiple" name="txtNCC">
-                                                    <optgroup label="Chọn Nhà Cung Cấp">
-                                                       <?php  
-                                                           $danhSachNhaCungCap=layDanhSachCungCap($cuaHang);
-                                                           $mancc=$r_sp['sp_nhacungcap'];
-                                                           while($row_ncc=$danhSachNhaCungCap->fetch_assoc())
-                                                           {
-                                                               $tenncc=$row_ncc['ncc_ten'];
-
-                                                               $idncc=$row_ncc['ncc_ma'];
-                                                       ?>
-                                                        <option value="<?php echo $idncc; ?>" <?php echo ($idncc==$mancc?'selected':''); ?> ><?php echo $tenncc; ?></option>
-                                                       <?php 
-                                                        }
-                                                        ?>
-                                                    </optgroup>
-
-                                                </select>
-                                            </div>                                    
-                                        </div>
-                                        <div class="form-group">
-                                               <label class="col-md-3 control-label">
-                                                   Danh Mục<span class="required"> * </span>
-                                               </label>
-                                               <div class="col-md-4">
-
-                                                <select id="select2-single-input-sm" class="form-control input-sm select2-multiple" name="txtDanhMuc">
-                                                    <optgroup label="Chọn Danh Mục">
-                                                       <?php  
-                                                           $danhmuc=layDanhMuc();
-                                                           $danhmucsp=$r_sp['sp_danhmuc'];
-                                                           while($row_dm=$danhmuc->fetch_assoc())
-                                                           {
-                                                               $ten=$row_dm['dm_ten'];
-
-                                                               $id=$row_dm['dm_ma'];
-                                                               ?>
-                                                              <option value="<?php echo $id; ?>" <?php echo ($danhmucsp==$id?'selected':''); ?> ><?php echo $ten; ?></option>
-                                                        <?php
-                                                           }
-                                                       ?>
-                                                    </optgroup>
-
-                                                </select>
-                                            </div>                                    
-                                        </div> 
-                                        
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">Đơn Giá
-                                            <span class="required"> * </span>
-                                            </label>
-                                            <div class="col-md-4 input-group select2-bootstrap-append select2-bootstrap-prepend input-large">
-                                                                       
-                                                <input value="<?php echo number_format($r_sp['sp_dongia']); ?>" onkeyup="FormatNumber(this);" type="text" name="txtDonGia" class="form-control"> 
-                                                <div class="input-group-addon">VNĐ</div> 
-                                            </div>
-                                        </div>
+                                               <?php //var_dump($categories); ?>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Hình Ảnh
-                                            <span class="required"> * </span>
+                                                <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-9">
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                        <img src="..<?php echo $r_sp['sp_hinh1']; ?>" alt="" /> </div>
+                                                        <img src="..<?php echo $r['dm_hinh']; ?>" alt="" /> </div>
                                                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> 
                                                         </div>
 
@@ -314,56 +225,36 @@ License: You must have a valid license purchased only from themeforest(the above
                                                             <span class="btn default btn-file">
                                                                 <span class="fileinput-new"> Select image </span>
                                                                 <span class="fileinput-exists"> Change </span>
-                                                                <input type="file" name="hinhanh" > </span>
+                                                                <input type="file" name="file_hinh" > </span>
                                                                 <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                                             </div>
                                                         </div>
 
                                                         <div class="clearfix margin-top-10"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3">Tóm Tắt
-                                                            <span class="required"> * </span>
-                                                        </label>
-                                                        <div class="col-md-9">
-                                                            <textarea class="ckeditor form-control" name="txtTomTat" rows="6" data-error-container="#editor2_error" >
-                                                                <?php echo $r_sp['sp_tomtat']; ?>
-                                                            </textarea>
-                                                            <div id="editor2_error"> </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3">Nội Dung
-                                                            <span class="required"> * </span>
-                                                        </label>
-                                                        <div class="col-md-9">
-                                                            <textarea class="ckeditor form-control" name="txtNoiDung" rows="6" data-error-container="#editor2_error" >
-                                                                <?php echo $r_sp['sp_noidung']; ?>
-                                                            </textarea>
-                                                            <div id="editor2_error"> </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-3">Thông Số
-                                                            <span class="required"> * </span>
-                                                        </label>
-                                                        <div class="col-md-9">
-                                                            <textarea class="ckeditor form-control" name="txtCauHinh" rows="6" data-error-container="#editor2_error" >
-                                                                <?php echo $r_sp['sp_cauhinh']; ?>
-                                                            </textarea>
-                                                            <div id="editor2_error"> </div>
-                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Giới Thiệu
+                                                        
+                                                    </label>
+                                                    <div class="col-md-9">
+                                                        <textarea class="ckeditor form-control" name="txtGioiThieu" rows="6" data-error-container="#editor2_error" >
+                                                         <?php echo $r['dm_gioithieu']; ?>
+                                                        </textarea>
+                                                        <div id="editor2_error"> </div>
+                                                    </div>
+                                                </div>
+                                                    
+                                                </div>  
                                                 <div class="form-actions">
                                                     <div class="row">
                                                         <div class="col-md-offset-3 col-md-9">
-                                                            <button type="submit" class="btn green" name="btnCapNhatSP">Cập Nhật Sản Phẩm</button>
-                                                             <a href="danh-sach-san-pham.php" class="btn grey-salsa btn-outline">Trở Về</a>
+                                                            <button type="submit" class="btn btn-circle green" name="btnCapNhatDanhMuc">Cập Nhật Danh Mục</button>
+                                                            <!--  <button type="button" class="btn btn-circle grey-salsa btn-outline">Cancel</button> -->
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                             </form>
                                             <!-- END Thêm Sản Phẩm -->
                                                 <!-- END FORM-->
@@ -1011,13 +902,14 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END THEME LAYOUT SCRIPTS -->
         <script type="text/javascript">
             $(document).ready(function(){
-                var form1 = $("#frmSanPham");
-                   var error1 = $('.alert-danger', form1);
-                   var success1 = $('.alert-success', form1);
-                    $.validator.addMethod("currency", function (value, element) {
-                        return this.optional(element) || /^\$?(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?$/.test(value);
-                    }, "kiểm tra lại đơn giá");
+                var form1 = $("#frmDanhMuc");
+                var error1 = $('.alert-danger', form1);
+                var success1 = $('.alert-success', form1);
 
+                $.validator.addMethod("currency", function (value, element) {
+                    return this.optional(element) || /^\$?(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?$/.test(value);
+                }, "kiểm tra lại đơn giá");
+                
                    form1.on('submit', function() {
                       for(var instanceName in CKEDITOR.instances) {
                           CKEDITOR.instances[instanceName].updateElement();
@@ -1030,106 +922,81 @@ License: You must have a valid license purchased only from themeforest(the above
                     focusInvalid: false, // do not focus the last invalid input
                     ignore: "", // validate all fields including form hidden input
                     rules: {
-                        txtTenSP:{
+                        txtTenDanhMuc:{
                             required:true
-                        },
-                        txtTomTat:{
-                            required:true
-                        },
-                        txtDonGia:{
-                            required:true,
-                          
-                        },
-                        txtNoiDung:{
-                            required:true
-                        },
-                        txtCauHinh:{
-                            required:true
-                        }
+                        } 
                     },
                     messages: {
-                        txtTenSP: {
-                            required:"Tên sản phẩm không có giá trị rỗng"
-                        },
-                         txtTomTat:{
-                            required:"Tóm tắt không có giá trị rỗng"
-                        },
-                        
-                        txtDonGia:{
-                            required:"Đơn giá không có giá trị rỗng",
-                            
-                        },
-                        txtNoiDung:{
-                            required:"Nội dung không có giá trị rỗng",
-                        },
-                         txtCauHinh:{
-                            required:"Cấu Hình không có giá trị rỗng",
-                        }
-
+                       txtTenDanhMuc:{
+                            required:"Tên danh mục không có giá trị rỗng"
+                        }  
                     },
-                       errorPlacement: function(error, element) {
+                    errorPlacement: function(error, element) {
 
-                           if (element.is(':checkbox')) 
-                           {
-                               error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
-                           } 
-                           else 
-                           if (element.is(':radio')) {
-                               error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
-                           }
-                           else 
-                           {
+                     if (element.is(':checkbox')) 
+                     {
+                         error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+                     } 
+                     else 
+                         if (element.is(':radio')) {
+                             error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+                         }
+                         else 
+                         {
                                error.insertAfter(element); // for other inputs, just perform default behavior
                            }
                             // console.log(error);
                            // console.log(element);
-                        
+                           
                            // var i=$(element).parent(".input-group");
                            // i?i.after(error):element.after(error);
                        },
                        invalidHandler: function(event, validator) { //display error alert on form submit              
-                           success1.hide();
-                           error1.show();
-                           App.scrollTo(error1, -200);
-                       },
+                         success1.hide();
+                         error1.show();
+                         App.scrollTo(error1, -200);
+                     },
                        highlight: function(element) { // hightlight error inputs
-                           $(element)
+                         $(element)
                                .closest('.form-group').addClass('has-error'); // set error class to the control group
-                       },
+                           },
 
                        unhighlight: function(element) { // revert the change done by hightlight
-                           $(element)
+                         $(element)
                                .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                       },
-                       submitHandler: function(form,e) {
-                         e.preventDefault();
-                         success1.show().slideUp(5000);
-                         error1.hide();
-                         form.submit();
-                         
-                       }
-                }); 
+                           },
+                           submitHandler: function(form,e) {
+                               e.preventDefault();
+                               success1.show();
+                               success1.slideUp(5000);
+                               error1.hide();
+                               form.submit();
+                               
+                           }
+                });
+               
+                
             });
-function FormatNumber(obj) {
-    var strvalue;
-    if (eval(obj))
-        strvalue = eval(obj).value;
-    else
-        strvalue = obj; 
-    var num;
-    num = strvalue.toString().replace(/\$|\,/g,'');
+            function FormatNumber(obj) {
+            var strvalue;
+            if (eval(obj))
+                strvalue = eval(obj).value;
+            else
+                strvalue = obj; 
+            var num;
+            num = strvalue.toString().replace(/\$|\,/g,'');
 
-    if(isNaN(num))
-        num = "";
-    sign = (num == (num = Math.abs(num)));
-    num = Math.floor(num*100+0.50000000001);
-    num = Math.floor(num/100).toString();
-    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
-        num = num.substring(0,num.length-(4*i+3))+','+
-    num.substring(num.length-(4*i+3));
-                //return (((sign)?'':'-') + num);
-                eval(obj).value = (((sign)?'':'-') + num);
-            }
+            if(isNaN(num))
+                num = "";
+            sign = (num == (num = Math.abs(num)));
+            num = Math.floor(num*100+0.50000000001);
+            num = Math.floor(num/100).toString();
+            for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+                num = num.substring(0,num.length-(4*i+3))+','+
+            num.substring(num.length-(4*i+3));
+        //return (((sign)?'':'-') + num);
+        eval(obj).value = (((sign)?'':'-') + num);
+    }
         </script>
     </body>
 </html>

@@ -9,8 +9,7 @@
     {
     	if(empty($_FILES['file_logo']['name']))
     	{
-    		
-    		echo "<script>alert('Thất Bại: Vui lòng chọn hình');</script>";
+    		echo "<script>alert('Vui lòng chọn hình');</script>";
     	}
     	else
     		uploadHinhCuaHang($cuaHang,$_FILES['file_logo']);
@@ -40,7 +39,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | New User Profile | Account</title>
+        <title>Cửa Hàng</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for user account page" name="description" />
@@ -141,9 +140,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <div class="profile-usermenu">
                                         <ul class="nav">
                                             <li>
-                                                <!-- <a href="page_user_profile_1.html">
-                                                    <i class="icon-home"></i> Cửa Hàng 
-                                                </a> -->
+                                                
                                             </li>
                                           
                                         </ul>
@@ -181,25 +178,37 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     <!-- PERSONAL INFO TAB -->
                                                     <div class="tab-pane active" id="tab_1_1" >
                                                         <form id="frmThongTin" role="form"  method="post">
+                                                            <div class="alert alert-danger display-hide">
+                                                                <button class="close" data-close="alert">
+                                                                    
+                                                                </button>  Nhập đầy đủ các trường dữ liệu.
+                                                            </div>
+                                                            <div class="alert alert-success display-hide">
+                                                                <button class="close" data-close="alert">
+                                                                    
+                                                                </button> Cập nhật thành công.
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label class="control-label">Tên Cửa Hàng</label>
                                                                 <span class="required"> * </span>
-                                                                <input type="text" class="form-control" value="<?php echo $row_thongtin['ch_ten']; ?>"  name="txtTen"/> </div>
-                                                            
-                                                            <div class="form-group">
-                                                                <label class="control-label">Số Điện Thoại</label>
-                                                                <input type="text" class="form-control" value="<?php echo $row_thongtin['ch_sdt']; ?>"  name="txtSDT"/> </div>
-                                                            <div class="margiv-top-10">
-                                                                
-                                                                <button type="submit" class="btn green" name="btnLuuThongTin">Lưu</button>
-                                                                
+                                                                <input type="text" class="form-control" value="<?php echo $row_thongtin['ch_ten']; ?>"  name="txtTen"/> 
                                                             </div>
-                                                        </form>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Số Điện Thoại</label>
+                                                                    <input type="text" class="form-control" value="<?php echo $row_thongtin['ch_sdt']; ?>"  name="txtSDT"/> </div>
+                                                                    <div class="margiv-top-10">
+
+                                                                        <button type="submit" class="btn green" name="btnLuuThongTin">Lưu</button>
+
+                                                                    </div>
+                                                                </form>
                                                     </div>
                                                     <!-- END PERSONAL INFO TAB -->
                                                     <!-- CHANGE AVATAR TAB -->
                                                     <div class="tab-pane" id="tab_1_2" >
-                                                        <form action="#" role="form" method="post" enctype="multipart/form-data">
+                                                        <form role="form" method="post" enctype="multipart/form-data">
+                                                         
                                                             <div class="form-group">
                                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
@@ -892,7 +901,8 @@ License: You must have a valid license purchased only from themeforest(the above
                         // {
                         //     error.insertAfter(element); // for other inputs, just perform default behavior
                         // }
-                    }
+                    },
+                      
                 });
 
                 

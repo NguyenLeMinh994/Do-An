@@ -13,9 +13,10 @@ function soLuongSanPham($cuaHang)
 function soLuongDonHang($cuaHang)
 {
 	$conn=connect();
-	$sql = "SELECT count(*) as soluong
-	FROM hoadon
-	WHERE hd_cuahang=$cuaHang AND hd_trangthai=1";
+	$sql = "SELECT COUNT(DISTINCT cthd_mahoadon) as soluong
+	FROM hoadon,
+	chitiethoadon
+	WHERE cthd_macuahang=$cuaHang  AND cthd_trangthai = 1 AND cthd_mahoadon=hd_ma";
 	$result = $conn->query($sql);
 	$row=$result->fetch_assoc();
 	return $row['soluong'];
@@ -23,7 +24,7 @@ function soLuongDonHang($cuaHang)
 function soluongBinhLuan($cuaHang)
 {
 	$conn=connect();
-	$sql = "SELECT count(*) as soluong
+	$sql = "SELECT count(DISTINCT bl_masanpham) as soluong
 	FROM binhluan,sanpham
 	WHERE bl_masanpham=sp_ma AND bl_trangthai=1 AND sp_macuahang=$cuaHang";
 	$result = $conn->query($sql);

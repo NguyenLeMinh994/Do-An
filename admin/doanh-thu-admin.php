@@ -1,5 +1,6 @@
 <?php require "top.php"; 
 require "func_admin/func_thongke.php";
+
 ?>
 <!DOCTYPE html>
 <!-- 
@@ -213,10 +214,12 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                 <div class="input-group input-large date-picker input-daterange" data-date="11/6/2017" data-date-format="dd-mm-yyyy">
                                                                     <input type="text" class="form-control" id="batdau" readonly name="txtFrom" required>
                                                                     <span class="input-group-addon"> đến </span>
-                                                                    <input type="text" class="form-control" id="ketthuc" readonly name="txtTo" required> </div>
-                                                                    <!-- /input-group -->
+                                                                    <input type="text" class="form-control" id="ketthuc" readonly name="txtTo" required> 
                                                                 </div>
-                                                            </div>  
+                                                                    <!-- /input-group -->
+                                                            </div>
+                                                        </div>
+                                                           
                                                             <div class="form-actions">
                                                                 <div class="row">
                                                                     <div class="col-md-offset-3 col-md-9">
@@ -257,20 +260,38 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                 <th> Mã  </th>
                                                                 <th> Cửa Hàng</th>
                                                                 <th> Chủ Cửa Hàng</th>
-                                                                
-                                                                <th> Doanh Thu </th>
+                                                                <th> Lãi Xuất </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php 
                                                             $danhsachcuahang=danhSachCuaHang();
+                                                            
                                                             while ($row_cuahang=$danhsachcuahang->fetch_assoc()) 
                                                             {
                                                                 $tencuahang=$row_cuahang['ch_ten'];
                                                                 $macuahang=$row_cuahang['ch_ma'];
                                                                 $chucuahang=$row_cuahang['nv_hoten'];
+                                                                
+                                                                if(isset($_POST['btnXacNhan']))
+                                                                {
+                                                                    if(!empty($_POST['txtFrom']) || !empty($_POST['txtTo']))
+                                                                    {
+                                                                        $ngaybatdau=date('Y-m-d',strtotime($_POST['txtFrom']));
+                                                                        $ngayketthuc=date('Y-m-d',strtotime($_POST['txtTo']));
+
+                                                                        $doanhthu=DoanhThuTheoDate($macuahang,$ngaybatdau,$ngayketthuc);
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        $doanhthu=DoanhThu($macuahang);
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    $doanhthu=DoanhThu($macuahang);
+                                                                }
                                                                 $tongtien=0;
-                                                                $doanhthu=DoanhThu($macuahang);
                                                                 while ($row_doanhthu=$doanhthu->fetch_assoc()) 
                                                                 {
                                                                     $tongtien+=$row_doanhthu['tongtien'];
@@ -286,7 +307,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                     </td>
                                                                     
                                                                 </tr>
-                                                                <?php } ?>
+                                                                <?php
+
+                                                            } 
+                                                            
+                                                            ?>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -863,15 +888,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                                             </div>
                                                                                             <!-- END CONTAINER -->
                                                                                             <!-- BEGIN FOOTER -->
-                                                                                            <div class="page-footer">
-                                                                                                <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
-                                                                                                    <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
-                                                                                                    <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
-                                                                                                </div>
-                                                                                                <div class="scroll-to-top">
-                                                                                                    <i class="icon-arrow-up"></i>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                            <?php require_once 'footer.php'; ?>
                                                                                             <!-- END FOOTER -->
                                                                                             <!-- BEGIN QUICK NAV -->
                                                                                             

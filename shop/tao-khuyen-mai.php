@@ -50,7 +50,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | Form Layouts</title>
+        <title>Tạo Khuyến Mãi</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for form layouts" name="description" />
@@ -117,7 +117,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="page-head">
                         <!-- BEGIN PAGE TITLE -->
                         <div class="page-title">
-                            <h1>Tạo Khuyến Mãi
+                            <h1>Khuyến Mãi
                                 
                             </h1>
                         </div>

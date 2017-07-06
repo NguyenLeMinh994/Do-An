@@ -1,5 +1,14 @@
 <?php require "top.php"; 
     require "func_admin/func_cuahang.php";
+    if(isset($_GET['idCH_cb']))
+    {
+        canhbao($_GET['idCH_cb']);
+    }
+    else
+        if (isset($_GET['idCH_huy'])) 
+        {
+            huycanhbao($_GET['idCH_huy']);
+        }
 ?>
 <!DOCTYPE html>
 <!-- 
@@ -178,48 +187,37 @@ License: You must have a valid license purchased only from themeforest(the above
                            
                             <!-- END EXAMPLE TABLE PORTLET-->
                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <div class="portlet box red">
+                            <div class="portlet box dark">
                                 <div class="portlet-title">
-                                    <div class="caption">
+                                    <div class="caption ">
                                         <i class="fa fa-globe"></i>Danh Sách Cửa Hàng</div>
                                     <div class="actions">
-                                        <a href="javascript:;" class="btn btn-default btn-sm btn-circle">
-                                            <i class="fa fa-plus"></i> Add </a>
-                                        <a href="javascript:;" class="btn btn-default btn-sm btn-circle">
-                                            <i class="fa fa-print"></i> Print </a>
+                                       
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <table class="table table-striped table-bordered table-hover table-header-fixed" id="sample_2">
+                                    <table class="table table-striped table-bordered table-hover dt-responsive" id="sample_2">
                                         <thead>
                                             <tr>
-                                                <th> Mã  </th>
-                                                <th> Cửa Hàng</th>
-                                                <th> Chủ Cửa Hàng</th>
-                                                <th> Số Điện Thoại </th>
-                                                <th> Email </th>
-                                                <th> Ngày Đăng Ký </th>
-                                                <th> Doanh Thu </th>
+                                                <th></th>
+                                                <th class="all"> Mã  </th>
+                                                <th class="min-phone-l"> Cửa Hàng</th>
+                                                <th class="min-tablet"> Chủ Cửa Hàng</th>
+                                                <th class="none">Ngày Đăng Ký </th>
+                                                <th class="none"> SĐT </th>
+                                                <th class="none"> Email </th>
+                                                <th class="desktop"> Khiếu Nại </th>
+                                                <th class="min-tablet"> Tình Trạng</th>
+                                                <th class="desktop"> Thao Tác </th>
                                             </tr>
                                         </thead>
-                                        <!-- <tfoot>
-                                            <tr>
-                                                 <th> Mã  </th>
-                                                <th> Cửa Hàng</th>
-                                                <th> Chủ Cửa Hàng</th>
-                                                <th> Số Điện Thoại </th>
-                                                <th> Email </th>
-                                                <th> Ngày Thuê </th>
-                                                <th> Doanh Thu </th>
-                                            </tr>
-                                        </tfoot> -->
                                         <tbody>
                                         <?php 
                                             $danhsachcuahang=danhSachCuaHang();
                                             while ($row_cuahang=$danhsachcuahang->fetch_assoc()) 
                                             {
 
-                                            $tencuahang=$row_cuahang['ch_ten'];
+                                                $tencuahang=$row_cuahang['ch_ten'];
                                                 $macuahang=$row_cuahang['ch_ma'];
                                                 $sdt_cuahang=$row_cuahang['ch_sdt'];
                                                
@@ -230,21 +228,70 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 $row_thongtin=$thongtin->fetch_assoc();
                                                 $email=$row_thongtin['nv_email'];
                                                 $chucuahang=$row_thongtin['nv_hoten'];
+                                                //------------------------------------------------------
+                                                $solan=demSoLanKhieuNai($macuahang);
+                                                $r_sl=$solan->fetch_assoc();
 
                                         ?>
                                             <tr>
+                                                <th></th>
                                                 <td> <?php echo $macuahang; ?> </td>
                                                 <td> <?php echo $tencuahang; ?> </td>
                                                 <td> <?php echo $chucuahang; ?> </td>
-                                                <td> <?php echo $sdt_cuahang; ?> </td>
-                                                <td><?php echo $email; ?></td>
                                                 <td> 
                                                     <?php echo $ngaybatdauthue;?>
                                                 </td>
-                                                <td>  
+                                                <td> <?php echo $sdt_cuahang; ?> </td>
+                                                <td><?php echo $email; ?></td>
+                                                
+                                                <td>
+                                                    <?php echo $r_sl['solan']; ?>
+                                                </td>
+                                                <td>
+                                                  <?php  
+                                                  if($r_sl['ch_canhbao']==1)
+                                                  {
+                                                    echo '<span class="badge badge-warning badge-roundless">Cảnh báo </span>';
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    echo '<span class="badge badge-primary badge-roundless">Hoạt Động </span>';
+                                                    
+                                                } 
+
+                                                  ?>
+                                                </td> 
+
+                                                <td>
+                                                  <a href="san-pham-khieu-nai.php?idCH=<?php echo $macuahang; ?>" class="btn dark btn-outline uppercase"> 
+                                                      Xem
+                                                  </a>
+                                                  <?php  
+                                                  if($r_sl['ch_canhbao']==1)
+                                                  {
+
+
+                                                  ?>
+                                                  <a href="?idCH_huy=<?php echo $macuahang; ?>" class="btn blue btn-outline uppercase"> 
+                                                      Hủy cảnh báo                                                  </a>
+                                                  <?php  
+                                                    }
+                                                    else
+                                                        if($r_sl['solan']>=5)
+                                                        {
+                                                            ?>
+                                                            <a href="?idCH_cb=<?php echo $macuahang; ?>" class="btn yellow btn-outline uppercase"> 
+                                                                Cảnh Báo
+                                                            </a>
+                                                            <?php 
+                                                        }
+                                                  ?>
                                                 </td>
                                             </tr>
-                                        <?php } ?>
+                                        <?php 
+                                    } 
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -821,50 +868,10 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
-        <div class="page-footer">
-            <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
-                <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
-                <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
-            </div>
-            <div class="scroll-to-top">
-                <i class="icon-arrow-up"></i>
-            </div>
-        </div>
+        <?php require_once 'footer.php'; ?>
         <!-- END FOOTER -->
         <!-- BEGIN QUICK NAV -->
-        <nav class="quick-nav">
-            <a class="quick-nav-trigger" href="#0">
-                <span aria-hidden="true"></span>
-            </a>
-            <ul>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" target="_blank" class="active">
-                        <span>Purchase Metronic</span>
-                        <i class="icon-basket"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/reviews/4021469?ref=keenthemes" target="_blank">
-                        <span>Customer Reviews</span>
-                        <i class="icon-users"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/showcast/" target="_blank">
-                        <span>Showcase</span>
-                        <i class="icon-user"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/metronic-theme/changelog/" target="_blank">
-                        <span>Changelog</span>
-                        <i class="icon-graph"></i>
-                    </a>
-                </li>
-            </ul>
-            <span aria-hidden="true" class="quick-nav-bg"></span>
-        </nav>
-        <div class="quick-nav-overlay"></div>
+        
         <!-- END QUICK NAV -->
         <!--[if lt IE 9]>
 <script src="../public/assets/global/plugins/respond.min.js"></script>
@@ -888,7 +895,8 @@ License: You must have a valid license purchased only from themeforest(the above
         <script src="../public/assets/global/scripts/app.min.js" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
-        <script src="../public/assets/pages/scripts/table-datatables-fixedheader.min.js" type="text/javascript"></script>
+        <!-- <script src="../public/assets/pages/scripts/table-datatables-fixedheader.min.js" type="text/javascript"></script> -->
+        <script src="../public/assets/pages/scripts/table-datatables-responsive.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <script src="../public/assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>

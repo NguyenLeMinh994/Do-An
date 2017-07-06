@@ -19,7 +19,7 @@ $soluongbinhluan=soluongBinhLuan($cuaHang);
             <li class="nav-item start active open">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-home"></i>
-                    <span class="title">Dashboard</span>
+                    <span class="title">Cửa Hàng</span>
                     <span class="selected"></span>
                     <span class="arrow open"></span>
                 </a>
@@ -38,7 +38,7 @@ $soluongbinhluan=soluongBinhLuan($cuaHang);
             </li>
             <li class="nav-item">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-bar-chart"></i>
+                    <i class="icon-book-open"></i>
                     <span class="title">Quản Lý Sản Phẩm</span>
                     <span class="arrow"></span>
                 </a>
@@ -72,7 +72,7 @@ $soluongbinhluan=soluongBinhLuan($cuaHang);
             
             <li class="nav-item">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-diamond"></i>
+                    <i class="icon-globe"></i>
                     <span class="title">Quản Lý Nhà Cung Cấp</span>
                     <span class="arrow"></span>
                 </a>
@@ -156,7 +156,7 @@ $soluongbinhluan=soluongBinhLuan($cuaHang);
     </li>
     <li class="nav-item">
         <a href="javascript:;" class="nav-link nav-toggle">
-            <i class="icon-puzzle"></i>
+            <i class="icon-users"></i>
             <span class="title">Quản Lý Bình Luận</span>
             <span class="arrow"></span>
         </a>
@@ -202,7 +202,7 @@ $soluongbinhluan=soluongBinhLuan($cuaHang);
     </li>
     <li class="nav-item ">
         <a href="javascript:;" class="nav-link nav-toggle">
-            <i class="icon-bar-chart"></i>
+            <i class="fa fa-group"></i>
             <span class="title">Yêu Cầu</span>
             <span class="arrow"></span>
         </a>
