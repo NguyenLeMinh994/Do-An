@@ -12,7 +12,7 @@ else
         capNhatTrangThaiHoaDon($_GET['idGiaoHang'],$cuaHang);
     }
 ?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <!-- 
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.7
 Version: 4.7.1
@@ -180,6 +180,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <div class="col-md-9">
                                                     <p class="form-control-static">
                                                         <?php  
+                                                        if($r_khachhang['hd_trangthai']==4)
+                                                        {
+                                                            echo '<span class="label label-danger"> Hủy </span>';
+                                                        }
+                                                        else
                                                         if($r_khachhang['cthd_trangthai']==1)
                                                         {
                                                             echo '<span class="label label-info"> Chưa Chuyển </span>';
@@ -263,7 +268,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                             </a>
                                                             <?php  
                                                         }
-                                                        else
+                                                        
                                 
                                                             ?>
                                                             <a href="danh-sach-don-hang.php" class="btn default">Trở Về</a>
@@ -296,8 +301,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <th> Hình </th>
                                             <th> Số lượng</th>
                                             <th> Đơn giá </th>
-                                            <th> Thành tiền </th>
-                                            <th> Trạng Thai </th>
+                                            <th> Thành Tiền </th>
+                                            <th> Trạng Thái </th>
 
                                         </tr>
                                     </thead>
@@ -327,6 +332,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 </td>
                                                 <td>
                                                     <?php  
+                                                    if($r_khachhang['hd_trangthai']==4)
+                                                    {
+                                                        echo '<span class="label label-danger"> Hủy </span>';
+                                                    }
+                                                    else
                                                         if($r_sp['cthd_trangthai']==1)
                                                         {
                                                             echo '<span class="label label-info"> Chưa Chuyển </span>';

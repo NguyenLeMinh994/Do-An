@@ -10,7 +10,7 @@ function danhSachDonHang($cuaHang)
 	khachhang
 	WHERE
 	cthd_macuahang = $cuaHang AND hd_ma=cthd_mahoadon AND hd_makhachhang=kh_ma
-	AND cthd_trangthai = 1
+	AND cthd_trangthai = 1 AND hd_trangthai<>4
 	GROUP BY cthd_mahoadon";
 	return $conn->query($sql);
 }
@@ -37,7 +37,7 @@ function danhSachDonHangBiHuy($cuaHang)
 	chitiethoadon,
 	khachhang
 	WHERE
-	hd_cuahang = $cuaHang AND hd_ma=cthd_mahoadon AND hd_makhachhang=kh_ma
+	cthd_macuahang = $cuaHang AND hd_ma=cthd_mahoadon AND hd_makhachhang=kh_ma
 	AND hd_trangthai=4
 	GROUP BY cthd_mahoadon";
 	return $conn->query($sql);
@@ -97,7 +97,8 @@ function thongTinKhachHang($maDH,$cuaHang)
 	tp_t_ten,
 	tp_t_loai,
 	q_h_ten,
-	q_h_loai
+	q_h_loai,
+	hd_trangthai
 	FROM
 	hoadon,
 	chitiethoadon,

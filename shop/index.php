@@ -176,7 +176,28 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                                                 <h4 class="modal-title">Cảnh Báo</h4>
                                             </div>
-                                            <div class="modal-body"> Cửa Hàng Đã Vi Phạm Hợp Đồng Cho Thuê</div>
+                                            <div class="modal-body"> 
+                                                <div class="note note-warning">
+                                                    <h4 class="block">Cảnh Báo! Vui Lòng kiểm tra lại sản phẩm</h4>
+                                                <?php  
+                                                    $noidung=noidungcanhbao($cuaHang);
+                                                    while($r_nd=$noidung->fetch_assoc())
+                                                    {   
+                                                        echo "<h4 class='block'>Sản phẩm: ".$r_nd['sp_ten']." - ".$r_nd['sp_ma']."</h4>";
+                                                        echo "<p>";
+                                                        echo $r_nd['solan']." người khiếu nại.";
+                                                        if($r_nd['sp_trangthai']==3)
+                                                        {
+                                                            echo "<br>Sản phẩm này đã xóa khỏi hệ thông.";
+                                                        }
+                                                        echo "</p>";
+                                                        echo "<br>";
+
+                                                    }
+
+                                                ?>
+                                                </div>
+                                            </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
                                                 <!-- <button type="button" class="btn green">Save changes</button> -->
@@ -349,6 +370,15 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END THEME LAYOUT SCRIPTS -->
         <script type="text/javascript">
             $(document).ready(function() {
+
+                <?php  
+                    $kiemtracanhbao=kiemtracanhbao($cuaHang);
+                    $kiemtra=$kiemtracanhbao->fetch_assoc();
+                    if($kiemtra['ch_canhbao']==1)
+                    {
+                ?>
+                    $('#basic').modal('show');
+                <?php } ?>
                 // PIE CHART
                 new Morris.Donut({
                   element: 'morris_chart_4',
@@ -381,7 +411,7 @@ License: You must have a valid license purchased only from themeforest(the above
                   labels: ['Lợi nhuận']
                 });
 
-                $('#basic').modal('show');
+              
             });
         </script>
     </body>

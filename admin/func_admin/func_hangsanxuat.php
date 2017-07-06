@@ -65,7 +65,7 @@ require_once "../config/connectionstring.php";
 			{
 
 				$sql="insert into hangsanxuat
-				(hsx_ten,hsx_tenkhongdau,hsx_ngaycapnhat,hsx_logo,hsx_gioithieu,hsx_trangthai)
+				(hsx_ten,hsx_tenkhongdau,hsx_ngaytao,hsx_logo,hsx_gioithieu,hsx_trangthai)
 				values('$tenHang', '$tenKhongDau', '$ngayHienTai','$path_hinh','$nd', 1)";
 				// var_dump($sql);
 				if ($conn->query($sql) === TRUE) 
@@ -153,7 +153,7 @@ require_once "../config/connectionstring.php";
 					SET 
 					  hsx_ten = '$tenHang',
 					  hsx_tenkhongdau='$tenkhongdau',
-					  hsx_ngaycapnhat='$ngayHienTai',
+					  hsx_ngaytao='$ngayHienTai',
 					  hsx_gioithieu='$nd'
 					WHERE
 					  hsx_ma=$maHang";

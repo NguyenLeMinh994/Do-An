@@ -59,7 +59,7 @@
 			  VALUES('$ten','$tenkhongdau','$diachi','$sdt','$email','$date',$cuaHang,1)";
 		if($conn->query($sql)===true)
 		{
-			echo "<script>alert('Thêm Thành Công');</script>";
+			
 		}
 	}
 	function capNhatNhaCungCap($maNCC,$ten,$diachi,$sdt,$email)

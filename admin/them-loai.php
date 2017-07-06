@@ -4,7 +4,7 @@
     
     if(isset($_POST['btnThemLoai']))
     {
-        themLoaiSanPham($_POST['txtTenLoai'],$_POST['txtLaiXuat']);
+        themLoaiSanPham($_POST['txtTenLoai'],$_POST['txtLaiSuat']);
     }
 ?>
 <!DOCTYPE html>
@@ -30,7 +30,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <head>
         <meta charset="utf-8" />
-        <title>Metronic Admin Theme #4 | Rowreorder Extension</title>
+        <title>Thêm Loại</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #4 for rowreorder extension demos" name="description" />
@@ -206,9 +206,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label">Lại Xuất</label>
+                                                <label class="col-md-3 control-label">Lại Suất</label>
                                                 <div class="col-md-4 input-group select2-bootstrap-append select2-bootstrap-prepend input-large">
-                                                    <input type="text" name="txtLaiXuat" class="form-control" placeholder="Lãi xuất">
+                                                    <input type="text" name="txtLaiSuat" class="form-control" placeholder="Lãi suất">
                                                     <div class="input-group-addon">%</div> 
                                                 </div>
                                             </div>
@@ -286,7 +286,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END THEME LAYOUT SCRIPTS -->
         <script type="text/javascript">
             $(document).ready(function(){
-                var form1 = $("#frmHang");
+                var form1 = $("#frloai");
                 var error1 = $('.alert-danger', form1);
                 var success1 = $('.alert-success', form1);
 
@@ -296,15 +296,26 @@ License: You must have a valid license purchased only from themeforest(the above
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "", // validate all fields including form hidden input
                 rules:{
-                    txtTenHang:{
+                    txtTenLoai:{
                         required:true
                         
                     },
-                },
+                     txtLaiSuat:{
+                        required:true,
+                        min:1,
+                        max:100
+                    }
+                    
+                },  
                 messages:{
-                    txtTenHang:{
-                        required:"Tên hãng không có giá trị rỗng",
+                    txtTenLoai:{
+                        required:"Tên loại không có giá trị rỗng",
                         
+                    },
+                    txtLaiSuat:{
+                        required:"Lãi suất không có giá trị rỗng",
+                        min:"Ít nhất 1%",
+                        max:"Tối đa 100%"
                     }
                 },
                 errorPlacement: function(error, element) {

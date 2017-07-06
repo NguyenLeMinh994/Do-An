@@ -34,4 +34,15 @@
 		WHERE lsp_trangthai=1";
 		return $conn->query($sql); 
 	}
+
+	//---------------------------
+	function soluongYeuCau()
+	{
+		$conn=connect();
+		$sql="SELECT count(yc_ma) as sl
+		FROM yeucau
+		WHERE yc_trangthai=1";
+		return $conn->query($sql); 
+	}
+
 ?>

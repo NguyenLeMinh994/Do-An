@@ -9,7 +9,7 @@ function DoanhThu($maCuaHang)
 	lsp_ten,
 	SUM(cthd_soluong) as soluong,
 	SUM(
-	(cthd_dongia * cthd_soluong) *(lsp_laixuat / 100)
+	(cthd_dongia * cthd_soluong) *(lsp_laisuat / 100)
 	) as tongtien
 	FROM
 	loaisanpham,
@@ -33,7 +33,7 @@ function DoanhThuTheoDate($maCuaHang,$ngaybatdau,$ngayketthuc)
 	lsp_ten,
 	SUM(cthd_soluong) as soluong,
 	SUM(
-	(cthd_dongia * cthd_soluong) *(lsp_laixuat / 100)
+	(cthd_dongia * cthd_soluong) *(lsp_laisuat / 100)
 	) as tongtien
 	FROM
 	loaisanpham,

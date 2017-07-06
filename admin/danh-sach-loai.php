@@ -124,7 +124,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <thead>
                                             <tr>
                                                 <th> Tên Loại</th>
-                                                <th> Lãi Xuất</th>
+                                                <th> Lãi Suất</th>
                                                 <th> Thao Tác</th>
                                             </tr>
                                         </thead>
@@ -139,7 +139,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $tenloai; ?> </td>
-                                                    <td><?php echo $row_loai['lsp_laixuat']; ?> %</td>
+                                                    <td><?php echo $row_loai['lsp_laisuat']; ?> %</td>
                                                     <td>
                                                         <a href='cap-nhat-loai-sp.php?idLoaiSP=<?php echo $maloaisp; ?>'  class='btn blue btn-outline uppercase'> 
                                                             <i class='icon-wrench'></i>

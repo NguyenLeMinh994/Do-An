@@ -1,3 +1,4 @@
+<?php require_once 'func_admin/func_trangadmin.php'; ?>
 <div class="page-sidebar-wrapper">
     <!-- BEGIN SIDEBAR -->
     <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
@@ -109,21 +110,21 @@
             <ul class="sub-menu">
                <li class="nav-item">
                 <a href="danh-sach-hang.php" class="nav-link ">
-                    <i class="icon-bar-chart"></i>
+                   
                     <span class="title">Danh Sách Hãng</span>
                     <span class="selected"></span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="them-hang-san-xuat.php" class="nav-link ">
-                    <i class="icon-bar-chart"></i>
+                   
                     <span class="title">Thêm Hãng</span>
                     <span class="selected"></span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="khoi-phuc-hang.php" class="nav-link ">
-                    <i class="icon-bar-chart"></i>
+                  
                     <span class="title">Khôi Phục Hãng</span>
                     <span class="selected"></span>
                 </a>
@@ -139,14 +140,14 @@
         <ul class="sub-menu">
            <li class="nav-item">
             <a href="danh-sach-khach-hang.php" class="nav-link ">
-                <i class="icon-bar-chart"></i>
+               
                 <span class="title">Danh Sách Khách Hàng</span>
                 <span class="selected"></span>
             </a>
         </li>
         <li class="nav-item">
             <a href="khoi-phuc-khach-hang.php" class="nav-link ">
-                <i class="icon-bar-chart"></i>
+             
                 <span class="title">Khôi Phục Khách Hàng</span>
                 <span class="selected"></span>
             </a>
@@ -162,7 +163,7 @@
     <ul class="sub-menu">
      <li class="nav-item">
         <a href="doanh-thu-admin.php" class="nav-link ">
-            <i class="icon-bar-chart"></i>
+           
             <span class="title">Thống Kê Doanh Thu</span>
             <span class="selected"></span>
         </a>
@@ -179,14 +180,18 @@
     <ul class="sub-menu">
        <li class="nav-item">
         <a href="danh-sach-yeu-cau.php" class="nav-link ">
-            <i class="icon-bar-chart"></i>
+          
             <span class="title">Danh Sách Yêu Cầu</span>
             <span class="selected"></span>
+            <?php $yeucau=soluongYeuCau(); 
+                $r_yc=$yeucau->fetch_assoc();
+            ?>
+            <span class="badge badge-success"><?php echo $r_yc['sl']; ?></span>
         </a>
     </li>
     <li class="nav-item">
         <a href="tu-choi-yeu-cau.php" class="nav-link ">
-            <i class="icon-bar-chart"></i>
+          
             <span class="title">Từ Chối Yêu Cầu</span>
             <span class="selected"></span>
         </a>

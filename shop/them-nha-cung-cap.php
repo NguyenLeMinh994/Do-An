@@ -217,10 +217,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <form id="frmNhaCungCap" class="form-horizontal form-bordered" method="post">
                                                     <div class="form-body">
                                                         <div class="alert alert-danger display-hide">
-                                                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. 
+                                                            <button class="close" data-close="alert"></button> Kiểm tra lại thông tin
                                                         </div>
                                                         <div class="alert alert-success display-hide">
-                                                            <button class="close" data-close="alert"></button> Your form validation is successful! 
+                                                            <button class="close" data-close="alert"></button> Thêm thành công 
                                                         </div>
                                                         <div class="form-group">
                                                          <label class="col-md-3 control-label">Tên Nhà Cung Cấp

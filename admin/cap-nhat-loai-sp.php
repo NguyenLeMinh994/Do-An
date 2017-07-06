@@ -4,7 +4,7 @@
     
     if(isset($_POST['btnCapNhatLoai']) && isset($_GET['idLoaiSP']) && !empty($_GET['idLoaiSP']))
     {
-        capNhatLoaiSanPham($_GET['idLoaiSP'],$_POST['txtTenLoai'],$_POST['txtLaiXuat']);
+        capNhatLoaiSanPham($_GET['idLoaiSP'],$_POST['txtTenLoai'],$_POST['txtLaiSuat']);
     }
     else
         if(!isset($_GET['idLoaiSP']) || empty($_GET['idLoaiSP']))  
@@ -225,9 +225,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label">Lại Xuất</label>
+                                                <label class="col-md-3 control-label">Lại Suất</label>
                                                 <div class="col-md-4 input-group select2-bootstrap-append select2-bootstrap-prepend input-large">
-                                                    <input type="text" name="txtLaiXuat" class="form-control" value="<?php echo $row_loai['lsp_laixuat']; ?>" placeholder="Lãi xuất">
+                                                    <input type="text" name="txtLaiSuat" class="form-control" value="<?php echo $row_loai['lsp_laisuat']; ?>" placeholder="Lãi suất">
                                                     <div class="input-group-addon">%</div> 
                                                 </div>
                                             </div>                      
@@ -319,7 +319,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         required:true
                         
                     },
-                    txtLaiXuat:{
+                    txtLaiSuat:{
                         required:true,
                         min:1,
                         max:100
@@ -329,8 +329,8 @@ License: You must have a valid license purchased only from themeforest(the above
                     txtTenLoai:{
                         required:"Tên loại không có giá trị rỗng",  
                     },
-                    txtLaiXuat:{
-                        required:"Lãi xuất không có giá trị rỗng",
+                    txtLaiSuat:{
+                        required:"Lãi suất không có giá trị rỗng",
                         min:"Ít nhất 1%",
                         max:"Tối đa 100%"
                     }

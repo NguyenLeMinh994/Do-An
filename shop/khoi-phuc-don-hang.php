@@ -1,10 +1,7 @@
 <?php  
     require "top.php";
     require "func_shop/func_donhang.php";
-    if(isset($_GET['idDH']))
-    {
-        khoiPhucDonHang($_GET['idDH']);
-    }
+
       
 ?>
 <!DOCTYPE html>
@@ -172,7 +169,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             <i class="fa fa-circle"></i>
                         </li>
                         <li>
-                            <span class="active">Danh Sách Đơn Hàng</span>
+                            <span class="active">Lịch Sử Đơn Hàng</span>
                         </li>
                     </ul>
                     <!-- END PAGE BREADCRUMB -->
@@ -187,7 +184,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="fa fa-globe"></i>
-                                    Danh Sách Đơn Hàng
+                                    Lịch Sử Đơn Hàng
                                     </div>
                                     <div class="actions">
                                         
@@ -201,7 +198,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th> Tên Khách Hàng </th>
                                                 <th> Tổng Tiền  </th>
                                                 <th>Ngày Mua</th>
-                                                <th> Trạng Thái </th>
+                                                <th> Tình Trạng </th>
                                                 <th> Thao Tác</th>
                                             </tr>
                                         </thead>
@@ -230,9 +227,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                        <a href='chi-tiet-don-hang.php?idHD=<?php echo $mahd; ?>' class='btn dark btn-outline uppercase'> 
                                                         Xem
                                                     </a>
-                                                    <a href='?idDH=<?php echo $mahd; ?>' class='btn red btn-outline uppercase'> 
-                                                        Khôi Phục
-                                                    </a>
+                                                    
                                                 </td>
                                             </tr>
                                             <?php  

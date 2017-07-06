@@ -1,13 +1,15 @@
 <?php 
     require "top.php";
     require "func_shop/func_nhacungcap.php";
-    if(!isset($_GET['idNCC']))
-    {
-        header('location:../shop/danh-sach-nha-cung-cap.php');
-    }
+    
     if(isset($_POST['btnCapNhat']) && !empty($_GET['idNCC']))
     {
         capNhatNhaCungCap($_GET['idNCC'],$_POST['txtTenNCC'],$_POST['txtDiaChi'],$_POST['txtSDT'],$_POST['txtEmail']);
+    }
+    else
+    if(!isset($_GET['idNCC']))
+    {
+        header('location:../shop/danh-sach-nha-cung-cap.php');
     }
  ?>
 <!DOCTYPE html>
@@ -229,10 +231,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <form id="frmNhaCungCap" class="form-horizontal form-bordered" method="post">
                                                     <div class="form-body">
                                                         <div class="alert alert-danger display-hide">
-                                                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. 
+                                                            <button class="close" data-close="alert"></button> Kiểm tra lại thông tin
                                                         </div>
                                                         <div class="alert alert-success display-hide">
-                                                            <button class="close" data-close="alert"></button> Your form validation is successful! 
+                                                            <button class="close" data-close="alert"></button> Cập nhật thành công 
                                                         </div>
                                                         <div class="form-group">
                                                            <label class="col-md-3 control-label">Tên Nhà Cung Cấp

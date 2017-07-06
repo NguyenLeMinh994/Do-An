@@ -1,6 +1,6 @@
 <?php 
 	require "../config/connectionstring.php";
-	function themLoaiSanPham($tenLoai,$laiXuat)
+	function themLoaiSanPham($tenLoai,$laisuat)
 	{
 		$conn=connect();
 		if($tenLoai!="")
@@ -8,9 +8,9 @@
 			$ngayHienTai=date("Y-m-d");
 			$tenKhongDau=to_slug($tenLoai);
 			$sql="INSERT INTO loaisanpham
-				(lsp_ten,lsp_tenkhongdau,lsp_ngaycapnhat,lsp_laixuat,lsp_trangthai)
+				(lsp_ten,lsp_tenkhongdau,lsp_ngaycapnhat,lsp_laisuat,lsp_trangthai)
 				VALUES
-				('$tenLoai', '$tenKhongDau', '$ngayHienTai',$laiXuat, 1)";
+				('$tenLoai', '$tenKhongDau', '$ngayHienTai',$laisuat, 1)";
 			// var_dump($sql);
 			if ($conn->query($sql) === TRUE) 
 			{
@@ -25,7 +25,7 @@
 			echo "<script>alert('Thêm thất bại')</script>";
 	}
 
-	function capNhatLoaiSanPham($maLoai,$tenLoai,$laiXuat)
+	function capNhatLoaiSanPham($maLoai,$tenLoai,$laisuat)
 	{
 		$conn=connect();
 		if($tenLoai!="")
@@ -38,7 +38,7 @@
 					lsp_ten='$tenLoai',
 					lsp_tenkhongdau='$tenKhongDau',
 					lsp_ngaycapnhat='$ngayHienTai',
-					lsp_laixuat=$laiXuat
+					lsp_laisuat=$laisuat
 				WHERE	
 					lsp_ma=$maLoai";
 			if ($conn->query($sql) === TRUE) 

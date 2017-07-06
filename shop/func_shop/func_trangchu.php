@@ -101,4 +101,25 @@ function thongKeCacNam($cuaHang)
 	return $conn->query($sql);
 }
 
+//--------------------------------------
+function kiemtracanhbao($macuahang)
+{
+	$conn=connect();
+	$sql="SELECT *
+	FROM cuahang
+	WHERE ch_ma=$macuahang";
+	return $conn->query($sql);
+}
+
+function noidungcanhbao($macuahang)
+{
+	$conn=connect();
+	$sql="SELECT count(bcch_ma) as solan,sp_ma,sp_ten,sp_trangthai 
+	FROM baocao_cuahang, sanpham, cuahang 
+	WHERE bcch_masanpham = sp_ma 
+	AND bcch_macuahang=ch_ma AND bcch_macuahang=$macuahang
+	GROUP BY bcch_macuahang,bcch_masanpham";
+	return $conn->query($sql);
+}
+
 ?>

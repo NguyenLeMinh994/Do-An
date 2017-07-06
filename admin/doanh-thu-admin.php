@@ -260,7 +260,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                 <th> Mã  </th>
                                                                 <th> Cửa Hàng</th>
                                                                 <th> Chủ Cửa Hàng</th>
-                                                                <th> Lãi Xuất </th>
+                                                                <th> Lãi Suất </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>

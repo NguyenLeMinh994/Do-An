@@ -148,7 +148,7 @@ $soluongbinhluan=soluongBinhLuan($cuaHang);
             </li>
             <li class="nav-item  ">
                 <a href="khoi-phuc-don-hang.php" class="nav-link ">
-                    <span class="title">Khôi Phục Đơn Hàng
+                    <span class="title">Lịch Sử Đơn Hàng
                     </span>
                 </a>
             </li>
