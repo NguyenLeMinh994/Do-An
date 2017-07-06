@@ -171,7 +171,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class=" icon-layers font-green"></i>
-                                        <span class="caption-subject font-green bold uppercase">Pie Chart</span>
+                                        <span class="caption-subject font-green bold uppercase">Cửa hàng và Khách hàng</span>
                                     </div>
                                     <div class="actions">
                                         
@@ -183,7 +183,30 @@ License: You must have a valid license purchased only from themeforest(the above
                             </div>
                         </div>
                         
-                        
+                        <div class="col-md-8">
+                            <div class="portlet light portlet-fit bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class=" icon-layers font-green"></i>
+                                        <span class="caption-subject font-green bold uppercase">Doanh Thu Admin</span>
+                                    </div>
+                                    <div class="actions">
+                                        <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                            <i class="icon-cloud-upload"></i>
+                                        </a>
+                                        <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                            <i class="icon-wrench"></i>
+                                        </a>
+                                        <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                            <i class="icon-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div id="morris_chart_3" style="height:250px;"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- END PAGE BASE CONTENT -->
                 </div>
@@ -270,6 +293,24 @@ License: You must have a valid license purchased only from themeforest(the above
 
                   ]
               });
+
+                // BAR CHART
+                new Morris.Bar({
+                  element: 'morris_chart_3',
+                  data: [
+                  <?php  
+                    $doanhthucanam=doanhthuhientai();
+                    while($r_nam=$doanhthucanam->fetch_assoc()){
+                  ?>
+                    { y: '<?php echo $r_nam['nam'] ?>', a:<?php echo $r_nam['tongtien']; ?>  },
+                  <?php  
+                    }
+                  ?>
+                  ],
+                  xkey: 'y',
+                  ykeys: ['a'],
+                  labels: ['Lợi nhuận']
+                });
                
             });
         </script>

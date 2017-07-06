@@ -189,6 +189,13 @@
             <span class="selected"></span>
         </a>
     </li>
+     <li class="nav-item">
+        <a href="doanh-thu-theo-nam.php" class="nav-link ">
+           
+            <span class="title">Doanh Thu Theo Năm</span>
+            <span class="selected"></span>
+        </a>
+    </li>
 
 </ul>
 </li>

@@ -17,7 +17,7 @@ function DoanhThu($maCuaHang)
 	sanpham,
 	chitiethoadon
 	WHERE
-	lsp_ma = sp_loaisanpham AND sp_ma = cthd_masanpham AND hd_ma = cthd_mahoadon AND cthd_macuahang =$maCuaHang
+	lsp_ma = sp_loaisanpham AND sp_ma = cthd_masanpham AND hd_ma = cthd_mahoadon AND cthd_macuahang =$maCuaHang AND cthd_trangthai=2
 	GROUP BY
 	lsp_ma,
 	hd_ngaydat,
@@ -41,7 +41,7 @@ function DoanhThuTheoDate($maCuaHang,$ngaybatdau,$ngayketthuc)
 	sanpham,
 	chitiethoadon
 	WHERE
-	lsp_ma = sp_loaisanpham AND sp_ma = cthd_masanpham AND hd_ma = cthd_mahoadon AND cthd_macuahang =$maCuaHang AND (hd_ngaydat BETWEEN '$ngaybatdau'AND'$ngayketthuc')
+	lsp_ma = sp_loaisanpham AND sp_ma = cthd_masanpham AND hd_ma = cthd_mahoadon AND cthd_macuahang =$maCuaHang AND (hd_ngaydat BETWEEN '$ngaybatdau'AND'$ngayketthuc') AND cthd_trangthai=2
 	GROUP BY
 	lsp_ma,
 	hd_ngaydat,
@@ -56,6 +56,18 @@ function danhSachCuaHang()
 	FROM
 	cuahang, nhanvien
 	WHERE ch_ma=nv_macuahang ";
+	return $conn->query($sql);
+}
+
+//---------------------------------------------------------------------------------
+function doanhthuTheoCaNam($nam)
+{
+	$conn=connect();
+	$sql="SELECT SUM(cthd_dongia*cthd_soluong*(lsp_laisuat/100)) as tongtien,Month(hd_ngaydat)as thang 
+	FROM cuahang,hoadon,chitiethoadon,sanpham,loaisanpham 
+	WHERE hd_ma=cthd_mahoadon AND cthd_masanpham=sp_ma AND sp_loaisanpham=lsp_ma AND cthd_trangthai=2 AND cthd_macuahang=ch_ma AND YEAR(hd_ngaydat)='$nam'
+	GROUP BY Month(hd_ngaydat)
+	";
 	return $conn->query($sql);
 }
 

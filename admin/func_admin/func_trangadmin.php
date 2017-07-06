@@ -45,4 +45,15 @@
 		return $conn->query($sql); 
 	}
 
+	function doanhthuhientai()
+	{
+		$conn=connect();
+
+		$sql="SELECT SUM((cthd_dongia*cthd_soluong)*(lsp_laisuat/100)) as tongtien,YEAR(hd_ngaydat) as nam 
+		FROM cuahang,hoadon,chitiethoadon,sanpham,loaisanpham 
+		WHERE hd_ma=cthd_mahoadon AND cthd_masanpham=sp_ma AND sp_loaisanpham=lsp_ma AND cthd_trangthai=2 AND cthd_macuahang=ch_ma
+		GROUP BY YEAR(hd_ngaydat)";	
+	return $conn->query($sql); 
+	}
+
 ?>
