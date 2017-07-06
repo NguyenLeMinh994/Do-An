@@ -48,6 +48,27 @@
             </li>
             <li class="nav-item">
                 <a href="javascript:;" class="nav-link ">
+                    <i class="fa fa-send-o"></i>
+                    <span class="title">Quản Lý Slide</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                <li class="nav-item">
+                    <a href="them-slide.php" class="nav-link ">
+                        <span class="title">Thêm slide</span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="slide.php" class="nav-link ">
+                        <span class="title">Danh Sách slide</span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+            </ul>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link ">
                     <i class="fa fa-soccer-ball-o"></i>
                     <span class="title">Quản Lý Loại</span>
                     <span class="arrow"></span>

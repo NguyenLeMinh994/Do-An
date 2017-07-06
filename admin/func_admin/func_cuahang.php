@@ -1,5 +1,5 @@
 <?php 
-	require "../config/connectionstring.php";
+	require_once "../config/connectionstring.php";
 	function danhSachCuaHang()
 	{
 		$conn=connect();
